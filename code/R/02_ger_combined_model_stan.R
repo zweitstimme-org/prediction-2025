@@ -18,6 +18,8 @@ source("code/R/auxiliary/functions.r") # Load additional functions
 # Specifications
 
 upcoming_election <- 2025 # What's the next election?
+cutoff <- Sys.Date()
+election_date <- as.Date("2025-02-23")
 
 # Parameters for Sampler
 nIter <- 3000
@@ -32,10 +34,36 @@ initlist <- replicate(nChains, structural_inits, simplify=FALSE)
 
 #### Poll Data for Dynamic Model
 
-# wahlrecht_polls <- get_wahlrecht_polls()
+down <- get_surveys()
 
+# sample_size
+wahlrecht_polls <- down %>% 
+  unnest(surveys) %>% 
+  unnest(survey) %>% 
+  select(institut = pollster, date, party, poll_share = percent, sample_size = respondents) %>%
+  mutate(date = ymd(date),
+         party = case_when(party == "greens" ~ "gru",
+                           party == "left" ~ "lin",
+                           party == "others" ~ "oth",
+                           TRUE ~ party)) %>%     
+  pivot_wider(names_from = party, values_from = poll_share) %>%
+  pivot_longer(cols = cdu:lin, names_to = "party", values_to = "poll_share") %>% 
+  rename(institute = institut) %>% 
+  pivot_wider(names_from = party, values_from = poll_share, values_fn = mean) %>%
+  # Make var oth which is 100 minus these vars cdu + spd + gru + lin + afd + fdp, but sometimes they are NA
+  mutate(oth = 100 - cdu - spd - gru - afd)
 
+# If lin is not NA, subtract form oth
+wahlrecht_polls <- wahlrecht_polls %>% 
+  mutate(oth = ifelse(!is.na(lin), oth - lin, oth),
+         oth = ifelse(!is.na(bsw), oth - bsw, oth),
+         oth = ifelse(!is.na(fdp), oth - fdp, oth))
 
+save(wahlrecht_polls, file = "data/wahlrecht_polls.RData")
+
+wahlrecht_polls <- wahlrecht_polls %>% mutate(lin = ifelse(!is.na(lin), 0, lin),
+                                              bsw = ifelse(!is.na(bsw), 0, bsw),
+                                              fdp = ifelse(!is.na(fdp), 0, fdp))
 
 
 #### Data for Structural Model
@@ -76,8 +104,6 @@ election_pred_E <- election_pred_E[party_names,]
 election_pred_E[,c(1, 3)] <- election_pred_E[,c(1, 3)] / 100
 
 
-cutoff <- Sys.Date()
-election_date <- as.Date("2025-02-23")
 
 wahlrecht_polls <- filter(wahlrecht_polls, date <= cutoff)
 
@@ -94,9 +120,7 @@ polls$iid <- as.numeric(factor(polls$institute))
   # Prepare Data for Jags
   Y <- round(as.matrix(polls[,party_names] / 100) * 
                polls$sample_size) # Grep existing Parties and transform share to number
- 
-  
-  
+
   
 forstan <- list(
   
@@ -134,7 +158,7 @@ results <- stan(file = model_file, data = forstan,
                 iter = nIter, chains = nChains, thin = 1, control = list(adapt_delta = 0.99, max_treedepth = 12) )
 
 
-# saveRDS(results, file = paste0("output/ger/draws/combined_model/res_brw_", 2021,"_",cutoff,".RDS"))
+saveRDS(results, file = paste0("output/ger/draws/combined_model/res_brw_", upcoming_election,"_",cutoff,".RDS"))
 
 res <- as.matrix(results)
 
@@ -201,7 +225,7 @@ levels <- df$levels[,adjustOrder,]
 
 lev_list <- lapply(seq(dim(levels)[3]), function(x) levels[ , , x])
 
-names(lev_list) <- seq.Date(from = as.Date("2021-09-26")-365, to = as.Date("2021-09-26"), by = 1)
+names(lev_list) <- seq.Date(from = as.Date("2025-02-23")-365, to = as.Date("2025-02-23"), by = 1)
 
 lev_list <- lapply(lev_list, function(x){ colnames(x) <- party_names
 x})
