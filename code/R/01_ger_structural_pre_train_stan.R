@@ -19,7 +19,8 @@ source("code/R/auxiliary/functions.r") # Load additional functions
 
 # Specifications
 
-upcoming_election <- 2021 # What's the next election?
+upcoming_election <- 2025 # What's the next election?
+election_date <- as.Date("2025-02-23")
 
 # Parameters for Sampler
 nIter <- 1000
@@ -28,6 +29,49 @@ nChains <- 6
 
 model_file <- "code/model_code/structural_pre_train.stan"
 
+# Get Poll Data
+# federal_polls <- read_csv("data/federal-polls.csv")
+# wahlrecht_polls <- federal_polls %>% rename(institute = auftraggeber) %>% select(date, party, poll_share, institute) %>% 
+#   filter(!(party %in% c("pir", "fw", "npd", "bsw"))) %>%
+#   # pivot_wider values from poll_share, names from party, if duplicate dates, make two rows
+#   
+#   # If lin is NA, set to lag
+#   mutate(lin = ifelse(is.na(lin), lag(lin), lin)) %>%
+#   # If afd is NA, set to lag
+#   mutate(afd = ifelse(is.na(afd), lag(afd), afd)) %>%
+#   mutate(oth = 100 - cdu - spd - afd - gru - lin - fdp) %>% 
+#   # Add fake sample size
+#   mutate(sample_size = 1000)
+
+down <- get_surveys()
+
+# sample_size
+wahlrecht_polls <- down %>% 
+  unnest(surveys) %>% 
+  unnest(survey) %>% 
+  select(institut = pollster, date, party, poll_share = percent, sample_size = respondents) %>%
+  mutate(date = ymd(date),
+         party = case_when(party == "greens" ~ "gru",
+                           party == "left" ~ "lin",
+                           party == "others" ~ "oth",
+                           TRUE ~ party)) %>%     
+  pivot_wider(names_from = party, values_from = poll_share) %>%
+  pivot_longer(cols = cdu:lin, names_to = "party", values_to = "poll_share") %>% 
+  rename(institute = institut) %>% 
+  pivot_wider(names_from = party, values_from = poll_share, values_fn = mean) %>%
+  # Make var oth which is 100 minus these vars cdu + spd + gru + lin + afd + fdp, but sometimes they are NA
+  mutate(oth = 100 - cdu - spd - gru - afd)
+
+# If lin is not NA, subtract form oth
+wahlrecht_polls <- wahlrecht_polls %>% 
+  mutate(oth = ifelse(!is.na(lin), oth - lin, oth),
+         oth = ifelse(!is.na(bsw), oth - bsw, oth),
+         oth = ifelse(!is.na(fdp), oth - fdp, oth))
+  
+save(wahlrecht_polls, file = "data/wahlrecht_polls.RData")
+
+
+
 
 
 
@@ -35,6 +79,41 @@ model_file <- "code/model_code/structural_pre_train.stan"
 
 # Load Data
 data_structural <- readRDS("data/ger/Structural/pre_train_data_21.RDS")
+
+data_structural_2021 <- filter(data_structural, election == 20)
+# write.xlsx(data_structural_2021, "data/ger/Structural/pre_train_data_21.xlsx")
+btw_2021_kerg2 <- read_csv("data/btw_2021_kerg2.csv")
+
+btw_2021_kerg2 %>% filter(Gruppenart == "Partei" & Stimme == 2 & Gebietsart == "Bund") %>% select(Gruppenname, Prozent) %>% 
+  # Rename Gruppenname CSU to CDU
+  mutate(Gruppenname = ifelse(Gruppenname == "CSU", "CDU", Gruppenname),
+         Prozent = Prozent %>% str_replace("\\,", ".") %>% as.numeric) %>%
+  # Aggreate by Gruppenname
+  group_by(Gruppenname) %>% summarise(Prozent = sum(Prozent) %>% round(2)) %>% 
+  # Order by Prozent decreasing
+  arrange(desc(Prozent)) %>% View
+
+# Read xlsx back in
+data_structural_2021 <- read.xlsx("data/ger/Structural/pre_train_data_21.xlsx")
+
+# Add back to df
+data_structural <- filter(data_structural, election != 20)
+data_structural <- bind_rows(data_structural, data_structural_2021)
+
+
+# Get the average for each party (columns cdu, spd, gru, lin, afd, fdp, bsw) from 200 to 230 days before election_date
+polls_fund <- wahlrecht_polls %>% pivot_longer(cols = cdu:lin, names_to = "party", values_to = "poll_share") %>% 
+  filter(date >= election_date - 230 & date <= election_date - 200) %>% 
+  group_by(party) %>% summarise(poll_share = mean(poll_share, na.rm = TRUE))
+
+# Replace the NA values in the data_structural with these values
+data_structural <- data_structural %>% left_join(polls_fund, by = "party") %>% 
+  mutate(poll_share = ifelse(is.na(poll_share), 0, poll_share)) %>% 
+  select(-c(polls_200_230)) %>% 
+  rename(polls_200_230 = poll_share)
+
+saveRDS(data_structural, "data/ger/Structural/pre_train_data_25.RDS")
+
 
 
 # Predictors
@@ -80,7 +159,7 @@ results <- stan(file = model_file, data = forstan,
             iter = nIter, chains = nChains, thin = 1, control = list(adapt_delta = 0.99, max_treedepth = 15))
 
 
-saveRDS(results, file = paste0("output/ger/draws/structural_pre_train/", 2021, "_structural_pre_train_stan.RDS"))
+saveRDS(results, file = paste0("output/ger/draws/structural_pre_train/", upcoming_election, "_structural_pre_train_stan.RDS"))
 
 res <- as.matrix(results)
 
@@ -91,7 +170,7 @@ jags_matrix <- as.matrix(res)
 structural_forecast <- jags_matrix[,grepl("y_mis\\[",colnames(jags_matrix))]
 colnames(structural_forecast) <- data_structural$party[!complete.cases(data_structural$voteshare)]
 
-saveRDS(structural_forecast, file = paste0("output/ger/forecasts/structural/", 2021, "_structural_forecast.RDS"))
+saveRDS(structural_forecast, file = paste0("output/ger/forecasts/structural/", upcoming_election, "_structural_forecast.RDS"))
 
 jags_summary_df <- jags_summary(jags_matrix)
 
@@ -105,5 +184,5 @@ b_0_mean <- filter(jags_summary_df, str_detect(var, "^b0\\[")) %>% magrittr::ext
 
 structural_inits <- list(b = b_mean, b0 = b_0_mean)
 
-saveRDS(structural_inits, paste0("data/ger/structural_inits/", 2021,"_structural_inits.RDS"))
+saveRDS(structural_inits, paste0("data/ger/structural_inits/", upcoming_election,"_structural_inits.RDS"))
 

@@ -2,7 +2,7 @@
 p_needed <- c("haven", "lubridate", "stringr", "ggplot2","dlm","plyr", "dplyr", 
 			   "magrittr", "broom", "tidyr",  "stringr", "reshape2", "rjags", 
 			   "runjags", "readr", "rvest", "mcmcplots", "parallel", "rstan", 
-			   "shinystan", "superdiag", "xtable", "knitr")
+			   "shinystan", "superdiag", "xtable", "knitr", "openxlsx", "coalitions")
 packages <- rownames(installed.packages())
 p_to_install <- p_needed[!(p_needed %in% packages)]
 if (length(p_to_install) > 0) {

@@ -13,11 +13,11 @@ source("code/R/auxiliary/functions.r") # Load additional functions
 
 
 
-### 0. Pre-train Structual Model
+### 0. Pre-train Structural Model
 
 # Specifications
 
-upcoming_election <- 2021 # What's the next election?
+upcoming_election <- 2025 # What's the next election?
 
 # Parameters for Sampler
 nIter <- 3000
@@ -28,6 +28,13 @@ model_file <- "code/model_code/combined_model.stan"
 
 structural_inits <- readRDS("data/ger/structural_inits/2021_structural_inits.RDS")
 initlist <- replicate(nChains, structural_inits, simplify=FALSE)
+
+
+#### Poll Data for Dynamic Model
+
+# wahlrecht_polls <- get_wahlrecht_polls()
+
+
 
 
 
@@ -64,28 +71,9 @@ rownames(election_pred_E) <- dat[dat$election==20,"party"]
 election_pred_E <- election_pred_E[party_names,]
 election_pred_E[,c(1, 3)] <- election_pred_E[,c(1, 3)] / 100
 
-#### Poll Data for Dynamic Model
 
-wahlrecht_polls <- get_wahlrecht_polls()
-
-
-federal_polls <- read_csv("data/federal-polls.csv")
-wahlrecht_polls <- federal_polls %>% rename(institute = auftraggeber) %>% select(date, party, poll_share, institute) %>% 
-  filter(!(party %in% c("pir", "fw", "npd", "bsw"))) %>%
-  # pivot_wider values from poll_share, names from party, if duplicate dates, make two rows
-  
-  pivot_wider(names_from = party, values_from = poll_share, values_fn = mean) %>%
-  # If lin is NA, set to lag
-  mutate(lin = ifelse(is.na(lin), lag(lin), lin)) %>%
-  # If afd is NA, set to lag
-  mutate(afd = ifelse(is.na(afd), lag(afd), afd)) %>%
-  mutate(oth = 100 - cdu - spd - afd - gru - lin - fdp) %>% 
-  # Add fake sample size
-  mutate(sample_size = 1000)
-
-
-cutoff <- as.Date("2021-09-20") # cutoff <- Sys.Date() # 
-election_date <- as.Date("2021-09-26")
+cutoff <- Sys.Date()
+election_date <- as.Date("2025-02-23")
 
 wahlrecht_polls <- filter(wahlrecht_polls, date <= cutoff)
 
