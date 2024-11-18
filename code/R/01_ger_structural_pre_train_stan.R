@@ -72,9 +72,6 @@ save(wahlrecht_polls, file = "data/wahlrecht_polls.RData")
 
 
 
-
-
-
 ### Data for Structural Model
 
 # Load Data
@@ -113,7 +110,10 @@ data_structural <- data_structural %>% left_join(polls_fund, by = "party") %>%
   rename(polls_200_230 = poll_share)
 
 saveRDS(data_structural, "data/ger/Structural/pre_train_data_25.RDS")
+data_structural <- readRDS("data/ger/Structural/pre_train_data_25.RDS")
 
+# Set past vote share of BSW to 0
+data_structural$voteshare_l1[data_structural$party == "bsw"] <- 0
 
 
 # Predictors
@@ -159,7 +159,7 @@ results <- stan(file = model_file, data = forstan,
             iter = nIter, chains = nChains, thin = 1, control = list(adapt_delta = 0.99, max_treedepth = 15))
 
 
-saveRDS(results, file = paste0("output/ger/draws/structural_pre_train/", upcoming_election, "_structural_pre_train_stan.RDS"))
+saveRDS(results, file = paste0("data/ger/draws/structural_pre_train/", upcoming_election, "_structural_pre_train_stan.RDS"))
 
 res <- as.matrix(results)
 
@@ -170,7 +170,7 @@ jags_matrix <- as.matrix(res)
 structural_forecast <- jags_matrix[,grepl("y_mis\\[",colnames(jags_matrix))]
 colnames(structural_forecast) <- data_structural$party[!complete.cases(data_structural$voteshare)]
 
-saveRDS(structural_forecast, file = paste0("output/ger/forecasts/structural/", upcoming_election, "_structural_forecast.RDS"))
+saveRDS(structural_forecast, file = paste0("data/ger/forecasts/Structural/", upcoming_election, "_structural_forecast.RDS"))
 
 jags_summary_df <- jags_summary(jags_matrix)
 

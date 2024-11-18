@@ -26,7 +26,7 @@ nChains <- 6
 
 model_file <- "code/model_code/combined_model.stan"
 
-structural_inits <- readRDS("data/ger/structural_inits/2021_structural_inits.RDS")
+structural_inits <- readRDS("data/ger/structural_inits/2025_structural_inits.RDS")
 initlist <- replicate(nChains, structural_inits, simplify=FALSE)
 
 
@@ -42,7 +42,11 @@ initlist <- replicate(nChains, structural_inits, simplify=FALSE)
 
 # Load Data
 # Load Data
-data_structural <- readRDS("data/ger/Structural/pre_train_data_21.RDS")
+data_structural <- readRDS("data/ger/Structural/pre_train_data_25.RDS")
+
+# Set past vote share of BSW to 0
+data_structural$voteshare_l1[data_structural$party == "bsw"] <- 0
+
 
 dat <- data_structural
 
@@ -66,8 +70,8 @@ ii_obs <- which(complete.cases(c(election_res / 100))) # Indicator for observed 
 ii_mis <- which(!complete.cases(c(election_res / 100))) # Indicator for missing elections
 
 # Predictors for upcoming election
-election_pred_E <- dat[dat$election==20,c(predictors)]
-rownames(election_pred_E) <- dat[dat$election==20,"party"]
+election_pred_E <- dat[dat$election==21,c(predictors)]
+rownames(election_pred_E) <- dat[dat$election==21,"party"]
 election_pred_E <- election_pred_E[party_names,]
 election_pred_E[,c(1, 3)] <- election_pred_E[,c(1, 3)] / 100
 
@@ -124,7 +128,7 @@ forstan <- list(
   
 )
 
-cat("\n Estimating Model for Election", 2021, "with a cutoff of ", cutoff, "\n") 
+cat("\n Estimating Model for Election", upcoming_election, "with a cutoff of", cutoff %>% as.character(), "\n") 
 
 results <- stan(file = model_file, data = forstan,
                 iter = nIter, chains = nChains, thin = 1, control = list(adapt_delta = 0.99, max_treedepth = 12) )
