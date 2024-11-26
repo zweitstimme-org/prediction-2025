@@ -1,0 +1,129 @@
+Loading required package: haven
+Loading required package: lubridate
+
+Attaching package: ‘lubridate’
+
+The following objects are masked from ‘package:base’:
+
+    date, intersect, setdiff, union
+
+Loading required package: stringr
+Loading required package: ggplot2
+Loading required package: dlm
+
+Attaching package: ‘dlm’
+
+The following object is masked from ‘package:ggplot2’:
+
+    %+%
+
+Loading required package: plyr
+Loading required package: dplyr
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:plyr’:
+
+    arrange, count, desc, failwith, id, mutate, rename, summarise,
+    summarize
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+Loading required package: magrittr
+Loading required package: broom
+Loading required package: tidyr
+
+Attaching package: ‘tidyr’
+
+The following object is masked from ‘package:magrittr’:
+
+    extract
+
+Loading required package: reshape2
+
+Attaching package: ‘reshape2’
+
+The following object is masked from ‘package:tidyr’:
+
+    smiths
+
+Loading required package: readr
+Loading required package: rvest
+
+Attaching package: ‘rvest’
+
+The following object is masked from ‘package:readr’:
+
+    guess_encoding
+
+Loading required package: mcmcplots
+Loading required package: coda
+Loading required package: parallel
+Loading required package: rstan
+Loading required package: StanHeaders
+
+rstan version 2.32.6 (Stan version 2.32.2)
+
+For execution on a local, multicore CPU with excess RAM we recommend calling
+options(mc.cores = parallel::detectCores()).
+To avoid recompilation of unchanged Stan programs, we recommend calling
+rstan_options(auto_write = TRUE)
+For within-chain threading using `reduce_sum()` or `map_rect()` Stan functions,
+change `threads_per_chain` option:
+rstan_options(threads_per_chain = 1)
+
+
+Attaching package: ‘rstan’
+
+The following object is masked from ‘package:coda’:
+
+    traceplot
+
+The following object is masked from ‘package:tidyr’:
+
+    extract
+
+The following object is masked from ‘package:magrittr’:
+
+    extract
+
+Loading required package: shinystan
+Loading required package: shiny
+
+This is shinystan version 2.6.0
+
+Loading required package: superdiag
+Loading required package: xtable
+Loading required package: knitr
+Loading required package: openxlsx
+Loading required package: coalitions
+     haven  lubridate    stringr    ggplot2        dlm       plyr      dplyr 
+      TRUE       TRUE       TRUE       TRUE       TRUE       TRUE       TRUE 
+  magrittr      broom      tidyr    stringr   reshape2      readr      rvest 
+      TRUE       TRUE       TRUE       TRUE       TRUE       TRUE       TRUE 
+ mcmcplots   parallel      rstan  shinystan  superdiag     xtable      knitr 
+      TRUE       TRUE       TRUE       TRUE       TRUE       TRUE       TRUE 
+  openxlsx coalitions 
+      TRUE       TRUE 
+Warning message:
+There were 8 warnings in `mutate()`.
+The first warning was:
+ℹ In argument: `sonstige = (function (x, decimal = TRUE) ...`.
+Caused by warning:
+! There were 7 warnings in `mutate()`.
+The first warning was:
+ℹ In argument: `cdu = (function (x, decimal = TRUE) ...`.
+Caused by warning:
+! NAs introduced by coercion
+ℹ Run `dplyr::last_dplyr_warnings()` to see the 6 remaining warnings.
+ℹ Run `dplyr::last_dplyr_warnings()` to see the 7 remaining warnings. 
+[1] "2024-11-23" "2024-11-25"
+Error in if (file.exists(str_c("output/polls/wahlrecht_polls_", last_run,  : 
+  the condition has length > 1
+Execution halted

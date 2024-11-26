@@ -2,3 +2,5 @@
 .Rhistory
 .RData
 .Ruserdata
+output/draws/
+output/zweitstimme_output*

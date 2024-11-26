@@ -4,7 +4,7 @@
 ### Authors: Lukas Stoetzer & Cornelius Erfort
 ### ----------------------------------------------------------
 
-# setwd("/home/cerfort/prediction-2025")
+setwd("/home/cerfort/prediction-2025")
 
 
 # Load required packages and functions
@@ -17,7 +17,7 @@ source("auxiliary/functions.r") # Load additional functions
 
 # Specifications
 upcoming_election <- 2025
-cutoff <- Sys.Date()
+cutoff <- Sys.Date() # Do not run at midnight or shortly before
 election_date <- as.Date("2025-02-23")
 
 # Sampler Parameters
@@ -26,19 +26,45 @@ nChains <- 5
 
 # Model and initial values
 model_file <- "model_code/combined_model_simple.stan"
-structural_inits <- readRDS("data/2025_structural_inits_simple.RDS")
+structural_inits <- readRDS("data/2025_structural_inits_simple.rds")
 initlist <- replicate(nChains, structural_inits, simplify = FALSE)
 
 ### ----------------------------------------------------------
 ### 2. Process Poll Data for Dynamic Model
 ### ----------------------------------------------------------
 
-# Get polls
-wahlrecht_polls <- get_wahlrecht_polls()
+# Saving the draws might fill up the hard disk at some point
+
+# Get new polls
+new_wahlrecht_polls <- get_wahlrecht_polls()
+
+# Get date of last run
+(last_run <- (list.files("output/draws") %>% str_subset("res_brw_2025_") %>% str_extract(".{10}(?=\\.rds)") %>% ymd))
+
+# Run again?
+run_again <- F
+
+# Get polls of last run, if file doesn't exist, run again anyway
+if(file.exists(str_c("output/polls/wahlrecht_polls_", last_run,".RData"))) load(str_c("output/polls/wahlrecht_polls_", last_run,".RData")) else {
+  run_again <- T
+}
+
+# Is there a new poll?
+run_again <- (max(new_wahlrecht_polls$date, na.rm = T) > max(wahlrecht_polls$date, na.rm = T))
+
+# If for some reason, this is NA, try running again anyway
+if(is.na(run_again)) run_again <- T
+
+
+# Save the new polls
+wahlrecht_polls <- new_wahlrecht_polls
 save(wahlrecht_polls, file = str_c("output/polls/wahlrecht_polls_", Sys.Date(),".RData"))
 
+
 # If the latest poll is from yesterday, run the script again
-if(max(wahlrecht_polls$date) != (Sys.Date() - 1)) {
+if(run_again) {
+  
+  message("There is a new poll. Running the model.")
   
   # Filter Polls 
   wahlrecht_polls <- filter(wahlrecht_polls, date <= cutoff)
@@ -167,5 +193,5 @@ if(max(wahlrecht_polls$date) != (Sys.Date() - 1)) {
   
   source("code/04_process_results.R")
   
-}
+} else   message("There is no new poll. Not running the model.")
 
