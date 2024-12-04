@@ -1,5 +1,6 @@
 # plumber.R
 
+
 #* Echo back the input
 #* @param msg The message to echo
 #* @get /echo
@@ -57,7 +58,7 @@ function(res) {
 
 #* Serve forecasts as JSON
 #* @serializer unboxedJSON
-#* @get /forecasts
+#* @get /forecast
 function(res) {
   rds_path <- "/app/files/forecast_api.rds"
   
@@ -70,6 +71,82 @@ function(res) {
   # Load the RDS file
   forecast_data <- readRDS(rds_path)
   
-  # Return as JSON
-  return(forecast_data)
+  # Manually convert the data to JSON and specify UTF-8 encoding
+  json_data <- jsonlite::toJSON(forecast_data, pretty = TRUE, auto_unbox = TRUE, 
+                                encode = "UTF-8")
+  
+  # Set the content type and encoding
+  res$setHeader("Content-Type", "application/json; charset=utf-8")
+  
+  # Return JSON data directly
+  res$body <- json_data
+  
+  res
 }
+
+
+#* Serve the last update timestamp
+#* @serializer unboxedJSON
+#* @get /last_updated
+function(res) {
+  rds_path <- "/app/files/last_updated.rds"
+  
+  # Check if the file exists
+  if (!file.exists(rds_path)) {
+    res$status <- 404
+    return(list(error = "File not found"))
+  }
+  
+  # Load the timestamp from the RDS file
+  last_updated <- readRDS(rds_path)
+  
+  # Return the timestamp as JSON
+  return(list(last_updated = last_updated))
+}
+
+#* Serve forecasts as JSON
+#* @serializer unboxedJSON
+#* @get /draws
+function(res) {
+  rds_path <- "/app/files/forecast_draws.rds"
+  
+  # Check if the file exists
+  if (!file.exists(rds_path)) {
+    res$status <- 404
+    return(list(error = "File not found"))
+  }
+  
+  # Load the RDS file
+  forecast_data <- readRDS(rds_path)
+  
+  # Manually convert the data to JSON and specify UTF-8 encoding
+  json_data <- jsonlite::toJSON(forecast_data, pretty = TRUE, auto_unbox = TRUE, 
+                                encode = "UTF-8")
+  
+  # Set the content type and encoding
+  res$setHeader("Content-Type", "application/json; charset=utf-8")
+  
+  # Return JSON data directly
+  res$body <- json_data
+  
+  res
+}
+
+# This endpoint serves the HTML file directly
+#* @get /interactive
+function(req, res) {
+  # Specify the path to your saved HTML file
+  html_file_path <- "/app/files/forecast.html"
+  
+  # Check if the file exists
+  if (file.exists(html_file_path)) {
+    # Serve the HTML file
+    res$setHeader("Content-Type", "text/html")
+    res$body <- paste(readLines(html_file_path), collapse = "\n")  # Read HTML file and set body
+    return(res)
+  } else {
+    res$status <- 404
+    return(list(message = "HTML file not found"))
+  }
+}
+

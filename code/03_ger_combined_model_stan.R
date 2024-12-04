@@ -21,8 +21,8 @@ cutoff <- Sys.Date() # Do not run at midnight or shortly before
 election_date <- as.Date("2025-02-23")
 
 # Sampler Parameters
-nIter <- 4000
-nChains <- 5 
+nIter <- 2000
+nChains <- 10
 
 # Model and initial values
 model_file <- "model_code/combined_model_simple.stan"
@@ -39,7 +39,9 @@ initlist <- replicate(nChains, structural_inits, simplify = FALSE)
 new_wahlrecht_polls <- get_wahlrecht_polls()
 
 # Get date of last run
-(last_run <- (list.files("output/draws") %>% str_subset("res_brw_2025_") %>% str_extract(".{10}(?=\\.rds)") %>% ymd))
+(last_run <- (list.files("/mnt/forecasts/prediction-2025/draws") %>% str_subset("res_brw_2025_") %>% str_extract(".{10}(?=\\.rds)") %>% ymd))
+(last_run <- max(last_run))
+
 
 # Run again?
 run_again <- F
@@ -160,7 +162,7 @@ if(run_again) {
     control = list(adapt_delta = 0.99, max_treedepth = 15)
   )
   
-  saveRDS(results, file = paste0("output/draws/res_brw_", upcoming_election, "_", cutoff, "_", Sys.Date(), ".rds"))
+  saveRDS(results, file = paste0("/mnt/forecasts/prediction-2025/draws/res_brw_", upcoming_election, "_", cutoff, "_", Sys.Date(), ".rds"))
   
   # Extract results
   res <- as.matrix(results)
@@ -182,11 +184,15 @@ if(run_again) {
   draws_forecast_levels[["polls"]] <- polls
   
   boxplot(draws_forecast_levels$forecast)
-  saveRDS(draws_forecast_levels, str_c("output/zweitstimme_output_", Sys.Date(),".rds"))
+  # saveRDS(draws_forecast_levels, str_c("/mnt/forecasts/prediction-2025/zweitstimme/zweitstimme_output_", Sys.Date(),".rds"))
   
   # Generate summary statistics
   forecast <- draws_forecast_levels[["forecast"]]
   colnames(forecast) <- draws_forecast_levels[["party_names"]]
+  
+  # Output these draws to the API
+  saveRDS(forecast, str_c("/mnt/forecasts/prediction-2025/forecast/forecast_draws_", Sys.Date(),".rds"))
+  
   
   round(apply(forecast, 2, mean) * 100, 1)  # Mean forecast
   round(t(apply(forecast, 2, quantile, c(1 / 12, 11 / 12))) * 100, 1)  # Credible intervals
