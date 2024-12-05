@@ -1,0 +1,349 @@
+Loading required package: haven
+Loading required package: lubridate
+
+Attaching package: ‘lubridate’
+
+The following objects are masked from ‘package:base’:
+
+    date, intersect, setdiff, union
+
+Loading required package: stringr
+Loading required package: ggplot2
+Loading required package: dlm
+
+Attaching package: ‘dlm’
+
+The following object is masked from ‘package:ggplot2’:
+
+    %+%
+
+Loading required package: plyr
+Loading required package: dplyr
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:plyr’:
+
+    arrange, count, desc, failwith, id, mutate, rename, summarise,
+    summarize
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+Loading required package: magrittr
+Loading required package: broom
+Loading required package: tidyr
+
+Attaching package: ‘tidyr’
+
+The following object is masked from ‘package:magrittr’:
+
+    extract
+
+Loading required package: reshape2
+
+Attaching package: ‘reshape2’
+
+The following object is masked from ‘package:tidyr’:
+
+    smiths
+
+Loading required package: readr
+Loading required package: rvest
+
+Attaching package: ‘rvest’
+
+The following object is masked from ‘package:readr’:
+
+    guess_encoding
+
+Loading required package: mcmcplots
+Loading required package: coda
+Loading required package: parallel
+Loading required package: rstan
+Loading required package: StanHeaders
+
+rstan version 2.32.6 (Stan version 2.32.2)
+
+For execution on a local, multicore CPU with excess RAM we recommend calling
+options(mc.cores = parallel::detectCores()).
+To avoid recompilation of unchanged Stan programs, we recommend calling
+rstan_options(auto_write = TRUE)
+For within-chain threading using `reduce_sum()` or `map_rect()` Stan functions,
+change `threads_per_chain` option:
+rstan_options(threads_per_chain = 1)
+
+
+Attaching package: ‘rstan’
+
+The following object is masked from ‘package:coda’:
+
+    traceplot
+
+The following object is masked from ‘package:tidyr’:
+
+    extract
+
+The following object is masked from ‘package:magrittr’:
+
+    extract
+
+Loading required package: shinystan
+Loading required package: shiny
+
+This is shinystan version 2.6.0
+
+Loading required package: superdiag
+Loading required package: xtable
+Loading required package: knitr
+Loading required package: openxlsx
+Loading required package: plotly
+
+Attaching package: ‘plotly’
+
+The following objects are masked from ‘package:plyr’:
+
+    arrange, mutate, rename, summarise
+
+The following object is masked from ‘package:ggplot2’:
+
+    last_plot
+
+The following object is masked from ‘package:stats’:
+
+    filter
+
+The following object is masked from ‘package:graphics’:
+
+    layout
+
+Loading required package: htmlwidgets
+      haven   lubridate     stringr     ggplot2         dlm        plyr 
+       TRUE        TRUE        TRUE        TRUE        TRUE        TRUE 
+      dplyr    magrittr       broom       tidyr     stringr    reshape2 
+       TRUE        TRUE        TRUE        TRUE        TRUE        TRUE 
+      readr       rvest   mcmcplots    parallel       rstan   shinystan 
+       TRUE        TRUE        TRUE        TRUE        TRUE        TRUE 
+  superdiag      xtable       knitr    openxlsx      plotly htmlwidgets 
+       TRUE        TRUE        TRUE        TRUE        TRUE        TRUE 
+Loading stan code.
+Loading structural inits.
+Checking for new polls.
+Loading required package: coalitions
+Warning message:
+There were 8 warnings in `mutate()`.
+The first warning was:
+ℹ In argument: `sonstige = (function (x, decimal = TRUE) ...`.
+Caused by warning:
+! There were 7 warnings in `mutate()`.
+The first warning was:
+ℹ In argument: `cdu = (function (x, decimal = TRUE) ...`.
+Caused by warning:
+! NAs introduced by coercion
+ℹ Run `dplyr::last_dplyr_warnings()` to see the 6 remaining warnings.
+ℹ Run `dplyr::last_dplyr_warnings()` to see the 7 remaining warnings. 
+[1] "2024-11-23" "2024-11-25" "2024-11-30" "2024-12-01" "2024-12-03"
+[6] "2024-12-04"
+[1] "2024-12-04"
+There is a new poll. Running the model.
+
+Estimating Model for Election 2025 with a cutoff of 2024-12-05 
+hash mismatch so recompiling; make sure Stan code ends with a blank line
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 3).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 4).
+Chain 1: 
+Chain 1: Gradient evaluation took 0.005603 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 56.03 seconds.
+Chain 1: Adjust your expectations accordingly!
+Chain 1: 
+Chain 1: 
+Chain 1: WARNING: There aren't enough warmup iterations to fit the
+Chain 1:          three stages of adaptation as currently configured.
+Chain 1:          Reducing each adaptation stage to 15%/75%/10% of
+Chain 1:          the given number of warmup iterations:
+Chain 1:            init_buffer = 15
+Chain 1:            adapt_window = 75
+Chain 1:            term_buffer = 10
+Chain 1: 
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 5).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 6).
+Chain 2: 
+Chain 2: Gradient evaluation took 0.006119 seconds
+Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 61.19 seconds.
+Chain 2: Adjust your expectations accordingly!
+Chain 2: 
+Chain 2: 
+Chain 2: WARNING: There aren't enough warmup iterations to fit the
+Chain 2:          three stages of adaptation as currently configured.
+Chain 2:          Reducing each adaptation stage to 15%/75%/10% of
+Chain 2:          the given number of warmup iterations:
+Chain 2:            init_buffer = 15
+Chain 2:            adapt_window = 75
+Chain 2:            term_buffer = 10
+Chain 2: 
+Chain 3: 
+Chain 3: Gradient evaluation took 0.004928 seconds
+Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 49.28 seconds.
+Chain 3: Adjust your expectations accordingly!
+Chain 3: 
+Chain 3: 
+Chain 3: WARNING: There aren't enough warmup iterations to fit the
+Chain 3:          three stages of adaptation as currently configured.
+Chain 3:          Reducing each adaptation stage to 15%/75%/10% of
+Chain 3:          the given number of warmup iterations:
+Chain 3:            init_buffer = 15
+Chain 3:            adapt_window = 75
+Chain 3:            term_buffer = 10
+Chain 3: 
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 7).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 8).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 9).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 10).
+Chain 5: 
+Chain 5: Gradient evaluation took 0.005372 seconds
+Chain 5: 1000 transitions using 10 leapfrog steps per transition would take 53.72 seconds.
+Chain 5: Adjust your expectations accordingly!
+Chain 5: 
+Chain 5: 
+Chain 5: WARNING: There aren't enough warmup iterations to fit the
+Chain 5:          three stages of adaptation as currently configured.
+Chain 5:          Reducing each adaptation stage to 15%/75%/10% of
+Chain 5:          the given number of warmup iterations:
+Chain 5:            init_buffer = 15
+Chain 5:            adapt_window = 75
+Chain 5:            term_buffer = 10
+Chain 5: 
+Chain 6: 
+Chain 6: Gradient evaluation took 0.005271 seconds
+Chain Chain 46: : 
+1000 transitions using 10 leapfrog steps per transition would take 52.71 seconds.
+Chain Chain 46: : Gradient evaluation took 0.005237 secondsAdjust your expectations accordingly!
+
+Chain Chain 46: : 1000 transitions using 10 leapfrog steps per transition would take 52.37 seconds.
+
+Chain Chain 64: : 
+Adjust your expectations accordingly!
+Chain 4: 
+Chain 4: Chain 
+6: WARNING: There aren't enough warmup iterations to fit the
+Chain 6:          three stages of adaptation as currently configured.
+Chain Chain 46: : WARNING: There aren't enough warmup iterations to fit the         Reducing each adaptation stage to 15%/75%/10% of
+
+Chain Chain 46: :          three stages of adaptation as currently configured.         the given number of warmup iterations:
+
+Chain 4: Chain          Reducing each adaptation stage to 15%/75%/10% of6
+: Chain            init_buffer = 154
+: Chain          the given number of warmup iterations:6
+:            adapt_window = 75Chain 
+4Chain : 6           init_buffer = 15: 
+           term_buffer = 10Chain 
+4Chain : 6           adapt_window = 75: 
+
+Chain 4:            term_buffer = 10
+Chain 4: 
+Chain 7: 
+Chain 7: Gradient evaluation took 0.004891 seconds
+Chain 7: 1000 transitions using 10 leapfrog steps per transition would take 48.91 seconds.
+Chain 7: Adjust your expectations accordingly!
+Chain 7: 
+Chain 7: 
+Chain 7: WARNING: There aren't enough warmup iterations to fit the
+Chain 7:          three stages of adaptation as currently configured.
+Chain 7:          Reducing each adaptation stage to 15%/75%/10% of
+Chain 7:          the given number of warmup iterations:
+Chain 7:            init_buffer = 15
+Chain 7:            adapt_window = 75
+Chain 7:            term_buffer = 10
+Chain 7: 
+Chain 8: 
+Chain 8: Gradient evaluation took 0.004968 seconds
+Chain 8: 1000 transitions using 10 leapfrog steps per transition would take 49.68 seconds.
+Chain 8: Adjust your expectations accordingly!
+Chain 8: 
+Chain 8: 
+Chain 8: WARNING: There aren't enough warmup iterations to fit the
+Chain 8:          three stages of adaptation as currently configured.
+Chain 8:          Reducing each adaptation stage to 15%/75%/10% of
+Chain 8:          the given number of warmup iterations:
+Chain 8:            init_buffer = 15
+Chain 8:            adapt_window = 75
+Chain 8:            term_buffer = 10
+Chain 8: 
+Chain 9: 
+Chain 9: Gradient evaluation took 0.004985 seconds
+Chain 9: 1000 transitions using 10 leapfrog steps per transition would take 49.85 seconds.
+Chain 9: Adjust your expectations accordingly!
+Chain 9: 
+Chain 9: 
+Chain 9: WARNING: There aren't enough warmup iterations to fit the
+Chain 9:          three stages of adaptation as currently configured.
+Chain 9:          Reducing each adaptation stage to 15%/75%/10% of
+Chain 9:          the given number of warmup iterations:
+Chain 9:            init_buffer = 15
+Chain 9:            adapt_window = 75
+Chain 9:            term_buffer = 10
+Chain 9: 
+Chain 10: 
+Chain 10: Gradient evaluation took 0.004849 seconds
+Chain 10: 1000 transitions using 10 leapfrog steps per transition would take 48.49 seconds.
+Chain 10: Adjust your expectations accordingly!
+Chain 10: 
+Chain 10: 
+Chain 10: WARNING: There aren't enough warmup iterations to fit the
+Chain 10:          three stages of adaptation as currently configured.
+Chain 10:          Reducing each adaptation stage to 15%/75%/10% of
+Chain 10:          the given number of warmup iterations:
+Chain 10:            init_buffer = 15
+Chain 10:            adapt_window = 75
+Chain 10:            term_buffer = 10
+Chain 10: 
+Chain 1: Iteration:   1 / 200 [  0%]  (Warmup)
+Chain 3: Iteration:   1 / 200 [  0%]  (Warmup)
+Chain 2: Iteration:   1 / 200 [  0%]  (Warmup)
+Chain 6: Iteration:   1 / 200 [  0%]  (Warmup)
+Chain 4: Iteration:   1 / 200 [  0%]  (Warmup)
+Chain 5: Iteration:   1 / 200 [  0%]  (Warmup)
+Chain 9: Iteration:   1 / 200 [  0%]  (Warmup)
+Chain 7: Iteration:   1 / 200 [  0%]  (Warmup)
+Chain 8: Iteration:   1 / 200 [  0%]  (Warmup)
+Chain 10: Iteration:   1 / 200 [  0%]  (Warmup)
+Chain 7: Iteration:  20 / 200 [ 10%]  (Warmup)
+Chain 6: Iteration:  20 / 200 [ 10%]  (Warmup)
+Chain 8: Iteration:  20 / 200 [ 10%]  (Warmup)
+Chain 2: Iteration:  20 / 200 [ 10%]  (Warmup)
+Chain 3: Iteration:  20 / 200 [ 10%]  (Warmup)
+Chain 7: Iteration:  40 / 200 [ 20%]  (Warmup)
+Chain 10: Iteration:  20 / 200 [ 10%]  (Warmup)
+Chain 8: Iteration:  40 / 200 [ 20%]  (Warmup)
+Chain 1: Iteration:  20 / 200 [ 10%]  (Warmup)
+Chain 4: Iteration:  20 / 200 [ 10%]  (Warmup)
+Chain 7: Iteration:  60 / 200 [ 30%]  (Warmup)
+Chain 2: Iteration:  40 / 200 [ 20%]  (Warmup)
+Chain 5: Iteration:  20 / 200 [ 10%]  (Warmup)
+Chain 5: Iteration:  40 / 200 [ 20%]  (Warmup)
+Chain 9: Iteration:  20 / 200 [ 10%]  (Warmup)
+Chain 10: Iteration:  40 / 200 [ 20%]  (Warmup)
+Chain 5: Iteration:  60 / 200 [ 30%]  (Warmup)
+Chain 8: Iteration:  60 / 200 [ 30%]  (Warmup)
+Chain 6: Iteration:  40 / 200 [ 20%]  (Warmup)
+Chain 9: Iteration:  40 / 200 [ 20%]  (Warmup)
+Chain 4: Iteration:  40 / 200 [ 20%]  (Warmup)
+Chain 1: Iteration:  40 / 200 [ 20%]  (Warmup)
+Chain 3: Iteration:  40 / 200 [ 20%]  (Warmup)

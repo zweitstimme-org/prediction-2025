@@ -344,6 +344,3 @@ get_wahlrecht_polls_old <- function() {
   
   return(wahlrecht_polls)
 }
-
-
-down$surveys[[5]]$survey

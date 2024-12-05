@@ -25,7 +25,7 @@ past_election_date <- as.Date("2021-09-26")
 days_in_model <- 365*2
 
 # Sampler Parameters
-nIter <- 200 # 2000
+nIter <- 2000
 nChains <- 10
 
 # Model and initial values
@@ -86,7 +86,7 @@ wahlrecht_polls <- wahlrecht_polls %>%
   # Make var oth which is 100 minus these vars cdu + spd + gru + lin + afd + fdp, but sometimes they are NA
   mutate(oth = 100 - cdu - spd - gru - afd - lin - bsw - fdp)
 
-run_again <- T
+run_again <- T # Remove this line to run the model only when their is a new poll
 
 # If the latest poll is from yesterday, run the script again
 if(run_again) {
@@ -96,7 +96,7 @@ if(run_again) {
   # Filter Polls 
   wahlrecht_polls <- filter(wahlrecht_polls, date <= cutoff)
   
-  # Select polls within the desired time window
+  # Select polls within the desired time win
   polls <- wahlrecht_polls %>%
     filter(
       date > (election_date - days_in_model) & date <= cutoff,
