@@ -4,6 +4,8 @@
 ### Authors: Lukas Stoetzer & Cornelius Erfort
 ### ----------------------------------------------------------
 
+start_time <- Sys.time()
+
 setwd("/home/cerfort/prediction-2025")
 
 
@@ -19,13 +21,18 @@ source("auxiliary/functions.r") # Load additional functions
 upcoming_election <- 2025
 cutoff <- Sys.Date() # Do not run at midnight or shortly before
 election_date <- as.Date("2025-02-23")
+past_election_date <- as.Date("2021-09-26")
+days_in_model <- 365*2
 
 # Sampler Parameters
-nIter <- 2000
+nIter <- 200 # 2000
 nChains <- 10
 
 # Model and initial values
+message("Loading stan code.")
 model_file <- "model_code/combined_model_simple.stan"
+
+message("Loading structural inits.")
 structural_inits <- readRDS("data/2025_structural_inits_simple.rds")
 initlist <- replicate(nChains, structural_inits, simplify = FALSE)
 
@@ -36,7 +43,13 @@ initlist <- replicate(nChains, structural_inits, simplify = FALSE)
 # Saving the draws might fill up the hard disk at some point
 
 # Get new polls
-new_wahlrecht_polls <- get_wahlrecht_polls()
+message("Checking for new polls.")
+# new_wahlrecht_polls <- get_wahlrecht_polls()
+
+new_wahlrecht_polls <- get_wahlrecht_polls_old()
+
+# Remove GMS, because BSW is not working through the package
+new_wahlrecht_polls <- new_wahlrecht_polls %>% filter(institute != "gms")
 
 # Get date of last run
 (last_run <- (list.files("/mnt/forecasts/prediction-2025/draws") %>% str_subset("res_brw_2025_") %>% str_extract(".{10}(?=\\.rds)") %>% ymd))
@@ -62,6 +75,18 @@ if(is.na(run_again)) run_again <- T
 wahlrecht_polls <- new_wahlrecht_polls
 save(wahlrecht_polls, file = str_c("output/polls/wahlrecht_polls_", Sys.Date(),".RData"))
 
+# Avoid zeros, and change to 2, and calculate others
+wahlrecht_polls <- wahlrecht_polls %>% 
+  mutate(lin = ifelse(!is.na(lin), lin, 2),
+         bsw = ifelse(!is.na(bsw), bsw, 2),
+         fdp = ifelse(!is.na(fdp), fdp, 2)) %>%
+  mutate(lin = ifelse(lin == 0, 2, lin),
+         bsw = ifelse(bsw == 0, 2, bsw),
+         fdp = ifelse(fdp == 0, 2, fdp)) %>%
+  # Make var oth which is 100 minus these vars cdu + spd + gru + lin + afd + fdp, but sometimes they are NA
+  mutate(oth = 100 - cdu - spd - gru - afd - lin - bsw - fdp)
+
+run_again <- T
 
 # If the latest poll is from yesterday, run the script again
 if(run_again) {
@@ -74,13 +99,13 @@ if(run_again) {
   # Select polls within the desired time window
   polls <- wahlrecht_polls %>%
     filter(
-      date > (election_date - 365) & date <= cutoff,
+      date > (election_date - days_in_model) & date <= cutoff,
       !apply(is.na(.), 1, any)
     )
   
   # Add necessary indices
-  all_dates <- seq.Date((election_date - 365), election_date, by = "1 day")
-  polls$t <- match(polls$date, seq.Date((election_date-365), election_date, 1) )
+  all_dates <- seq.Date((election_date - days_in_model), election_date, by = "1 day")
+  polls$t <- match(polls$date, seq.Date((election_date-days_in_model), election_date, 1) )
   polls$iid <- as.numeric(factor(polls$institute))
   
   ### ----------------------------------------------------------
@@ -90,8 +115,13 @@ if(run_again) {
   # Load structural data
   data_structural <- readRDS("data/pre_train_data_25.rds") %>% 
     mutate(voteshare_l1 = case_when(election == 21 & party %in% c("lin", "bsw")  ~ 4.8700000/2, TRUE ~   voteshare_l1 )) %>%
-    mutate(log_voteshare_l1 = log(ifelse(voteshare_l1==0,voteshare_l1+0.01,voteshare_l1)), 
-           log_polls_200_230 = log(ifelse(polls_200_230==0,polls_200_230+0.01,polls_200_230)))
+    mutate(log_voteshare_l1 = log((ifelse(voteshare_l1 == 0, 0.01, voteshare_l1)/100) / (1-ifelse(voteshare_l1 == 0, 0.01, voteshare_l1)/100)),
+             # log(ifelse(voteshare_l1==0,voteshare_l1+0.01,voteshare_l1)), 
+           log_polls_200_230 = log((polls_200_230/100) / (1-polls_200_230/100))
+             # log(ifelse(polls_200_230==0,polls_200_230+0.01,polls_200_230))
+           ) 
+  
+  
   
   # Define predictors and dependent variable
   predictors <- c("log_voteshare_l1", "chancellor_party", "log_polls_200_230")
@@ -100,7 +130,7 @@ if(run_again) {
   # Prepare matrices for Stan
   election_res <- as.matrix(data_structural[, dependent])
   election_pred <- as.matrix(data_structural[, predictors]) / 100
-  party_names <- data_structural$party[is.na(election_res)]
+  party_names <- c("spd", "cdu", "gru", "fdp", "afd", "lin", "bsw", "oth") # data_structural$party[is.na(election_res)]
   nParties <- length(party_names)
   
   # Observed and missing election indices
@@ -162,6 +192,7 @@ if(run_again) {
     control = list(adapt_delta = 0.99, max_treedepth = 15)
   )
   
+  message("Saving the draws.")
   saveRDS(results, file = paste0("/mnt/forecasts/prediction-2025/draws/res_brw_", upcoming_election, "_", cutoff, "_", Sys.Date(), ".rds"))
   
   # Extract results
@@ -169,9 +200,9 @@ if(run_again) {
   
   # Process forecast results
   draws_forecast_levels <- list()
-  levels <- array(NA, dim = c(nIter / 2 * nChains, nParties, 366))
+  levels <- array(NA, dim = c(nIter / 2 * nChains, nParties, (days_in_model+1)))
   
-  for (t in 1:366) {
+  for (t in 1:(days_in_model+1)) {
     sel_levels_temp <- paste0("alpha[", t, ",", 1:nParties, "]")
     levels[, , t] <- res[, sel_levels_temp]
   }
@@ -200,4 +231,9 @@ if(run_again) {
   source("code/04_process_results.R")
   
 } else   message("There is no new poll. Not running the model.")
+
+
+end_time <- Sys.time()
+message("Total time needed in mins:")
+difftime(end_time, start_time, unit = "mins") %>% message
 

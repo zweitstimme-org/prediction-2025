@@ -209,8 +209,116 @@ create_df_mean <- function(dta = model_res, pn = party_names){
   
 }
 
+# Function to extract data from a single XML document
+wahlrecht_xml_extract <- function(xml_url) {
+  require(xml2)
+  
+  # xml_url <- "https://www.wahlrecht.de/umfragen/xml/bundestag_archiv.xml"
+  
+  # Load the XML document as a list
+  # xml_url <- "https://www.wahlrecht.de/umfragen/xml/bundestag_aktuell.xml"
+  xml_doc <- as_list(read_xml(xml_url))
+  
+  # Unnest the <umfragen> node to get individual <umfrage> entries
+    xml_df <- as_tibble(xml_doc) %>% unnest_wider(umfragen) %>% 
+    unnest_longer(werte) %>% 
+    unnest(id) %>% 
+    unnest(typ) %>% 
+    unnest(reg) %>% 
+      unnest(dat) %>% 
+      unnest(dat) %>% 
+      unnest(inst) %>% 
+      unnest(inst) %>% 
+      unnest(werte) %>% 
+      unnest(werte) %>% 
+      unnest(bfrg) %>% 
+      unnest(bfrg) %>% 
+      unnest(rnd) %>% 
+      unnest(rnd) %>% 
+      unnest(beg) %>% 
+      unnest(beg) %>% 
+      unnest(bfrg) %>% 
+      unnest(bfrg) %>% 
+      unnest(end) %>% 
+      unnest(end) %>% 
+      unnest(meth) %>% 
+      unnest(meth) %>% 
+      # unnest(agart) %>% 
+      # unnest(agart) %>% 
+      unnest(stat) %>% 
+      unnest(stat) %>% 
+      unnest(stand) %>% 
+      unnest(stand) %>% 
+      mutate(werte_id = case_when(werte_id == "grn" ~ "gru",
+                                  werte_id == "cxu" ~ "cdu",
+                                  werte_id == "lnk" ~ "lin",
+                                  werte_id == "fpd" ~ "fdp",
+                                  T ~ werte_id),
+             werte = as.numeric(werte)
+      ) %>%
+      filter(!(werte_id %in% c("son", "frw"))) %>% 
+      rename(institute = inst, date = dat, party = werte_id, value = werte, sample_size = bfrg) %>% 
+      as.data.frame %>% 
+      mutate(date = as.Date(date)) %>%
+      pivot_wider(values_from = "value", names_from = "party") 
+    
+    if("agart" %in% names(xml_df)) xml_df <- select(xml_df, -agart)
+      
+    # unnest_wider(ag) %>% 
+    
+    # unnest(ag1) %>% 
+    #   unnest(ag1) %>% 
+    #   unnest(ag2) %>% 
+    #   unnest(ag2) %>% 
+    
+
+    
+  xml_df
+}
 
 get_wahlrecht_polls <- function() {
+  
+  # down <- get_surveys()
+  # xml_url <- "https://www.wahlrecht.de/umfragen/xml/bundestag_aktuell.xml"
+  
+  new_polls <- ("https://www.wahlrecht.de/umfragen/xml/bundestag_aktuell.xml") %>% wahlrecht_xml_extract
+  old_polls <- ("https://www.wahlrecht.de/umfragen/xml/bundestag_archiv.xml") %>% wahlrecht_xml_extract
+  
+  old_polls$date %>% min
+  
+  wahlrecht_polls <- bind_rows(new_polls, old_polls)
+  
+  
+  # sample_size
+  wahlrecht_polls <- wahlrecht_polls %>% 
+    # unnest(surveys) %>% 
+    # unnest(survey) %>% 
+    # select(institut = pollster, date, party, poll_share = percent, sample_size = respondents) %>%
+    # mutate(date = ymd(date),
+    #        party = case_when(party == "greens" ~ "gru",
+    #                          party == "left" ~ "lin",
+    #                          party == "others" ~ "oth",
+    #                          TRUE ~ party)) %>%     
+    # pivot_wider(names_from = party, values_from = poll_share) %>%
+    pivot_longer(cols = cdu:afd, names_to = "party", values_to = "poll_share") %>% 
+    # rename(institute = institut) %>% 
+    pivot_wider(names_from = party, values_from = poll_share, values_fn = mean) 
+
+  
+  # If lin is not NA, subtract form oth
+  # wahlrecht_polls <- wahlrecht_polls %>% 
+  #   mutate(oth = ifelse(!is.na(lin), oth - lin, oth),
+  #          oth = ifelse(!is.na(bsw), oth - bsw, oth),
+  #          oth = ifelse(!is.na(fdp), oth - fdp, oth))
+  
+  # Arrange by date, decreasing
+  wahlrecht_polls <- wahlrecht_polls %>% arrange(desc(date))
+  
+  return(wahlrecht_polls)
+}
+
+
+get_wahlrecht_polls_old <- function() {
   require(coalitions)
   
   down <- get_surveys()
@@ -228,22 +336,14 @@ get_wahlrecht_polls <- function() {
     pivot_wider(names_from = party, values_from = poll_share) %>%
     pivot_longer(cols = cdu:lin, names_to = "party", values_to = "poll_share") %>% 
     rename(institute = institut) %>% 
-    pivot_wider(names_from = party, values_from = poll_share, values_fn = mean) %>%
+    pivot_wider(names_from = party, values_from = poll_share, values_fn = mean) 
     # Make var oth which is 100 minus these vars cdu + spd + gru + lin + afd + fdp, but sometimes they are NA
-    mutate(oth = 100 - cdu - spd - gru - afd)
-  
-  # If lin is not NA, subtract form oth
-  wahlrecht_polls <- wahlrecht_polls %>% 
-    mutate(oth = ifelse(!is.na(lin), oth - lin, oth),
-           oth = ifelse(!is.na(bsw), oth - bsw, oth),
-           oth = ifelse(!is.na(fdp), oth - fdp, oth))
-  
-  wahlrecht_polls <- wahlrecht_polls %>% mutate(lin = ifelse(!is.na(lin), lin, 0),
-                                                bsw = ifelse(!is.na(bsw), bsw, 0),
-                                                fdp = ifelse(!is.na(fdp), fdp, 0))
   
   # Arrange by date, decreasing
   wahlrecht_polls <- wahlrecht_polls %>% arrange(desc(date))
   
   return(wahlrecht_polls)
 }
+
+
+down$surveys[[5]]$survey

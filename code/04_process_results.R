@@ -12,7 +12,6 @@
 source("auxiliary/packages.r")  # Load required packages
 source("auxiliary/functions.r") # Load additional functions
 
-
 # Figure
 
 # potential_file <- list.files("output/draws/", full.names = T) %>% str_subset("res_brw_2025")
@@ -36,6 +35,7 @@ source("auxiliary/functions.r") # Load additional functions
 forecast <- readRDS(forecast_files)
 
 # Save newest draws to api folder
+message("Saving the draws for API.")
 saveRDS(as.data.frame(forecast), file = "api/forecast_draws.rds")
 
 
@@ -82,6 +82,7 @@ df_forecast$x <- seq(0, 6, 1)
 
 
 # Output the forecast data for API
+message("Saving the forecast for API.")
 saveRDS(df_forecast, file = "output/forecasts/forecast_api.rds")
 file.copy("output/forecasts/forecast_api.rds", "api/forecast_api.rds", overwrite = T)
 
@@ -154,8 +155,10 @@ file.copy("output/forecasts/forecast_api.rds", "api/forecast_api.rds", overwrite
 # mtext("Vote Share (%)", side=2, line=3, cex=1.2)
 # dev.off()
 
+message("Creating ggplot.")
 df_forecast %>% mutate(value_label = round(value, 1),
-                       value_label = ifelse(value_label %% 1 == 0, str_c(value_label, ".0"), value_label)) %>% 
+                       value_label = ifelse(value_label %% 1 == 0, str_c(value_label, ".0"), value_label),
+                       value_label = str_replace_all(value_label, "\\.", ",")) %>% 
   ggplot(aes(x = reorder(name, -value), y = value, color = name, fill = name)) +
   geom_hline(yintercept = 5, linetype = "dotted", size = .5, color = "black") +
   geom_linerange(aes(ymin = low95, ymax = high95), linewidth = 10, alpha = 0.3, position=position_dodge(width=.5)) + # , col = party_colors[all_fcst$party_name]) +
@@ -196,8 +199,6 @@ saveRDS(last_updated, file = "api/last_updated.rds")
 
 
 
-library(highcharter)
-library(htmlwidgets)
 
 
 # Add value labels with one decimal
@@ -285,9 +286,7 @@ formatted_date <- paste0(format(as.POSIXlt(current_date), "%d"), ". ",
 # saveWidget(highchart_plot, "api/forecast.html", selfcontained = TRUE, title = "Wahlprognose von zweitstimme.org")
 # 
 
-
-library(plotly)
-library(htmlwidgets)
+message("Creating plotly.")
 
 df_forecast$name <- factor(df_forecast$name, levels = df_forecast$name)
 
@@ -297,7 +296,7 @@ plotly_plot <- plot_ly(
   y = ~value,
   type = 'scatter',
   mode = 'markers',
-  marker = list(color = ~color, size = 12, line = list(width = 2, color = 'white')),
+  marker = list(color = ~color, size = 18, line = list(width = 4, color = 'white')),
   hoverinfo = 'text',  
   text = ~paste0('Vorhersage: ', round(value, 1), '%', "\nKonfidenzintervall: ", round(low, 1), "% - ", round(high, 1), "%") %>% str_replace_all("\\.", ",")
 ) %>% layout(
@@ -354,7 +353,7 @@ plotly_plot <- plot_ly(
     ),
     base = df_forecast$low,  
     orientation = 'v',  
-    opacity = 0.4,
+    opacity = 0.7,
     text = NA,
     hoverinfo = 'text'  
   ) %>%  config(displayModeBar = FALSE)
