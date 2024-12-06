@@ -35,11 +35,15 @@ model_file <- "model_code/structural_pre_train_simple.stan"
 
 # We should create a script to prepare this RDS File for the 25 election
 # Load structural data
-data_structural25 <- readRDS("data/pre_train_data_25.rds")
-data_structural21 <- readRDS("data/pre_train_data_21.rds")
+# data_structural25 <- readRDS("data/pre_train_data_25.rds")
+# data_structural21 <- readRDS("data/pre_train_data_21.rds")
+# 
+# data_structural21[1:10,]
+# data_structural25[1:10,]
 
-data_structural21[1:10,]
-data_structural25[1:10,]
+data_structural <- readRDS("data/pre_train_data_25.rds")
+
+
 # Define a function to calculate the log ratio
 log_ratio <- function(x) {
   x <- x / 100                      # Scale the value by dividing by 100
