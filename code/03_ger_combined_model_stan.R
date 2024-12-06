@@ -86,7 +86,7 @@ wahlrecht_polls <- wahlrecht_polls %>%
   # Make var oth which is 100 minus these vars cdu + spd + gru + lin + afd + fdp, but sometimes they are NA
   mutate(oth = 100 - cdu - spd - gru - afd - lin - bsw - fdp)
 
-run_again <- T # Remove this line to run the model only when their is a new poll
+# run_again <- T # Remove this line to run the model only when their is a new poll
 
 # If the latest poll is from yesterday, run the script again
 if(run_again) {

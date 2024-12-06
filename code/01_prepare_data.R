@@ -11,7 +11,7 @@ source("auxiliary/functions.r") # Load additional functions
 ### Data for Structural Model
 
 # Get polls
-wahlrecht_polls <- get_wahlrecht_polls()
+wahlrecht_polls <- get_wahlrecht_polls_old()
 save(wahlrecht_polls, file = str_c("output/polls/wahlrecht_polls_", Sys.Date(),".RData"))
 
 
@@ -23,7 +23,9 @@ data_structural <- readRDS("data/pre_train_data_21.rds")
 # write.xlsx(data_structural_2021, "data/ger/Structural/pre_train_data_21.xlsx")
 
 # Read xlsx back in
-data_structural_2021 <- read.xlsx("data/pre_train_data_21.xlsx")
+data_structural_2021 <- read.xlsx("data/pre_train_data_21.xlsx") %>% filter(election == 20)
+
+data_structural_2025 <- read.xlsx("data/pre_train_data_21.xlsx") %>% filter(election == 21)
 
 # 2021 election results for hand coding
 # btw_2021_kerg2 <- read_csv("data/btw_2021_kerg2.csv")
@@ -40,7 +42,6 @@ data_structural_2021 <- read.xlsx("data/pre_train_data_21.xlsx")
 
 # Add back to df
 data_structural <- filter(data_structural, election != 20)
-data_structural <- bind_rows(data_structural, data_structural_2021)
 
 # Get the average for each party (columns cdu, spd, gru, lin, afd, fdp, bsw) from 200 to 230 days before election_date
 polls_fund <- wahlrecht_polls %>% pivot_longer(cols = cdu:lin, names_to = "party", values_to = "poll_share") %>% 
@@ -48,10 +49,17 @@ polls_fund <- wahlrecht_polls %>% pivot_longer(cols = cdu:lin, names_to = "party
   group_by(party) %>% summarise(poll_share = mean(poll_share, na.rm = TRUE))
 
 # Replace the NA values in the data_structural with these values
-data_structural <- data_structural %>% left_join(polls_fund, by = "party") %>% 
+data_structural_2025 <- data_structural_2025 %>% left_join(polls_fund, by = "party") %>% 
   mutate(poll_share = ifelse(is.na(poll_share), 0, poll_share)) %>% 
   select(-c(polls_200_230)) %>% 
   rename(polls_200_230 = poll_share)
+
+
+data_structural <- bind_rows(data_structural, data_structural_2021)
+data_structural <- bind_rows(data_structural, data_structural_2025)
+
+
+
 
 # Set past vote share of BSW to 0
 data_structural$voteshare_l1[data_structural$party == "bsw"] <- 0
