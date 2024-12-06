@@ -26,7 +26,7 @@ nChains <- 10
 # Stan model file
 model_file <- "model_code/structural_pre_train_simple.stan"
 
-# Model is a simplified Dirichelt model (without dynamic component on the parameters).
+# Model is a simplified Dirichlet model (without dynamic component on the parameters).
 
 ### ----------------------------------------------------------
 ### 1. Load Structural Model Data
@@ -35,19 +35,38 @@ model_file <- "model_code/structural_pre_train_simple.stan"
 
 # We should create a script to prepare this RDS File for the 25 election
 # Load structural data
-data_structural <- readRDS("data/pre_train_data_25.RDS")
+data_structural25 <- readRDS("data/pre_train_data_25.rds")
+data_structural21 <- readRDS("data/pre_train_data_21.rds")
 
-# We can not use 0 for the bsw this will screw things up.
-# Let's instead use the 
-data_structural <- data_structural %>% 
-  mutate(voteshare_l1 = case_when(election == 21 & party %in% c("lin", "bsw")  ~ 4.8700000/2, TRUE ~   voteshare_l1 )) %>%
-  mutate(log_voteshare_l1 = log(ifelse(voteshare_l1==0,voteshare_l1+0.01,voteshare_l1)), 
-         log_polls_200_230 = log(ifelse(polls_200_230==0,polls_200_230+0.01,polls_200_230)))
+data_structural21[1:10,]
+data_structural25[1:10,]
+# Define a function to calculate the log ratio
+log_ratio <- function(x) {
+  x <- x / 100                      # Scale the value by dividing by 100
+  x <- ifelse(x == 0, x + 0.01, x)  # Add 0.02 if the value is 0
+  log(x/(1-x))                            # Calculate the logarithm
+}
+
+# Apply the function to your data
+data_structural <- data_structural %>%
+  mutate(
+    voteshare_l1 = case_when(
+      election == 21 & party %in% c("lin", "bsw") ~ 4.8700000 / 2,
+      TRUE ~ voteshare_l1
+    ),
+    lr_voteshare = log_ratio(voteshare),     # Apply log_ratio to voteshare_l1
+    lr_voteshare_l1 = log_ratio(voteshare_l1),     # Apply log_ratio to voteshare_l1
+    lr_polls_200_230 = log_ratio(polls_200_230)   # Apply log_ratio to polls_200_230
+  )
 
 
 # For comparsion
 m <- lm(voteshare ~ voteshare_l1 + chancellor_party + polls_200_230, data_structural)
+summary(m)
 predict(m, newdata = filter(data_structural, election == 21))
+
+m_lr <- lm(lr_voteshare ~ lr_voteshare_l1 + lr_polls_200_230 + polls_200_230, data_structural)
+pred_lr <- predict(m_lr, newdata = filter(data_structural, election == 21))
 
 
 ### ----------------------------------------------------------
@@ -56,7 +75,7 @@ predict(m, newdata = filter(data_structural, election == 21))
 
 # Define predictors and dependent variable
 # We need to work with the log transformed voteshares if we want a proportional relationship
-predictors <- c("log_voteshare_l1", "chancellor_party", "log_polls_200_230")
+predictors <- c("lr_voteshare_l1", "chancellor_party", "lr_polls_200_230")
 dependent <- "voteshare"
 
 # Create matrices for predictors and dependent variable
@@ -99,7 +118,7 @@ results <- stan(
   data = forstan,
   iter = nIter,
   chains = nChains,
-  control = list(adapt_delta = 0.99, max_treedepth = 15)
+  #control = list(adapt_delta = 0.99, max_treedepth = 15)
 )
 
 saveRDS(results, 
