@@ -35,11 +35,11 @@ model_file <- "model_code/structural_pre_train_simple.stan"
 
 # We should create a script to prepare this RDS File for the 25 election
 # Load structural data
-# data_structural25 <- readRDS("data/pre_train_data_25.rds")
-# data_structural21 <- readRDS("data/pre_train_data_21.rds")
+#data_structural25 <- readRDS("data/pre_train_data_25.rds")
+#data_structural21 <- readRDS("data/pre_train_data_21.rds")
 # 
-# data_structural21[1:10,]
-# data_structural25[1:10,]
+#data_structural21[1:10,]
+#data_structural25[1:10,]
 
 data_structural <- readRDS("data/pre_train_data_25.rds")
 
@@ -69,8 +69,9 @@ m <- lm(voteshare ~ voteshare_l1 + chancellor_party + polls_200_230, data_struct
 summary(m)
 predict(m, newdata = filter(data_structural, election == 21))
 
-m_lr <- lm(lr_voteshare ~ lr_voteshare_l1 + lr_polls_200_230 + polls_200_230, data_structural)
+m_lr <- lm(lr_voteshare ~ lr_voteshare_l1 + chancellor_party + lr_polls_200_230, data_structural)
 pred_lr <- predict(m_lr, newdata = filter(data_structural, election == 21))
+summary(m_lr)
 
 
 ### ----------------------------------------------------------
@@ -125,8 +126,8 @@ results <- stan(
   #control = list(adapt_delta = 0.99, max_treedepth = 15)
 )
 
-saveRDS(results, 
-        file = paste0("output/draws/", upcoming_election, "_structural_pre_train_stan_simple.RDS"))
+#saveRDS(results, 
+#        file = paste0("output/draws/", upcoming_election, "_structural_pre_train_stan_simple.RDS"))
 
 ### ----------------------------------------------------------
 ### 4. Generate Forecasts and Save Results
@@ -137,7 +138,6 @@ res <- as.matrix(results)
 structural_forecast <- res[, grepl("y_mis\\[", colnames(res))]
 colnames(structural_forecast) <- data_structural$party[!complete.cases(data_structural$voteshare)]
 
-boxplot(structural_forecast)
 saveRDS(structural_forecast, 
         file = paste0("output/forecasts/", upcoming_election, "_structural_forecast_simple.RDS"))
 

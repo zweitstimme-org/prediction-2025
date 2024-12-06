@@ -125,9 +125,9 @@ model {
   pos = 1; // Pre-set counter to 1
 
   // Structural component of the model
-  b0 ~ normal(0, 10); // Initialization of b0 in the structural component
+  b0 ~ normal(b0_prior, 1); // Initialization of b0 in the structural component
   for (k in 1:K){
-    b ~ normal(0, 10);
+    b ~ normal(b_prior[k], 1);
   }
   
   
