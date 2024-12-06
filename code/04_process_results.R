@@ -27,25 +27,23 @@ source("auxiliary/functions.r") # Load additional functions
 # str_c("/mnt/forecasts/zweitstimme/zweitstimme_output_", Sys.Date(),".rds")
 
 # Get the latest forecast file
-
-
 (forecast_files <- list.files("/mnt/forecasts/prediction-2025/forecast", full.names = T) %>% str_subset("forecast_draws_"))
 (forecast_files <- forecast_files[ymd(str_extract(forecast_files, ".{10}(?=\\.rds)")) == max(ymd(str_extract(forecast_files, ".{10}(?=\\.rds)")))])
 
 forecast <- readRDS(forecast_files)
+
+# Adjust Order to size of party
+ordered_party <- names(sort(-apply(forecast,2,median)))
+forecast <- forecast[, ordered_party]
 
 # Save newest draws to api folder
 message("Saving the draws for API.")
 saveRDS(as.data.frame(forecast), file = "api/forecast_draws.rds")
 
 
-# Adjust Order to size of party
-ordered_party <- names(sort(-apply(forecast,2,median)))
-forecast <- forecast[, ordered_party]
-
 # Define names
 party_names <- data.frame("full_name" = c("CDU/CSU", "SPD",  "Grüne", "FDP", "AfD" ,"Linke", "BSW", "Andere"),
-                          "full_name_eng" = c("CDU/CSU", "SPD",  "Grüne", "FDP", "AfD" ,"Linke", "BSW", "Andere"),
+                          "full_name_eng" = c("CDU/CSU", "SPD",  "Greens", "FDP", "AfD" ,"Left", "BSW", "Other"),
                           "short_name" =  c("cdu","spd","gru","fdp","afd","lin","bsw","oth"))
 party_colors <- c(
   "CDU/CSU" = "#000000",
@@ -67,13 +65,9 @@ colnames(df_forecast) <- c("value", "low", "high", "low95", "high95")
 
 df_forecast$name <- party_names$full_name[match(rownames(df_forecast),party_names$short_name)]
 df_forecast$name_eng <- party_names$full_name_eng[match(rownames(df_forecast),party_names$short_name)]
-rownames(df_forecast) <- party_names$full_name[match(rownames(df_forecast),party_names$short_name)]
-
-
 
 # Drop Andere
 df_forecast <- filter(df_forecast, name != "Andere")
-
 df_forecast$color <- party_colors[df_forecast$name]
 
 df_forecast$y <- df_forecast$value
@@ -85,6 +79,53 @@ df_forecast$x <- seq(0, 6, 1)
 message("Saving the forecast for API.")
 saveRDS(df_forecast, file = "output/forecasts/forecast_api.rds")
 file.copy("output/forecasts/forecast_api.rds", "api/forecast_api.rds", overwrite = T)
+
+
+# Add timestamp
+last_updated <- Sys.time()
+saveRDS(last_updated, file = "api/last_updated.rds")
+
+
+
+message("Creating ggplot.")
+
+df_forecast <- readRDS("output/forecasts/forecast_api.rds")
+
+df_forecast %>% mutate(value_label = round(value, 1),
+                       value_label = ifelse(value_label %% 1 == 0, str_c(value_label, ".0"), value_label),
+                       value_label = str_replace_all(value_label, "\\.", ",")) %>% 
+  ggplot(aes(x = reorder(name, -value), y = value, color = name, fill = name)) +
+  geom_hline(yintercept = 5, linetype = "dotted", size = .5, color = "black") +
+  geom_linerange(aes(ymin = low95, ymax = high95), linewidth = 10, alpha = 0.3, position=position_dodge(width=.5)) + # , col = party_colors[all_fcst$party_name]) +
+  geom_linerange(aes(ymin = low, ymax = high), linewidth = 10, alpha = 0.7, position=position_dodge(width=.5)) + # , col = party_colors[all_fcst$party_name]) +
+  geom_point(size = 6, color = "white", shape = 21, stroke = 2) +
+  geom_point(size = 2, fill = "white", shape = 21) +
+  scale_color_manual(values = df_forecast$color, breaks = df_forecast$name) +
+  scale_fill_manual(values = df_forecast$color, breaks = df_forecast$name) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    plot.title = element_text(face = "bold", size = 16, hjust = 0.5),
+    plot.subtitle = element_text(size = 12, hjust = 0.5),
+    axis.text.x = element_text(size = 8, face = "bold", color = "black"),
+    axis.ticks.y = element_blank(),
+    axis.line.y = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    plot.margin = margin(10, 10, 10, 10)
+  ) +
+  labs(
+    x = NULL,
+    y = "%"
+  ) +
+  geom_text(aes(label = value_label, y = value), hjust = 2, size = 3, color = "black") 
+
+ggsave(filename = "output/fig/figure_forecast.pdf", height = 6, width = 6*1.5)
+ggsave(filename = "output/fig/figure_forecast.png", device = "png", dpi = 300,  height = 5, width = 5*1.5, bg = "white")
+
+# Copy files into the api folder
+file.copy("output/fig/figure_forecast.png", "api/figure_forecast.png", overwrite = T)
+file.copy("output/fig/figure_forecast.pdf", "api/figure_forecast.pdf", overwrite = T)
 
 
 
@@ -155,70 +196,12 @@ file.copy("output/forecasts/forecast_api.rds", "api/forecast_api.rds", overwrite
 # mtext("Vote Share (%)", side=2, line=3, cex=1.2)
 # dev.off()
 
-message("Creating ggplot.")
-df_forecast %>% mutate(value_label = round(value, 1),
-                       value_label = ifelse(value_label %% 1 == 0, str_c(value_label, ".0"), value_label),
-                       value_label = str_replace_all(value_label, "\\.", ",")) %>% 
-  ggplot(aes(x = reorder(name, -value), y = value, color = name, fill = name)) +
-  geom_hline(yintercept = 5, linetype = "dotted", size = .5, color = "black") +
-  geom_linerange(aes(ymin = low95, ymax = high95), linewidth = 10, alpha = 0.3, position=position_dodge(width=.5)) + # , col = party_colors[all_fcst$party_name]) +
-  geom_linerange(aes(ymin = low, ymax = high), linewidth = 10, alpha = 0.7, position=position_dodge(width=.5)) + # , col = party_colors[all_fcst$party_name]) +
-  geom_point(size = 6, color = "white", shape = 21, stroke = 2) +
-  geom_point(size = 2, fill = "white", shape = 21) +
-  scale_color_manual(values = df_forecast$color, breaks = df_forecast$name) +
-  scale_fill_manual(values = df_forecast$color, breaks = df_forecast$name) +
-  theme_minimal() +
-  theme(
-    legend.position = "none",
-    plot.title = element_text(face = "bold", size = 16, hjust = 0.5),
-    plot.subtitle = element_text(size = 12, hjust = 0.5),
-    axis.text.x = element_text(size = 8, face = "bold", color = "black"),
-    axis.ticks.y = element_blank(),
-    axis.line.y = element_blank(),
-    panel.grid.major.x = element_blank(),
-    panel.grid.minor.x = element_blank(),
-    plot.margin = margin(10, 10, 10, 10)
-  ) +
-  labs(
-    x = NULL,
-    y = "%"
-  ) +
-  geom_text(aes(label = value_label, y = value), hjust = 2, size = 3, color = "black") 
-
-ggsave(filename = "output/fig/figure_forecast.pdf", height = 6, width = 6*1.5)
-ggsave(filename = "output/fig/figure_forecast.png", device = "png", dpi = 300,  height = 5, width = 5*1.5, bg = "white")
-
-# Copy files into the api folder
-file.copy("output/fig/figure_forecast.png", "api/figure_forecast.png", overwrite = T)
-file.copy("output/fig/figure_forecast.pdf", "api/figure_forecast.pdf", overwrite = T)
-
-
-# Add timestamp
-last_updated <- Sys.time()
-saveRDS(last_updated, file = "api/last_updated.rds")
 
 
 
 
 
-# Add value labels with one decimal
-df_forecast <- df_forecast %>%
-  mutate(
-    value_label = round(value, 1),
-    value_label = ifelse(value_label %% 1 == 0, paste0(value_label, ".0"), as.character(value_label))
-  )
 
-# Get the current date in German
-current_date <- Sys.Date()
-
-
-# Manually translate to German
-months <- c("Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember")
-
-# Format date manually
-formatted_date <- paste0(format(as.POSIXlt(current_date), "%d"), ". ", 
-                         months[as.POSIXlt(current_date)$mon + 1], " ",
-                         format(as.POSIXlt(current_date), "%Y"))
 
 
 # 
@@ -287,6 +270,30 @@ formatted_date <- paste0(format(as.POSIXlt(current_date), "%d"), ". ",
 # 
 
 message("Creating plotly.")
+
+
+df_forecast <- readRDS("output/forecasts/forecast_api.rds")
+
+# Add value labels with one decimal
+df_forecast <- df_forecast %>%
+  mutate(
+    value_label = round(value, 1),
+    value_label = ifelse(value_label %% 1 == 0, paste0(value_label, ".0"), as.character(value_label))
+  )
+
+# Get the current date in German
+current_date <- Sys.Date()
+
+
+# Manually translate to German
+months <- c("Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember")
+
+# Format date manually
+formatted_date <- paste0(format(as.POSIXlt(current_date), "%d"), ". ", 
+                         months[as.POSIXlt(current_date)$mon + 1], " ",
+                         format(as.POSIXlt(current_date), "%Y"))
+
+
 
 df_forecast$name <- factor(df_forecast$name, levels = df_forecast$name)
 

@@ -344,3 +344,13 @@ get_wahlrecht_polls_old <- function() {
   
   return(wahlrecht_polls)
 }
+
+coal_majo <- function(share, share_above_hurdle){
+  
+  if(any(share < 0.05)){
+    return(FALSE)
+  } else {
+    return(sum(share)/share_above_hurdle > 0.5)
+  }
+  
+}
