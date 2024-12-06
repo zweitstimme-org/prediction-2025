@@ -3,6 +3,11 @@ start_time <- Sys.time()
 
 setwd("/home/cerfort/prediction-2025")
 
+# Load required packages and functions
+source("auxiliary/packages.r")  # Load required packages
+source("auxiliary/functions.r") # Load additional functions
+
+
 # Specifications
 upcoming_election <- 2025
 cutoff <- Sys.Date() # Do not run at midnight or shortly before
@@ -42,6 +47,7 @@ wahlrecht_polls <- new_wahlrecht_polls
 save(wahlrecht_polls, file = str_c("output/polls/wahlrecht_polls_", Sys.Date(),".RData"))
 
 
+run_again <- T
 
 if(run_again) {
   

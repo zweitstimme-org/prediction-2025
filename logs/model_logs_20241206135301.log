@@ -1,0 +1,244 @@
+Loading required package: haven
+Loading required package: lubridate
+
+Attaching package: ‘lubridate’
+
+The following objects are masked from ‘package:base’:
+
+    date, intersect, setdiff, union
+
+Loading required package: stringr
+Loading required package: ggplot2
+Loading required package: dlm
+
+Attaching package: ‘dlm’
+
+The following object is masked from ‘package:ggplot2’:
+
+    %+%
+
+Loading required package: plyr
+Loading required package: dplyr
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:plyr’:
+
+    arrange, count, desc, failwith, id, mutate, rename, summarise,
+    summarize
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+Loading required package: magrittr
+Loading required package: broom
+Loading required package: tidyr
+
+Attaching package: ‘tidyr’
+
+The following object is masked from ‘package:magrittr’:
+
+    extract
+
+Loading required package: reshape2
+
+Attaching package: ‘reshape2’
+
+The following object is masked from ‘package:tidyr’:
+
+    smiths
+
+Loading required package: readr
+Loading required package: rvest
+
+Attaching package: ‘rvest’
+
+The following object is masked from ‘package:readr’:
+
+    guess_encoding
+
+Loading required package: mcmcplots
+Loading required package: coda
+Loading required package: parallel
+Loading required package: rstan
+Loading required package: StanHeaders
+
+rstan version 2.32.6 (Stan version 2.32.2)
+
+For execution on a local, multicore CPU with excess RAM we recommend calling
+options(mc.cores = parallel::detectCores()).
+To avoid recompilation of unchanged Stan programs, we recommend calling
+rstan_options(auto_write = TRUE)
+For within-chain threading using `reduce_sum()` or `map_rect()` Stan functions,
+change `threads_per_chain` option:
+rstan_options(threads_per_chain = 1)
+
+
+Attaching package: ‘rstan’
+
+The following object is masked from ‘package:coda’:
+
+    traceplot
+
+The following object is masked from ‘package:tidyr’:
+
+    extract
+
+The following object is masked from ‘package:magrittr’:
+
+    extract
+
+Loading required package: shinystan
+Loading required package: shiny
+
+This is shinystan version 2.6.0
+
+Loading required package: superdiag
+Loading required package: xtable
+Loading required package: knitr
+Loading required package: openxlsx
+Loading required package: plotly
+
+Attaching package: ‘plotly’
+
+The following objects are masked from ‘package:plyr’:
+
+    arrange, mutate, rename, summarise
+
+The following object is masked from ‘package:ggplot2’:
+
+    last_plot
+
+The following object is masked from ‘package:stats’:
+
+    filter
+
+The following object is masked from ‘package:graphics’:
+
+    layout
+
+Loading required package: htmlwidgets
+      haven   lubridate     stringr     ggplot2         dlm        plyr 
+       TRUE        TRUE        TRUE        TRUE        TRUE        TRUE 
+      dplyr    magrittr       broom       tidyr     stringr    reshape2 
+       TRUE        TRUE        TRUE        TRUE        TRUE        TRUE 
+      readr       rvest   mcmcplots    parallel       rstan   shinystan 
+       TRUE        TRUE        TRUE        TRUE        TRUE        TRUE 
+  superdiag      xtable       knitr    openxlsx      plotly htmlwidgets 
+       TRUE        TRUE        TRUE        TRUE        TRUE        TRUE 
+Checking for new polls.
+Loading required package: coalitions
+Warning message:
+There were 8 warnings in `mutate()`.
+The first warning was:
+ℹ In argument: `sonstige = (function (x, decimal = TRUE) ...`.
+Caused by warning:
+! There were 7 warnings in `mutate()`.
+The first warning was:
+ℹ In argument: `cdu = (function (x, decimal = TRUE) ...`.
+Caused by warning:
+! NAs introduced by coercion
+ℹ Run `dplyr::last_dplyr_warnings()` to see the 6 remaining warnings.
+ℹ Run `dplyr::last_dplyr_warnings()` to see the 7 remaining warnings. 
+[1] "2024-12-06"
+There is a new poll. Running the model.
+Loading stan code.
+Loading structural inits.
+
+Estimating Model for Election 2025 with a cutoff of 2024-12-06 
+hash mismatch so recompiling; make sure Stan code ends with a blank line
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 3).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 4).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 5).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 6).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 7).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 8).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 9).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 10).
+Chain 4: 
+Chain 4: Gradient evaluation took 0.005565 seconds
+Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 55.65 seconds.
+Chain 4: Adjust your expectations accordingly!
+Chain 4: 
+Chain 4: 
+Chain 3: 
+Chain 3: Gradient evaluation took 0.005789 seconds
+Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 57.89 seconds.
+Chain 3: Adjust your expectations accordingly!
+Chain 3: 
+Chain 3: 
+Chain 8: 
+Chain 8: Gradient evaluation took 0.006073 seconds
+Chain 8: 1000 transitions using 10 leapfrog steps per transition would take 60.73 seconds.
+Chain 8: Adjust your expectations accordingly!
+Chain 8: 
+Chain 8: 
+Chain 10: 
+Chain 10: Gradient evaluation took 0.00488 seconds
+Chain 10: 1000 transitions using 10 leapfrog steps per transition would take 48.8 seconds.
+Chain 10: Adjust your expectations accordingly!
+Chain 10: 
+Chain 10: 
+Chain 1: 
+Chain 1: Gradient evaluation took 0.006715 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 67.15 seconds.
+Chain 1: Adjust your expectations accordingly!
+Chain 1: 
+Chain 1: 
+Chain 4: Iteration:    1 / 2000 [  0%]  (Warmup)
+Chain 3: Iteration:    1 / 2000 [  0%]  (Warmup)
+Chain 2: 
+Chain 2: Gradient evaluation took 0.0056 seconds
+Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 56 seconds.
+Chain 2: Adjust your expectations accordingly!
+Chain 2: 
+Chain 2: 
+Chain 6: 
+Chain 6: Gradient evaluation took 0.004735 seconds
+Chain 6: 1000 transitions using 10 leapfrog steps per transition would take 47.35 seconds.
+Chain 6: Adjust your expectations accordingly!
+Chain 6: 
+Chain 6: 
+Chain 9: 
+Chain 9: Gradient evaluation took 0.005654 seconds
+Chain 9: 1000 transitions using 10 leapfrog steps per transition would take 56.54 seconds.
+Chain 9: Adjust your expectations accordingly!
+Chain 9: 
+Chain 9: 
+Chain 8: Iteration:    1 / 2000 [  0%]  (Warmup)
+Chain 1: Iteration:    1 / 2000 [  0%]  (Warmup)
+Chain 10: Iteration:    1 / 2000 [  0%]  (Warmup)
+Chain 2: Iteration:    1 / 2000 [  0%]  (Warmup)
+Chain 6: Iteration:    1 / 2000 [  0%]  (Warmup)
+Chain 9: Iteration:    1 / 2000 [  0%]  (Warmup)
+Chain 7: 
+Chain 7: Gradient evaluation took 0.004721 seconds
+Chain 7: 1000 transitions using 10 leapfrog steps per transition would take 47.21 seconds.
+Chain 7: Adjust your expectations accordingly!
+Chain 7: 
+Chain 7: 
+Chain 5: 
+Chain 5: Gradient evaluation took 0.004726 seconds
+Chain 5: 1000 transitions using 10 leapfrog steps per transition would take 47.26 seconds.
+Chain 5: Adjust your expectations accordingly!
+Chain 5: 
+Chain 5: 
+Chain 7: Iteration:    1 / 2000 [  0%]  (Warmup)
+Chain 5: Iteration:    1 / 2000 [  0%]  (Warmup)

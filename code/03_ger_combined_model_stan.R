@@ -6,9 +6,6 @@
 
 
 
-# Load required packages and functions
-source("auxiliary/packages.r")  # Load required packages
-source("auxiliary/functions.r") # Load additional functions
 
 ### ----------------------------------------------------------
 ### 1. Set-Up and Pre-train Structural Model
@@ -138,13 +135,13 @@ wahlrecht_polls <- wahlrecht_polls %>%
   
   # Estimate model
   cat("\nEstimating Model for Election", upcoming_election, "with a cutoff of", as.character(cutoff), "\n")
-  # results <- stan(
-  #   file = model_file,
-  #   data = forstan,
-  #   iter = nIter,
-  #   chains = nChains,
-  #   control = list(adapt_delta = 0.99, max_treedepth = 15)
-  # )
+  results <- stan(
+    file = model_file,
+    data = forstan,
+    iter = nIter,
+    chains = nChains,
+    control = list(adapt_delta = 0.99, max_treedepth = 15)
+  )
   
   message("Saving the draws.")
   saveRDS(results, file = paste0("/mnt/forecasts/prediction-2025/draws/res_brw_", upcoming_election, "_", cutoff, "_", Sys.Date(), ".rds"))

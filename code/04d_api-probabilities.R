@@ -1,4 +1,6 @@
 
+message("Creating plotly for probabilities.")
+
 forecast <- readRDS("api/forecast_draws.rds")
 
 
