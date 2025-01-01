@@ -262,7 +262,7 @@ wahlrecht_xml_extract <- function(xml_url) {
       mutate(date = as.Date(date)) %>%
       pivot_wider(values_from = "value", names_from = "party") 
     
-    if("agart" %in% names(xml_df)) xml_df <- select(xml_df, -agart)
+    if("agart" %in% names(xml_df)) xml_df <- dplyr::select(xml_df, -agart)
       
     # unnest_wider(ag) %>% 
     
@@ -313,6 +313,8 @@ get_wahlrecht_polls <- function() {
   
   # Arrange by date, decreasing
   wahlrecht_polls <- wahlrecht_polls %>% arrange(desc(date))
+  
+  wahlrecht_polls$sample_size <- as.numeric(wahlrecht_polls$sample_size)
   
   return(wahlrecht_polls)
 }

@@ -40,7 +40,6 @@ file.copy("output/fig/figure_forecast.png", "api/figure_forecast.png", overwrite
 file.copy("output/fig/figure_forecast.pdf", "api/figure_forecast.pdf", overwrite = T)
 
 
-
 # # Plot
 # pdf("output/fig/figure_forecast.pdf", width = 12, height = 8)
 # par(mar=c(5,5,0,0)+.1)

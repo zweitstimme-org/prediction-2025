@@ -91,7 +91,7 @@ wahlrecht_polls <- wahlrecht_polls %>%
   # Predictors for the upcoming election
   election_pred_E <- data_structural %>%
     filter(election == 21) %>%
-    select(all_of(predictors)) %>%
+    dplyr::select(all_of(predictors)) %>%
     as.matrix() / 100
   rownames(election_pred_E) <- data_structural$party[data_structural$election == 21]
   election_pred_E <- election_pred_E[party_names, ]
@@ -144,7 +144,9 @@ wahlrecht_polls <- wahlrecht_polls %>%
   )
   
   message("Saving the draws.")
-  saveRDS(results, file = paste0("/mnt/forecasts/prediction-2025/draws/res_brw_", upcoming_election, "_", cutoff, "_", Sys.Date(), ".rds"))
+  saveRDS(results, file = paste0("/mnt/forecasts/prediction-2025/draws/res_brw_", upcoming_election, "_", as.Date(cutoff+1), ".rds"))
+  
+  
   
   # Extract results
   res <- as.matrix(results)
@@ -173,7 +175,7 @@ wahlrecht_polls <- wahlrecht_polls %>%
   colnames(forecast) <- draws_forecast_levels[["party_names"]]
   
   # Output these draws to the API
-  saveRDS(forecast, str_c("/mnt/forecasts/prediction-2025/forecast/forecast_draws_", Sys.Date(),".rds"))
+  saveRDS(forecast, str_c("/mnt/forecasts/prediction-2025/forecast/forecast_draws_", as.Date(cutoff+1),".rds"))
   
   
   round(apply(forecast, 2, mean) * 100, 1)  # Mean forecast

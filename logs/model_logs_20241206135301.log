@@ -242,3 +242,189 @@ Chain 5:
 Chain 5: 
 Chain 7: Iteration:    1 / 2000 [  0%]  (Warmup)
 Chain 5: Iteration:    1 / 2000 [  0%]  (Warmup)
+Chain 3: Iteration:  200 / 2000 [ 10%]  (Warmup)
+Chain 7: Iteration:  200 / 2000 [ 10%]  (Warmup)
+Chain 9: Iteration:  200 / 2000 [ 10%]  (Warmup)
+Chain 10: Iteration:  200 / 2000 [ 10%]  (Warmup)
+Chain 8: Iteration:  200 / 2000 [ 10%]  (Warmup)
+Chain 6: Iteration:  200 / 2000 [ 10%]  (Warmup)
+Chain 3: Iteration:  400 / 2000 [ 20%]  (Warmup)
+Chain 5: Iteration:  200 / 2000 [ 10%]  (Warmup)
+Chain 4: Iteration:  200 / 2000 [ 10%]  (Warmup)
+Chain 1: Iteration:  200 / 2000 [ 10%]  (Warmup)
+Chain 7: Iteration:  400 / 2000 [ 20%]  (Warmup)
+Chain 2: Iteration:  200 / 2000 [ 10%]  (Warmup)
+Chain 9: Iteration:  400 / 2000 [ 20%]  (Warmup)
+Chain 10: Iteration:  400 / 2000 [ 20%]  (Warmup)
+Chain 5: Iteration:  400 / 2000 [ 20%]  (Warmup)
+Chain 3: Iteration:  600 / 2000 [ 30%]  (Warmup)
+Chain 6: Iteration:  400 / 2000 [ 20%]  (Warmup)
+Chain 8: Iteration:  400 / 2000 [ 20%]  (Warmup)
+Chain 4: Iteration:  400 / 2000 [ 20%]  (Warmup)
+Chain 9: Iteration:  600 / 2000 [ 30%]  (Warmup)
+Chain 1: Iteration:  400 / 2000 [ 20%]  (Warmup)
+Chain 7: Iteration:  600 / 2000 [ 30%]  (Warmup)
+Chain 5: Iteration:  600 / 2000 [ 30%]  (Warmup)
+Chain 6: Iteration:  600 / 2000 [ 30%]  (Warmup)
+Chain 3: Iteration:  800 / 2000 [ 40%]  (Warmup)
+Chain 10: Iteration:  600 / 2000 [ 30%]  (Warmup)
+Chain 9: Iteration:  800 / 2000 [ 40%]  (Warmup)
+Chain 7: Iteration:  800 / 2000 [ 40%]  (Warmup)
+Chain 8: Iteration:  600 / 2000 [ 30%]  (Warmup)
+Chain 5: Iteration:  800 / 2000 [ 40%]  (Warmup)
+Chain 2: Iteration:  400 / 2000 [ 20%]  (Warmup)
+Chain 6: Iteration:  800 / 2000 [ 40%]  (Warmup)
+Chain 10: Iteration:  800 / 2000 [ 40%]  (Warmup)
+Chain 9: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+Chain 9: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+Chain 3: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+Chain 3: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+Chain 7: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+Chain 7: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+Chain 4: Iteration:  600 / 2000 [ 30%]  (Warmup)
+Chain 1: Iteration:  600 / 2000 [ 30%]  (Warmup)
+Chain 9: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+Chain 8: Iteration:  800 / 2000 [ 40%]  (Warmup)
+Chain 5: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+Chain 5: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+Chain 6: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+Chain 6: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+Chain 4: Iteration:  800 / 2000 [ 40%]  (Warmup)
+Chain 9: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+Chain 3: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+Chain 7: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+Chain 10: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+Chain 10: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+Chain 5: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+Chain 1: Iteration:  800 / 2000 [ 40%]  (Warmup)
+Chain 9: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+Chain 2: Iteration:  600 / 2000 [ 30%]  (Warmup)
+Chain 6: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+Chain 8: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+Chain 8: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+Chain 10: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+Chain 5: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+Chain 9: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+Chain 3: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+Chain 2: Iteration:  800 / 2000 [ 40%]  (Warmup)
+Chain 7: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+Chain 10: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+Chain 1: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+Chain 1: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+Chain 8: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+Chain 5: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+Chain 4: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+Chain 4: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+Chain 6: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+Chain 9: Iteration: 2000 / 2000 [100%]  (Sampling)
+Chain 9: 
+Chain 9:  Elapsed Time: 9744.15 seconds (Warm-up)
+Chain 9:                5059.4 seconds (Sampling)
+Chain 9:                14803.5 seconds (Total)
+Chain 9: 
+Chain 10: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+Chain 8: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+Chain 5: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+Chain 3: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+Chain 2: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+Chain 2: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+Chain 7: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+Chain 10: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+Chain 6: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+Chain 4: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+Chain 5: Iteration: 2000 / 2000 [100%]  (Sampling)
+Chain 5: 
+Chain 5:  Elapsed Time: 11249.4 seconds (Warm-up)
+Chain 5:                5431.47 seconds (Sampling)
+Chain 5:                16680.8 seconds (Total)
+Chain 5: 
+Chain 8: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+Chain 10: Iteration: 2000 / 2000 [100%]  (Sampling)
+Chain 10: 
+Chain 10:  Elapsed Time: 12235.3 seconds (Warm-up)
+Chain 10:                5037.93 seconds (Sampling)
+Chain 10:                17273.2 seconds (Total)
+Chain 10: 
+Chain 6: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+Chain 7: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+Chain 2: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+Chain 8: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+Chain 4: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+Chain 1: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+Chain 6: Iteration: 2000 / 2000 [100%]  (Sampling)
+Chain 6: 
+Chain 6:  Elapsed Time: 11482.8 seconds (Warm-up)
+Chain 6:                8095.24 seconds (Sampling)
+Chain 6:                19578 seconds (Total)
+Chain 6: 
+Chain 8: Iteration: 2000 / 2000 [100%]  (Sampling)
+Chain 8: 
+Chain 8:  Elapsed Time: 13061.8 seconds (Warm-up)
+Chain 8:                6643.95 seconds (Sampling)
+Chain 8:                19705.7 seconds (Total)
+Chain 8: 
+Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
+Chain 3: 
+Chain 3:  Elapsed Time: 9907.03 seconds (Warm-up)
+Chain 3:                10125.8 seconds (Sampling)
+Chain 3:                20032.9 seconds (Total)
+Chain 3: 
+Chain 7: Iteration: 2000 / 2000 [100%]  (Sampling)
+Chain 7: 
+Chain 7:  Elapsed Time: 9974.17 seconds (Warm-up)
+Chain 7:                10192.3 seconds (Sampling)
+Chain 7:                20166.5 seconds (Total)
+Chain 7: 
+Chain 2: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+Chain 4: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+Chain 1: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
+Chain 4: 
+Chain 4:  Elapsed Time: 14559.1 seconds (Warm-up)
+Chain 4:                10060.2 seconds (Sampling)
+Chain 4:                24619.3 seconds (Total)
+Chain 4: 
+Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
+Chain 2: 
+Chain 2:  Elapsed Time: 16098.5 seconds (Warm-up)
+Chain 2:                10334.6 seconds (Sampling)
+Chain 2:                26433 seconds (Total)
+Chain 2: 
+Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
+Chain 1: 
+Chain 1:  Elapsed Time: 14325.7 seconds (Warm-up)
+Chain 1:                23448.1 seconds (Sampling)
+Chain 1:                37773.7 seconds (Total)
+Chain 1: 
+Saving the draws.
+Saving the draws for API.
+Saving the forecast for API.
+Creating ggplot.
+Creating plotly.
+Warning messages:
+1: In readLines(file, warn = TRUE) :
+  incomplete final line found on '/home/cerfort/prediction-2025/model_code/combined_model_simple.stan'
+2: There were 430 divergent transitions after warmup. See
+https://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup
+to find out why this is a problem and how to eliminate them. 
+3: There were 10 chains where the estimated Bayesian Fraction of Missing Information was low. See
+https://mc-stan.org/misc/warnings.html#bfmi-low 
+4: Examine the pairs() plot to diagnose sampling problems
+ 
+5: The largest R-hat is NA, indicating chains have not mixed.
+Running the chains for more iterations may help. See
+https://mc-stan.org/misc/warnings.html#r-hat 
+6: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.
+Running the chains for more iterations may help. See
+https://mc-stan.org/misc/warnings.html#bulk-ess 
+7: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.
+Running the chains for more iterations may help. See
+https://mc-stan.org/misc/warnings.html#tail-ess 
+Total time needed in hours:
+10.7

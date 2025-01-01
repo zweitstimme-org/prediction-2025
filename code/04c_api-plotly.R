@@ -1,5 +1,9 @@
 
+
+
 message("Creating plotly.")
+
+font_family <- "'Segoe UI', -apple-system, sans-serif"
 
 # Load data
 df_forecast <- readRDS("output/forecasts/forecast_api.rds")
@@ -12,7 +16,7 @@ df_forecast <- df_forecast %>%
   )
 
 # Get the current date in German
-current_date <- Sys.Date()
+current_date <-  Sys.Date() # "2024-12-08" #
 
 # Manually translate to German
 months <- c("Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember")
@@ -26,27 +30,40 @@ formatted_date <- paste0(format(as.POSIXlt(current_date), "%d"), ". ",
 
 df_forecast$name <- factor(df_forecast$name, levels = df_forecast$name)
 
+
 plotly_plot <- plot_ly(
   data = df_forecast, 
   x = ~name, 
   y = ~value,
   type = 'scatter',
   mode = 'markers',
-  marker = list(color = ~color, size = 18, line = list(width = 4, color = 'white')),
+  marker = list(color = ~color, size = 17, line = list(width = 4, color = 'white')),
   hoverinfo = 'text',  
-  text = ~paste0('Vorhersage: ', round(value, 1), '%', "\nKonfidenzintervall: ", round(low, 1), "% - ", round(high, 1), "%") %>% str_replace_all("\\.", ",")
-) %>% layout(
-  title = str_c("Wahlprognose von zweitstimme.org\n", "vom ", formatted_date),
-  xaxis = list(title = "",
-               fixedrange = TRUE),
-  yaxis = list(title = "%",
-               fixedrange = TRUE),
+  text = ~paste0(round(value, 1), '%', " (", round(low, 1), "% - ", round(high, 1), "%)") %>% str_replace_all("\\.", ",")
+) %>%
+
+layout(
+  # title = str_c("Wahlprognose von zweitstimme.org\n", "vom ", formatted_date),
+  xaxis = list(
+    title = "",
+    fixedrange = TRUE,
+    tickfont = list(family = font_family),  # Add font for tick labels
+    tickangle = 0,
+    showline = TRUE,     # Show x-axis line
+    linecolor = "black", # Color of x-axis line
+    linewidth = 1
+  ),
+  yaxis = list(
+    title = "Stimmanteil in %",
+    fixedrange = TRUE,
+    tickfont = list(family = font_family)  # Add font for tick labels
+  ),
   showlegend = FALSE,
   hovermode = 'closest',
-  # displayModeBar = FALSE,  # Disable the mode bar
-  bargap = 0.6,  # Reduce the gap between bars
+  bargap = 0.6,
+  font = list(family = font_family,
+              size = 16),  # Global font family
   shapes = list(
-    # Horizontal dashed line at 5%
     list(
       type = "line",
       x0 = -.5,
@@ -54,30 +71,32 @@ plotly_plot <- plot_ly(
       y0 = 5,
       y1 = 5,
       line = list(
-        color = "grey",  # Color of the line
-        width = 2,        # Line width
-        dash = "dash"     # Dashed line
+        color = "grey",
+        width = 2,
+        dash = "dash"
       ),
-      layer = "below"  # This places the line below the bars (in the background)
+      layer = "below"
     )
   ),
   annotations = list(
-    # Label for the 5% line
     list(
-      x = 0.02,  # Position the text on the left
-      y = 5.5,  # Align it with the 5% line
-      xref = "paper",  # Use "paper" to position in the plot area (relative coordinates)
-      yref = "y",      # Refer to the y-axis for positioning
-      text = "5% Hürde",  # The label text
-      showarrow = FALSE,  # No arrow
+      x = 0.02,
+      y = 7,
+      xref = "paper",
+      yref = "y",
+      text = "5%-Hürde",
+      showarrow = FALSE,
       font = list(
-        size = 12,
+        family = font_family,  # Add font for annotation
+        size = 16,
         color = "grey"
       ),
       align = "left"
     )
   )
 ) %>%
+  # margin = list(t = 80)  # Increase the top margin (default is usually 20)
+ 
   add_trace(
     x = df_forecast$name,
     y = df_forecast$high - df_forecast$low,  
@@ -93,13 +112,107 @@ plotly_plot <- plot_ly(
     text = NA,
     hoverinfo = 'text'  
   ) %>%  
-  config(displayModeBar = FALSE)
+  plotly::config(displayModeBar = FALSE)
 
 
+
+
+
+
+plotly_plot
 
 # plotly_plot
 
 saveWidget(plotly_plot, "api/forecast.html", selfcontained = TRUE, title = "Wahlprognose von zweitstimme.org") %>% 
   suppressWarnings()
 
+
+# Create mobile version
+plotly_plot_mobile <- plot_ly(
+  data = df_forecast, 
+  x = ~name, 
+  y = ~value,
+  type = 'scatter',
+  mode = 'markers',
+  marker = list(color = ~color, size = 8, line = list(width = 3, color = 'white')), # Smaller dots
+  hoverinfo = 'text',  
+  text = ~paste0(round(value, 1), '%', " (", round(low, 1), "% - ", round(high, 1), "%)") %>% str_replace_all("\\.", ",")
+) %>%
+  
+  layout(
+    xaxis = list(
+      title = "",
+      fixedrange = TRUE,
+      tickfont = list(family = font_family, size = 14),  # Smaller font
+      tickangle = -45,  # Vertical labels
+      showline = TRUE,
+      linecolor = "black",
+      linewidth = 1
+    ),
+    yaxis = list(
+      title = "Anteil in %",
+      fixedrange = TRUE,
+      tickfont = list(family = font_family, size = 14)  # Smaller font
+    ),
+    showlegend = FALSE,
+    hovermode = 'closest',
+    bargap = 0.6,
+    font = list(family = font_family,
+                size = 14),  # Smaller global font
+    shapes = list(
+      list(
+        type = "line",
+        x0 = -.5,
+        x1 = 7,
+        y0 = 5,
+        y1 = 5,
+        line = list(
+          color = "grey",
+          width = 2,
+          dash = "dash"
+        ),
+        layer = "below"
+      )
+    ),
+    annotations = list(
+      list(
+        x = 0.02,
+        y = 10,
+        xref = "paper",
+        yref = "y",
+        text = "5%-Hürde",
+        showarrow = FALSE,
+        font = list(
+          family = font_family,
+          size = 14,  # Smaller font
+          color = "grey"
+        ),
+        align = "left"
+      )
+    ),
+    margin = list(b = 0)  # Increased bottom margin for rotated labels
+  ) %>%
+  
+  add_trace(
+    x = df_forecast$name,
+    y = df_forecast$high - df_forecast$low,  
+    type = 'bar',
+    name = 'Konfidenzintervall',
+    marker = list(
+      color = df_forecast$color,  
+      line = list(width = 0)
+    ),
+    base = df_forecast$low,  
+    orientation = 'v',  
+    opacity = 0.7,
+    text = NA,
+    hoverinfo = 'text'  
+  ) %>%  
+  plotly::config(displayModeBar = FALSE)
+
+plotly_plot_mobile
+
+# Save mobile version
+saveWidget(plotly_plot_mobile, "api/forecast_mobile.html", selfcontained = TRUE, title = "Wahlprognose von zweitstimme.org") %>% 
+  suppressWarnings()
 

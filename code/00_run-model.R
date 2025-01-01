@@ -1,4 +1,3 @@
-
 start_time <- Sys.time()
 
 setwd("/home/cerfort/prediction-2025")
@@ -15,15 +14,17 @@ election_date <- as.Date("2025-02-23")
 past_election_date <- as.Date("2021-09-26")
 days_in_model <- 365*2
 
+
 # Sampler Parameters
-nIter <- 2000
-nChains <- 10
+nIter <- 1000
+nChains <- 20
+
 
 # Get new polls
 message("Checking for new polls.")
 # new_wahlrecht_polls <- get_wahlrecht_polls()
 
-new_wahlrecht_polls <- get_wahlrecht_polls_old() %>% 
+new_wahlrecht_polls <- get_wahlrecht_polls() %>% 
   # Remove GMS, because BSW is not working through the package
   filter(institute != "gms")
 
@@ -34,10 +35,11 @@ new_wahlrecht_polls <- get_wahlrecht_polls_old() %>%
 run_again <- F
 
 # Get polls of last run, if file doesn't exist, run again anyway
-if(file.exists(str_c("output/polls/wahlrecht_polls_", last_run,".RData"))) load(str_c("output/polls/wahlrecht_polls_", last_run,".RData")) else run_again <- T
-
-# Is there a new poll?
-run_again <- (max(new_wahlrecht_polls$date, na.rm = T) > max(wahlrecht_polls$date, na.rm = T))
+if(file.exists(str_c("output/polls/wahlrecht_polls_", last_run,".RData"))) {
+  load(str_c("output/polls/wahlrecht_polls_", last_run,".RData")) 
+  # Is there a new poll?
+  run_again <- (max(new_wahlrecht_polls$date, na.rm = T) > max(wahlrecht_polls$date, na.rm = T))
+  } else run_again <- T
 
 # If for some reason, this is NA, try running again anyway
 if(is.na(run_again)) run_again <- T
@@ -60,6 +62,11 @@ if(run_again) {
   source("code/04a_api-data.R")
   source("code/04b_api-ggplot.R")
   source("code/04c_api-plotly.R")
+  source("code/04d_api-probabilities.R")
+  source("code/05_forecast-trend.R")
+  source("code/06_wahlkreis-model.R")
+  source("code/07_wahlkreis-plotly.R")
+  
   
 } else   message("There is no new poll. Not running the model.")
 
