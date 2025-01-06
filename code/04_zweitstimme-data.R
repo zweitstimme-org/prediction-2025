@@ -1,3 +1,5 @@
+message("Zweitstimme forecast.")
+
 # Get the latest forecast file
 (forecast_files <- list.files("/mnt/forecasts/prediction-2025/forecast", full.names = T) %>% str_subset("forecast_draws_"))
 (forecast_files <- forecast_files[ymd(str_extract(forecast_files, ".{10}(?=\\.rds)")) == max(ymd(str_extract(forecast_files, ".{10}(?=\\.rds)")))])
@@ -9,7 +11,6 @@ ordered_party <- names(sort(-apply(forecast,2,median)))
 forecast <- forecast[, ordered_party]
 
 # Save newest draws to api folder
-message("Saving the draws for API.")
 saveRDS(as.data.frame(forecast), file = "api/forecast_draws.rds")
 
 
@@ -48,9 +49,8 @@ df_forecast$x <- seq(0, 6, 1)
 
 
 # Output the forecast data for API
-message("Saving the forecast for API.")
-saveRDS(df_forecast, file = "output/forecasts/forecast_api.rds")
-file.copy("output/forecasts/forecast_api.rds", "api/forecast_api.rds", overwrite = T)
+# saveRDS(df_forecast, file = "output/forecasts/forecast_api.rds")
+saveRDS(df_forecast, file = "api/forecast_api.rds")
 
 
 # Add timestamp

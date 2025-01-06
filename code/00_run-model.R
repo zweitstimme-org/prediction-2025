@@ -55,18 +55,22 @@ if(run_again) {
   
   message("There is a new poll. Running the model.")
   
+  # Only run once
+  # source("code/01_prepare-data.R")
+  # source("code/02_ger_structural_pre_train_stan.R")
+  
   # Run the model file
   source("code/03_ger_combined_model_stan.R")
   
   # Run the data and plots
-  source("code/04a_api-data.R")
-  source("code/04b_api-ggplot.R")
-  source("code/04c_api-plotly.R")
-  source("code/04d_api-probabilities.R")
-  source("code/05_forecast-trend.R")
-  source("code/06_wahlkreis-model.R")
-  source("code/07_wahlkreis-plotly.R")
-  
+  source("code/04_zweitstimme-data.R")
+  source("code/05_zweitstimme-figures.R")
+  # source("code/04d_api-probabilities.R")
+  source("code/06_forecast-trend.R")
+  source("code/07_wahlkreis-model.R")
+  source("code/08_wahlkreis-figures.R")
+  source("code/09_vacant-seats.R")
+  source("code/10_probabilities.R")
   
 } else   message("There is no new poll. Not running the model.")
 

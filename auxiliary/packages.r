@@ -9,7 +9,9 @@ p_needed <- c("haven", "lubridate", "stringr", "ggplot2","dlm","plyr", "dplyr",
 			   "tidyverse",
 			   "MASS",
 			   "httr",
-			   "future.apply")
+			   "future.apply",
+			   "stargazer")
+
 packages <- rownames(installed.packages())
 p_to_install <- p_needed[!(p_needed %in% packages)]
 if (length(p_to_install) > 0) {

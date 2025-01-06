@@ -1,6 +1,6 @@
 ##### Forecast Trend
 
-message("Generating trend plot.")
+message("Zweitstimme trend.")
 
 (forecast_files <- list.files("/mnt/forecasts/prediction-2025/forecast", full.names = T) %>% str_subset("forecast_draws_"))
 

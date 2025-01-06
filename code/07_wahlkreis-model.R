@@ -1,7 +1,12 @@
+message("Erststimme forecast.")
+
 rmse <- function(pred, obs) {
   sqrt(mean((pred
              - obs) ^ 2))
 }
+
+nsim <- 10000
+
 
 full_df <-
   read.csv2("data/btw_candidates_1983-2025.csv",
@@ -54,6 +59,8 @@ train <-
              full_df$election != 1990) |
             (full_df$election == 1990 & full_df$east != 1) , ]
 
+train <- train[train$partei != "AND", ]
+
 test <- full_df[full_df$election == election,]
 
 test$weight <- 1
@@ -99,6 +106,8 @@ reg <-
      data = train)
 
 summary(reg)
+
+stargazer(reg, type = "latex", out = "output/tables/district_reg.tex")
 
 # Number of simulations for model uncertainty (lm and neural net)
 
@@ -176,12 +185,11 @@ draws <- map_df(draws, ~unlist(.), .id = "variable") %>% as.matrix()
 
 #nsim <- nrow(forecast)
 
-nsim <- 500
 adjustOrder <-
   match(c("cdu", "spd", "lin", "gru", "fdp", "afd", "bsw", "oth"),
         colnames(draws))
 
-forecast <- draws[1:3000, adjustOrder]
+forecast <- draws[1:nsim, adjustOrder]
 
 
 colnames(forecast) <-
@@ -298,19 +306,19 @@ for (zsim in 1:nsim) {
   
   
   
-  tmp_reg_winner <- future_lapply(1:mu_nsim, function(x) {
-    select <-
-      cbind(1:299, unlist(lapply(
-        aggregate(-reg_preds[, x], list(test$wkr), order)[, 2], `[[`, 1
-      )))
-    
-    vals[select]
-  })
+  # tmp_reg_winner <- future_lapply(1:mu_nsim, function(x) {
+  #   select <-
+  #     cbind(1:299, unlist(lapply(
+  #       aggregate(-reg_preds[, x], list(test$wkr), order)[, 2], `[[`, 1
+  #     )))
+  #   
+  #   vals[select]
+  # })
   
   res_list[[zsim]] <-
     list(
       # winner_nn = tmp_winner,
-      winner_reg = tmp_reg_winner,
+      # winner_reg = tmp_reg_winner,
       # rmse_nn = rmse_nn,
       rmse_reg = rmse_reg
     )
@@ -401,6 +409,9 @@ test$party <- ifelse(test$partei == "CDU/CSU", "cdu",
 # test$partei[test$partei == "CDU"] <- "CDU/CSU"
 # test$partei[test$partei == "CSU"] <- "CDU/CSU"
 
+test$partei[test$partei == "AND"] <- "And."
+
+
 test$partei[test$partei == "AFD"] <- "AfD"
 
 test$partei[test$partei == "GRUENE"] <- "Grüne"
@@ -412,12 +423,19 @@ test$partei[test$partei == "LINKE"] <- "Linke"
 # View(test %>% dplyr::select(wkr, wkr_name, party, partei, winner, probability, value, low, high))
 test$partei %>% unique
 
-test <- filter(test, partei != "AND")
+# test <- filter(test, partei != "AND")
 
-View(test %>% dplyr::select(wkr, wkr_name, party, partei, winner, probability, value, low, high, res_l1_E, res_l1_Z, zs_pred))
+# View(test %>% dplyr::select(wkr, wkr_name, party, partei, winner, probability, value, low, high, res_l1_E, res_l1_Z, zs_pred))
 
 
-test <- test %>% dplyr::select(wkr, wkr_name, land, party, partei, winner, probability, value, low, high)
+test <- test %>% dplyr::select(wkr, wkr_name, land, party, partei, winner, probability, value, low, high, value_l1 = res_l1_E, zs_value_l1 = res_l1_Z, incumbent_party)
+
+test <- test %>% mutate(value_l1 = round(value_l1*100, 1), zs_value_l1 = round(zs_value_l1*100, 1))
+
+test <- test %>% arrange(wkr, party)
+
+saveRDS(test, "data/test.RDS")
+saveRDS(res_pred, "data/res_pred.RDS")
 
 
 # Write into api folder as rds
@@ -433,6 +451,12 @@ party_colors <- c(
 )
 
 test$color <- party_colors[test$partei]
+
+
+test$zs_value <- round(apply(zs_pred, 1, function(x) mean(x))*100, 1)
+test$zs_low  <- round(apply(zs_pred, 1, function(x) quantile(x, probs = 0.17))*100, 1)  # 17% quantile
+test$zs_high <- round(apply(zs_pred, 1, function(x) quantile(x, probs = 0.83))*100, 1)  # 83% quantile
+
 
 # Output the forecast data for API
 message("Saving the district forecast for API.")

@@ -1,3 +1,6 @@
+message("Erststimme plot.")
+
+
 districts <- readRDS("api/forecast_districts.rds")
 
 # Create a new column for the type of the forecast
@@ -45,21 +48,39 @@ primary_color <- list(
 )
 
 # ggplot with custom colors applied
+
+# Compute the number of districts won per party
+party_labels <- gdf %>%
+  group_by(party) %>%
+  summarize(won_districts = sum(winner, na.rm = TRUE)) %>%
+  mutate(label = paste0(party %>% str_replace_all(c("afd" = "AfD", "cdu" = "CDU/CSU", "bsw" = "BSW", "gru" = "Greens", "spd" = "SPD", "lin" = "Linke")), " (", won_districts, ")")) %>%
+  pull(label, name = party)
+
+# Plot with dynamic labels
 ggplot(gdf) +
-  geom_sf(aes(fill = factor(party), alpha = probability)) +  # 'party' as the factor for fill
+  geom_sf(aes(fill = factor(party), alpha = probability)) +
   scale_fill_manual(
-    values = primary_color,  # Map party names to custom colors
-    name = "Party"  # Label for the legend
+    values = primary_color,
+    name = "",
+    labels = party_labels
   ) +
   theme_void() +
   theme(
-    legend.position = "none",  # Show the legend for the party color
-    plot.title = element_text(hjust = 0.5)  # Center-align the title
-  ) 
-  
-ggsave(filename = "output/fig/figure_forecast_districts.png", device = "png", dpi = 300,  height = 5*1.7, width = 5, bg = "white")
-ggsave(filename = "api/figure_forecast_districts.png", device = "png", dpi = 300,  height = 5*1.7, width = 5, bg = "white")
+    legend.position = "right",
+    plot.title = element_text(hjust = 0.5)
+  ) +
+  guides(alpha = "none") +
+  coord_sf(expand = FALSE)  # Prevent extra space around the plot
 
+
+ggsave(
+  filename = "api/figure_forecast_districts.png",
+  device = "png",
+  dpi = 300,
+  height = 5,  # Adjust to fit your map's aspect ratio
+  width = 5,
+  bg = "white"
+)
 
 
 # Assuming gdf has 'party', 'geometry' and 'probability' columns, and party is factorized properly

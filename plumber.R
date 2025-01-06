@@ -120,6 +120,66 @@ function(res) {
   res
 }
 
+# Serve predicted probabilities as JSON
+#* @serializer unboxedJSON
+#* @get /pred_probabilities
+function(res) {
+  rds_path <- "/app/files/pred_probabilities.rds"
+  
+  # Check if the file exists
+  if (!file.exists(rds_path)) {
+    res$status <- 404
+    return(list(error = "File not found"))
+  }
+  
+  # Load the RDS file
+  forecast_data <- readRDS(rds_path)
+  
+  # Manually convert the data to JSON and specify UTF-8 encoding
+  json_data <- jsonlite::toJSON(forecast_data, pretty = TRUE, auto_unbox = TRUE, 
+                                encode = "UTF-8")
+  
+  # Set the content type and encoding
+  res$setHeader("Content-Type", "application/json; charset=utf-8")
+  
+  # Return JSON data directly
+  res$body <- json_data
+  
+  res
+}
+
+
+# Serve predicted probabilities for vacant seats as JSON
+#* @serializer unboxedJSON
+#* @get /pred_vacant
+function(res) {
+  rds_path <- "/app/files/pred_vacant.rds"
+  
+  # Check if the file exists
+  if (!file.exists(rds_path)) {
+    res$status <- 404
+    return(list(error = "File not found"))
+  }
+  
+  # Load the RDS file
+  forecast_data <- readRDS(rds_path)
+  
+  # Manually convert the data to JSON and specify UTF-8 encoding
+  json_data <- jsonlite::toJSON(forecast_data, pretty = TRUE, auto_unbox = TRUE, 
+                                encode = "UTF-8")
+  
+  # Set the content type and encoding
+  res$setHeader("Content-Type", "application/json; charset=utf-8")
+  
+  # Return JSON data directly
+  res$body <- json_data
+  
+  res
+}
+
+
+
+
 # Serve district forecasts as JSON
 # Including 83% intervals
 #* @serializer unboxedJSON
@@ -257,48 +317,3 @@ function(req, res) {
 }
 
 
-
-# Serve hurdle.png
-#* @get /hurdle
-function(req, res) {
-  png_file_path <- "/app/files/hurdle.png"
-  
-  if (file.exists(png_file_path)) {
-    res$setHeader("Content-Type", "image/png")
-    res$body <- readBin(png_file_path, "raw", file.info(png_file_path)$size)
-    return(res)
-  } else {
-    res$status <- 404
-    return(list(message = "PNG file not found"))
-  }
-}
-
-# Serve majorities.png
-#* @get /majorities
-function(req, res) {
-  png_file_path <- "/app/files/majorities.png"
-  
-  if (file.exists(png_file_path)) {
-    res$setHeader("Content-Type", "image/png")
-    res$body <- readBin(png_file_path, "raw", file.info(png_file_path)$size)
-    return(res)
-  } else {
-    res$status <- 404
-    return(list(message = "PNG file not found"))
-  }
-}
-
-# Serve winner.png
-#* @get /winner
-function(req, res) {
-  png_file_path <- "/app/files/winner.png"
-  
-  if (file.exists(png_file_path)) {
-    res$setHeader("Content-Type", "image/png")
-    res$body <- readBin(png_file_path, "raw", file.info(png_file_path)$size)
-    return(res)
-  } else {
-    res$status <- 404
-    return(list(message = "PNG file not found"))
-  }
-}
