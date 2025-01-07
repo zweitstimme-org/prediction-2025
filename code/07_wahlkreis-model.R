@@ -432,7 +432,12 @@ test <- test %>% dplyr::select(wkr, wkr_name, land, party, partei, winner, proba
 
 test <- test %>% mutate(value_l1 = round(value_l1*100, 1), zs_value_l1 = round(zs_value_l1*100, 1))
 
+test$zs_value <- round(apply(zs_pred, 1, function(x) mean(x))*100, 1)
+test$zs_low  <- round(apply(zs_pred, 1, function(x) quantile(x, probs = 0.17))*100, 1)  # 17% quantile
+test$zs_high <- round(apply(zs_pred, 1, function(x) quantile(x, probs = 0.83))*100, 1)  # 83% quantile
+
 test <- test %>% arrange(wkr, party)
+
 
 saveRDS(test, "data/test.RDS")
 saveRDS(res_pred, "data/res_pred.RDS")
@@ -453,9 +458,6 @@ party_colors <- c(
 test$color <- party_colors[test$partei]
 
 
-test$zs_value <- round(apply(zs_pred, 1, function(x) mean(x))*100, 1)
-test$zs_low  <- round(apply(zs_pred, 1, function(x) quantile(x, probs = 0.17))*100, 1)  # 17% quantile
-test$zs_high <- round(apply(zs_pred, 1, function(x) quantile(x, probs = 0.83))*100, 1)  # 83% quantile
 
 
 # Output the forecast data for API
