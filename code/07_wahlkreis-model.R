@@ -440,7 +440,7 @@ test <- test %>% arrange(wkr, party)
 
 
 saveRDS(test, "data/test.RDS")
-saveRDS(res_pred, "data/res_pred.RDS")
+saveRDS(res_pred, "/mnt/forecasts/prediction-2025/temp/res_pred.RDS")
 
 
 # Write into api folder as rds

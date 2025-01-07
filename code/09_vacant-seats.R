@@ -9,7 +9,7 @@ load("data/btw_candidates_1983-2025.RData")
 
 # Get data from district forecast
 test <- readRDS("data/test.RDS")
-res_pred <- readRDS("data/res_pred.RDS")
+res_pred <- readRDS("/mnt/forecasts/prediction-2025/temp/res_pred.RDS")
 
 # Divide Linke and BSW
 # 
