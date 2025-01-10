@@ -316,4 +316,60 @@ function(req, res) {
   }
 }
 
+# This endpoint serves the HTML file directly
+#* @get /interactive_districts_share
+function(req, res) {
+  # Specify the path to your saved HTML file
+  html_file_path <- "/app/files/map_value.html"
+  
+  # Check if the file exists
+  if (file.exists(html_file_path)) {
+    # Serve the HTML file
+    res$setHeader("Content-Type", "text/html")
+    res$body <- paste(readLines(html_file_path), collapse = "\n")  # Read HTML file and set body
+    return(res)
+  } else {
+    res$status <- 404
+    return(list(message = "HTML file not found"))
+  }
+}
+
+
+# This endpoint serves the HTML file directly
+#* @get /interactive_districts_probability
+function(req, res) {
+  # Specify the path to your saved HTML file
+  html_file_path <- "/app/files/map_probability.html"
+  
+  # Check if the file exists
+  if (file.exists(html_file_path)) {
+    # Serve the HTML file
+    res$setHeader("Content-Type", "text/html")
+    res$body <- paste(readLines(html_file_path), collapse = "\n")  # Read HTML file and set body
+    return(res)
+  } else {
+    res$status <- 404
+    return(list(message = "HTML file not found"))
+  }
+}
+
+
+
+# This endpoint serves the HTML file directly
+#* @get /interactive_vacant
+function(req, res) {
+  # Specify the path to your saved HTML file
+  html_file_path <- "/app/files/map_vacant.html"
+  
+  # Check if the file exists
+  if (file.exists(html_file_path)) {
+    # Serve the HTML file
+    res$setHeader("Content-Type", "text/html")
+    res$body <- paste(readLines(html_file_path), collapse = "\n")  # Read HTML file and set body
+    return(res)
+  } else {
+    res$status <- 404
+    return(list(message = "HTML file not found"))
+  }
+}
 

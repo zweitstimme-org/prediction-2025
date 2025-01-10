@@ -16,7 +16,6 @@ res_pred <- readRDS("/mnt/forecasts/prediction-2025/temp/res_pred.RDS")
 # test %>% filter(party == "lin") %>% mutate(party = "bsw",
 #                                            res_l1_Z = res_l1_Z/2,
 #                                            res_l1_E = res_l1_E/2,
-#                                            
 
 # Get votes at last election as estimate for this election
 land_Z <- btw_candidates_1983_2025 %>% filter(incumbent_party == 1 & election %in% c(2021)) %>% 
@@ -77,6 +76,25 @@ res_el <- res_el[colnames(draws)]
 # 3. Divide allocate seats to party lists at state level (need Zweitstimme result at state level?)
 
 
+# Proportional swing
+sim.swing <- -sweep(-draws, 2, -res_el)
+sim.prop.swing <- t(apply(sim.swing, 1, function(x)
+  x / res_el))
+
+zs_pred <- matrix(0, nrow = nrow(votes_est), ncol = nrow(sim.swing))
+
+# for (i in 1:nrow(votes_est)) if (votes_est[i, "party"] %in% colnames(sim.prop.swing)) zs_pred[i, ] <- votes_est[i, "resp_Z"] + sim.prop.swing[, colnames(sim.prop.swing) %in% votes_est[i, "party"]] * votes_est[i, "resp_Z"]
+# Proportional swing
+zs_pred <- t(apply(votes_est, 1, function(row) {
+  party <- row["party"]
+  resp_Z <- as.numeric(row["resp_Z"])
+  if (party %in% colnames(sim.prop.swing)) {
+    return(resp_Z + sim.prop.swing[, party] * resp_Z)
+  } else {
+    return(rep(0, ncol(sim.prop.swing)))
+  }
+}))
+
 pred_abandoned <- data.frame()
 
 for (j in 1:nsim) {
@@ -91,14 +109,7 @@ for (j in 1:nsim) {
     group_by(wkr) %>% filter(pred == max(pred))
   district_draw$party[district_draw$party == "cdu" & district_draw$land == "BY"] <- "csu"
   
-  # Proportional swing
-  sim.swing <- -sweep(-draws, 2, -res_el)
-  sim.prop.swing <- t(apply(sim.swing, 1, function(x)
-    x / res_el))
-  
-  zs_pred <- matrix(0, nrow = nrow(votes_est), ncol = nrow(sim.swing))
-  
-  for (i in 1:nrow(votes_est)) if (votes_est[i, "party"] %in% colnames(sim.prop.swing)) zs_pred[i, ] <- votes_est[i, "resp_Z"] + sim.prop.swing[, colnames(sim.prop.swing) %in% votes_est[i, "party"]] * votes_est[i, "resp_Z"]
+
   
   # Rows are rows from votes_est, cols are per draw
   votes_est$zs_pred <- zs_pred[, forecast_seed]
@@ -108,8 +119,7 @@ for (j in 1:nsim) {
   (grundmandat <- table(district_draw$party) %>% as.data.frame %>% filter(Freq >= 3) %>% pull(Var1) %>% as.character())
   
   # Get parties with at least 5% (or 3 districts? Take CDU?)
-  forecast_seed <- sample(1:ncol(draws), 1)
-  
+
   full_draw <- draws[forecast_seed, ]
   draw <- full_draw[(full_draw >= 0.05) | colnames(draws) %in% grundmandat]
   
@@ -162,15 +172,15 @@ for (j in 1:nsim) {
     }
     
     # New divisor
-    (divisor <- round((divisor_min + divisor_max)/2, 0))
+    (divisor <- (divisor_min + divisor_max)/2)
     (seats <- round(listvote_party/divisor, 0))
     (seats_sum <- round(seats %>% sum))
     
   }
   
-  divisor
-  seats
-  sum(seats)
+  # divisor
+  # seats
+  # sum(seats)
   
   ##############################################
   # List votes per party and state (proportional swing?)
@@ -188,6 +198,8 @@ for (j in 1:nsim) {
   for (seats_party in names(seats)) {
     
     print(seats_party)
+    
+    if(seats_party == "fdp") next
     
     # Number of votes
     mytest[colnames(mytest) == seats_party]
@@ -209,10 +221,10 @@ for (j in 1:nsim) {
     while(sum(party_est$seats_round) != seats[seats_party]) {
       if(sum(party_est$seats_round) > seats[seats_party]) {
         
-        (divisor_cand <- c(party_est$pred_Z_abs / (party_est$seats_round - .5), party_est$pred_Z_abs / (party_est$seats_round - 1.5)))
+        (divisor_cand <- c(party_est$pred_Z_abs / (party_est$seats_round - .5), party_est$pred_Z_abs / (party_est$seats_round - 1.5)) %>% unique)
         
         # Only positive divisors
-        divisor_cand <- divisor_cand[divisor_cand > 0]
+        (divisor_cand <- divisor_cand[divisor_cand > 0])
         
         # Choose new divisor between smallest and second smallest candidate
         (divisor_min <- sort(divisor_cand)[1])
@@ -221,7 +233,7 @@ for (j in 1:nsim) {
         
       } else {
         
-        (divisor_cand <- c(party_est$pred_Z_abs / (party_est$seats_round + .5), party_est$pred_Z_abs / (party_est$seats_round + 1.5)))
+        (divisor_cand <- c(party_est$pred_Z_abs / (party_est$seats_round + .5), party_est$pred_Z_abs / (party_est$seats_round + 1.5)) %>% unique)
         
         # Only positive divisors
         divisor_cand <- divisor_cand[divisor_cand > 0]
@@ -229,15 +241,15 @@ for (j in 1:nsim) {
         # Choose new divisor between smallest and second smallest candidate
         (divisor_min <- sort(divisor_cand, decreasing = T)[1])
         (divisor_max <- sort(divisor_cand, decreasing = T)[2])
-        
+
       }
       
       # New divisor
-      (this_divisor <- round((divisor_min + divisor_max)/2, 0))
+      (this_divisor <- (divisor_min + divisor_max)/2)
       (party_est$seats_round <- round(party_est$pred_Z_abs/this_divisor, 0))
     }
     
-    divisor
+    # this_divisor
     sum(party_est$seats_round)
     
     seats_allocated <- bind_rows(seats_allocated, data.frame(party = seats_party, divisor = this_divisor, seats = sum(party_est$seats_round)))
@@ -278,9 +290,18 @@ for (j in 1:nsim) {
 #   summarise(abandon_p = mean(n),
 #             value_mean = mean(pred)) %>% arrange(-abandon_p) %>% View
 
+# Merge to test and make NA values 0, to add abandon_p
+test <- merge(test, pred_abandoned  %>% filter(abandoned) %>%  group_by(wkr, party) %>% mutate(n = n()/max(iteration)) %>%
+                summarise(abandon_p_party = mean(n) %>% round(2)),
+              by = c("wkr", "party"), all.x = T) %>% 
+  dplyr::mutate(abandon_p_party = case_when(is.na(abandon_p_party) ~ 0,
+                         T ~ abandon_p_party)) 
+saveRDS(test, file = "api/forecast_districts.rds")
 
-pred_abandoned %>% filter(abandoned) %>%  group_by(land, wkr, wkr_name) %>% mutate(n = n()/max(iteration)) %>%
-  summarise(abandon_p = mean(n) %>% round(2)) %>% arrange(-abandon_p) %>% 
+
+
+pred_abandoned %>%  group_by(land, wkr, wkr_name) %>% mutate(n = n()/max(iteration)) %>%
+  summarise(abandon_p = mean(abandoned) %>% round(2)) %>% arrange(-abandon_p) %>% 
   saveRDS(file = "api/pred_vacant.rds")
 
 # This can be merged with a ranked list of candidate results to determine which districts will not have a representative

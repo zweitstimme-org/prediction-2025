@@ -67,7 +67,7 @@ res_el <- res_el[colnames(draws)]
 
 pred_probabilities <- data.frame()
 
-for (j in 1:100) {
+for (j in 1:10000) {
   print(j)
   
   forecast_seed <- j # sample(1:500, 1)
@@ -104,16 +104,32 @@ pred_probabilities[is.na(pred_probabilities)] <- 0
 
 
 # saveRDS(pred_probabilities, "output/forecasts/pred_probabilities.rds")
-  data.frame(hurdle_lin = mean(pred_probabilities$lin > 0),
-             hurdle_bsw = mean(pred_probabilities$bsw > 0),
-             hurdle_fdp = mean(pred_probabilities$fdp > 0),
-             maj_cdu_csu_gru = mean((pred_probabilities$cdu + pred_probabilities$csu + pred_probabilities$gru) > .5),
-             maj_cdu_csu_spd = mean((pred_probabilities$cdu + pred_probabilities$csu + pred_probabilities$spd) > .5),
-             maj_cdu_csu_gru_spd = mean((pred_probabilities$cdu + pred_probabilities$csu + pred_probabilities$gru + pred_probabilities$spd) > .5)) # %>% 
+data.frame(
+  hurdle_lin = mean(pred_probabilities$lin > 0),
+  hurdle_bsw = mean(pred_probabilities$bsw > 0),
+  hurdle_fdp = mean(pred_probabilities$fdp > 0),
+  hurdle_spd = mean(pred_probabilities$spd > 0),
+  hurdle_cdu = mean(pred_probabilities$cdu > 0),
+  hurdle_csu = mean(pred_probabilities$csu > 0),
+  hurdle_gru = mean(pred_probabilities$gru > 0),
+  hurdle_afd = mean(pred_probabilities$afd > 0),
+  maj_cdu_csu_gru = mean((pred_probabilities$cdu + pred_probabilities$csu + pred_probabilities$gru) > 0.5),
+  maj_cdu_csu_spd = mean((pred_probabilities$cdu + pred_probabilities$csu + pred_probabilities$spd) > 0.5),
+  maj_cdu_csu_gru_spd = mean((pred_probabilities$cdu + pred_probabilities$csu + pred_probabilities$gru + pred_probabilities$spd) > 0.5),
+  maj_cdu_csu_afd = mean((pred_probabilities$cdu + pred_probabilities$csu + pred_probabilities$afd) > 0.5),
+  prob_lin_largest = mean(pred_probabilities$lin > apply(pred_probabilities[, -which(names(pred_probabilities) == "lin")], 1, max)),
+  prob_bsw_largest = mean(pred_probabilities$bsw > apply(pred_probabilities[, -which(names(pred_probabilities) == "bsw")], 1, max)),
+  prob_fdp_largest = mean(pred_probabilities$fdp > apply(pred_probabilities[, -which(names(pred_probabilities) == "fdp")], 1, max)),
+  prob_spd_largest = mean(pred_probabilities$spd > apply(pred_probabilities[, -which(names(pred_probabilities) == "spd")], 1, max)),
+  prob_cdu_largest = mean(pred_probabilities$cdu > apply(pred_probabilities[, -which(names(pred_probabilities) == "cdu")], 1, max)),
+  prob_csu_largest = mean(pred_probabilities$csu > apply(pred_probabilities[, -which(names(pred_probabilities) == "csu")], 1, max)),
+  prob_gru_largest = mean(pred_probabilities$gru > apply(pred_probabilities[, -which(names(pred_probabilities) == "gru")], 1, max)),
+  prob_afd_largest = mean(pred_probabilities$afd > apply(pred_probabilities[, -which(names(pred_probabilities) == "afd")], 1, max))
+) %>% 
   saveRDS("api/pred_probabilities.rds")
 
   
-  data.frame(maj_cdu_csu_gru = mean((pred_probabilities$cdu + pred_probabilities$csu + pred_probabilities$gru) > .5),
-             maj_cdu_csu_spd = mean((pred_probabilities$cdu + pred_probabilities$csu + pred_probabilities$spd) > .5),
-             maj_cdu_csu_gru_spd = mean((pred_probabilities$cdu + pred_probabilities$csu + pred_probabilities$gru + pred_probabilities$spd) > .5)) # %>% 
-  
+  # data.frame(maj_cdu_csu_gru = mean((pred_probabilities$cdu + pred_probabilities$csu + pred_probabilities$gru) > .5),
+  #            maj_cdu_csu_spd = mean((pred_probabilities$cdu + pred_probabilities$csu + pred_probabilities$spd) > .5),
+  #            maj_cdu_csu_gru_spd = mean((pred_probabilities$cdu + pred_probabilities$csu + pred_probabilities$gru + pred_probabilities$spd) > .5)) # %>% 
+  # 

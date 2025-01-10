@@ -427,8 +427,9 @@ test$partei %>% unique
 
 # View(test %>% dplyr::select(wkr, wkr_name, party, partei, winner, probability, value, low, high, res_l1_E, res_l1_Z, zs_pred))
 
+test %>% names
 
-test <- test %>% dplyr::select(wkr, wkr_name, land, party, partei, winner, probability, value, low, high, value_l1 = res_l1_E, zs_value_l1 = res_l1_Z, incumbent_party)
+test <- test %>% dplyr::select(wkr, wkr_name, land, party, partei, winner, probability, value, low, high, value_l1 = res_l1_E, zs_value_l1 = res_l1_Z, incumbent_party, zs_valid_l1 = valid_Z_l1, valid_l1 = valid_E_l1)
 
 test <- test %>% mutate(value_l1 = round(value_l1*100, 1), zs_value_l1 = round(zs_value_l1*100, 1))
 
@@ -436,7 +437,7 @@ test$zs_value <- round(apply(zs_pred, 1, function(x) mean(x))*100, 1)
 test$zs_low  <- round(apply(zs_pred, 1, function(x) quantile(x, probs = 0.17))*100, 1)  # 17% quantile
 test$zs_high <- round(apply(zs_pred, 1, function(x) quantile(x, probs = 0.83))*100, 1)  # 83% quantile
 
-test <- test %>% arrange(wkr, party)
+# test <- test %>% arrange(wkr, party)
 
 
 saveRDS(test, "data/test.RDS")

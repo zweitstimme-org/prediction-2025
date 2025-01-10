@@ -68,8 +68,8 @@ if(run_again) {
   # source("code/04d_api-probabilities.R")
   source("code/06_forecast-trend.R")
   source("code/07_wahlkreis-model.R")
-  source("code/08_wahlkreis-figures.R")
   source("code/09_vacant-seats.R")
+  source("code/08_wahlkreis-figures.R")
   source("code/10_probabilities.R")
   
 } else   message("There is no new poll. Not running the model.")
