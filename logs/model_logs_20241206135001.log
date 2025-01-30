@@ -1,0 +1,4 @@
+Checking for new polls.
+Error in get_wahlrecht_polls_old() %>% filter(institute != "gms") : 
+  could not find function "%>%"
+Execution halted

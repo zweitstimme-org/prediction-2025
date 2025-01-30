@@ -1,0 +1,448 @@
+Loading required package: haven
+Loading required package: lubridate
+
+Attaching package: ‘lubridate’
+
+The following objects are masked from ‘package:base’:
+
+    date, intersect, setdiff, union
+
+Loading required package: stringr
+Loading required package: ggplot2
+Loading required package: dlm
+
+Attaching package: ‘dlm’
+
+The following object is masked from ‘package:ggplot2’:
+
+    %+%
+
+Loading required package: plyr
+Loading required package: dplyr
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:plyr’:
+
+    arrange, count, desc, failwith, id, mutate, rename, summarise,
+    summarize
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+Loading required package: magrittr
+Loading required package: broom
+Loading required package: tidyr
+
+Attaching package: ‘tidyr’
+
+The following object is masked from ‘package:magrittr’:
+
+    extract
+
+Loading required package: reshape2
+
+Attaching package: ‘reshape2’
+
+The following object is masked from ‘package:tidyr’:
+
+    smiths
+
+Loading required package: readr
+Loading required package: rvest
+
+Attaching package: ‘rvest’
+
+The following object is masked from ‘package:readr’:
+
+    guess_encoding
+
+Loading required package: mcmcplots
+Loading required package: coda
+Loading required package: parallel
+Loading required package: rstan
+Loading required package: StanHeaders
+
+rstan version 2.32.6 (Stan version 2.32.2)
+
+For execution on a local, multicore CPU with excess RAM we recommend calling
+options(mc.cores = parallel::detectCores()).
+To avoid recompilation of unchanged Stan programs, we recommend calling
+rstan_options(auto_write = TRUE)
+For within-chain threading using `reduce_sum()` or `map_rect()` Stan functions,
+change `threads_per_chain` option:
+rstan_options(threads_per_chain = 1)
+
+
+Attaching package: ‘rstan’
+
+The following object is masked from ‘package:coda’:
+
+    traceplot
+
+The following object is masked from ‘package:tidyr’:
+
+    extract
+
+The following object is masked from ‘package:magrittr’:
+
+    extract
+
+Loading required package: shinystan
+Loading required package: shiny
+
+This is shinystan version 2.6.0
+
+Loading required package: superdiag
+Loading required package: xtable
+Loading required package: knitr
+Loading required package: openxlsx
+Loading required package: plotly
+
+Attaching package: ‘plotly’
+
+The following objects are masked from ‘package:plyr’:
+
+    arrange, mutate, rename, summarise
+
+The following object is masked from ‘package:ggplot2’:
+
+    last_plot
+
+The following object is masked from ‘package:stats’:
+
+    filter
+
+The following object is masked from ‘package:graphics’:
+
+    layout
+
+Loading required package: htmlwidgets
+      haven   lubridate     stringr     ggplot2         dlm        plyr 
+       TRUE        TRUE        TRUE        TRUE        TRUE        TRUE 
+      dplyr    magrittr       broom       tidyr     stringr    reshape2 
+       TRUE        TRUE        TRUE        TRUE        TRUE        TRUE 
+      readr       rvest   mcmcplots    parallel       rstan   shinystan 
+       TRUE        TRUE        TRUE        TRUE        TRUE        TRUE 
+  superdiag      xtable       knitr    openxlsx      plotly htmlwidgets 
+       TRUE        TRUE        TRUE        TRUE        TRUE        TRUE 
+Loading stan code.
+Loading structural inits.
+Checking for new polls.
+Loading required package: coalitions
+Warning message:
+There were 8 warnings in `mutate()`.
+The first warning was:
+ℹ In argument: `sonstige = (function (x, decimal = TRUE) ...`.
+Caused by warning:
+! There were 7 warnings in `mutate()`.
+The first warning was:
+ℹ In argument: `cdu = (function (x, decimal = TRUE) ...`.
+Caused by warning:
+! NAs introduced by coercion
+ℹ Run `dplyr::last_dplyr_warnings()` to see the 6 remaining warnings.
+ℹ Run `dplyr::last_dplyr_warnings()` to see the 7 remaining warnings. 
+[1] "2024-11-23" "2024-11-25" "2024-11-30" "2024-12-01" "2024-12-03"
+[6] "2024-12-04" "2024-12-05"
+[1] "2024-12-05"
+There is a new poll. Running the model.
+
+Estimating Model for Election 2025 with a cutoff of 2024-12-06 
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 3).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 4).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 5).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 6).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 7).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 8).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 9).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 10).
+Chain 3: 
+Chain 3: Gradient evaluation took 0.007126 seconds
+Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 71.26 seconds.
+Chain 3: Adjust your expectations accordingly!
+Chain 3: 
+Chain 3: 
+Chain 5: 
+Chain 5: Gradient evaluation took 0.00603 seconds
+Chain 5: 1000 transitions using 10 leapfrog steps per transition would take 60.3 seconds.
+Chain 5: Adjust your expectations accordingly!
+Chain 5: 
+Chain 5: 
+Chain 3: Iteration:    1 / 2000 [  0%]  (Warmup)
+Chain 9: 
+Chain 9: Gradient evaluation took 0.005108 seconds
+Chain 9: 1000 transitions using 10 leapfrog steps per transition would take 51.08 seconds.
+Chain 9: Adjust your expectations accordingly!
+Chain 9: 
+Chain 9: 
+Chain 5: Iteration:    1 / 2000 [  0%]  (Warmup)
+Chain 9: Iteration:    1 / 2000 [  0%]  (Warmup)
+Chain 4: 
+Chain Chain 24: : 
+Gradient evaluation took 0.006204 seconds
+Chain Chain 24: : Gradient evaluation took 0.006664 seconds1000 transitions using 10 leapfrog steps per transition would take 62.04 seconds.
+
+Chain Chain 24: : 1000 transitions using 10 leapfrog steps per transition would take 66.64 seconds.Adjust your expectations accordingly!
+
+Chain Chain 24: : Adjust your expectations accordingly!
+
+Chain Chain 42: : 
+
+Chain 2: 
+Chain 6: 
+Chain 6: Gradient evaluation took 0.006043 seconds
+Chain 6: 1000 transitions using 10 leapfrog steps per transition would take 60.43 seconds.
+Chain 6: Adjust your expectations accordingly!
+Chain 6: 
+Chain 6: 
+Chain 8: 
+Chain 8: Gradient evaluation took 0.005925 seconds
+Chain 8: 1000 transitions using 10 leapfrog steps per transition would take 59.25 seconds.
+Chain 8: Adjust your expectations accordingly!
+Chain 8: 
+Chain 8: 
+Chain 2: Iteration:    1 / 2000 [  0%]  (Warmup)
+Chain 8: Iteration:    1 / 2000 [  0%]  (Warmup)
+Chain 4: Iteration:    1 / 2000 [  0%]  (Warmup)
+Chain 6: Iteration:    1 / 2000 [  0%]  (Warmup)
+Chain 10: 
+Chain 10: Gradient evaluation took 0.005143 seconds
+Chain 10: 1000 transitions using 10 leapfrog steps per transition would take 51.43 seconds.
+Chain 10: Adjust your expectations accordingly!
+Chain 10: 
+Chain 10: 
+Chain 1: 
+Chain 1: Gradient evaluation took 0.005216 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 52.16 seconds.
+Chain 1: Adjust your expectations accordingly!
+Chain 1: 
+Chain 1: 
+Chain 7: 
+Chain 7: Gradient evaluation took 0.00482 seconds
+Chain 7: 1000 transitions using 10 leapfrog steps per transition would take 48.2 seconds.
+Chain 7: Adjust your expectations accordingly!
+Chain 7: 
+Chain 7: 
+Chain 10: Iteration:    1 / 2000 [  0%]  (Warmup)
+Chain 1: Iteration:    1 / 2000 [  0%]  (Warmup)
+Chain 7: Iteration:    1 / 2000 [  0%]  (Warmup)
+Chain 3: Iteration:  200 / 2000 [ 10%]  (Warmup)
+Chain 10: Iteration:  200 / 2000 [ 10%]  (Warmup)
+Chain 9: Iteration:  200 / 2000 [ 10%]  (Warmup)
+Chain 4: Iteration:  200 / 2000 [ 10%]  (Warmup)
+Chain 5: Iteration:  200 / 2000 [ 10%]  (Warmup)
+Chain 7: Iteration:  200 / 2000 [ 10%]  (Warmup)
+Chain 2: Iteration:  200 / 2000 [ 10%]  (Warmup)
+Chain 1: Iteration:  200 / 2000 [ 10%]  (Warmup)
+Chain 6: Iteration:  200 / 2000 [ 10%]  (Warmup)
+Chain 3: Iteration:  400 / 2000 [ 20%]  (Warmup)
+Chain 4: Iteration:  400 / 2000 [ 20%]  (Warmup)
+Chain 8: Iteration:  200 / 2000 [ 10%]  (Warmup)
+Chain 2: Iteration:  400 / 2000 [ 20%]  (Warmup)
+Chain 10: Iteration:  400 / 2000 [ 20%]  (Warmup)
+Chain 5: Iteration:  400 / 2000 [ 20%]  (Warmup)
+Chain 9: Iteration:  400 / 2000 [ 20%]  (Warmup)
+Chain 6: Iteration:  400 / 2000 [ 20%]  (Warmup)
+Chain 1: Iteration:  400 / 2000 [ 20%]  (Warmup)
+Chain 4: Iteration:  600 / 2000 [ 30%]  (Warmup)
+Chain 7: Iteration:  400 / 2000 [ 20%]  (Warmup)
+Chain 8: Iteration:  400 / 2000 [ 20%]  (Warmup)
+Chain 2: Iteration:  600 / 2000 [ 30%]  (Warmup)
+Chain 5: Iteration:  600 / 2000 [ 30%]  (Warmup)
+Chain 9: Iteration:  600 / 2000 [ 30%]  (Warmup)
+Chain 3: Iteration:  600 / 2000 [ 30%]  (Warmup)
+Chain 1: Iteration:  600 / 2000 [ 30%]  (Warmup)
+Chain 4: Iteration:  800 / 2000 [ 40%]  (Warmup)
+Chain 6: Iteration:  600 / 2000 [ 30%]  (Warmup)
+Chain 10: Iteration:  600 / 2000 [ 30%]  (Warmup)
+Chain 5: Iteration:  800 / 2000 [ 40%]  (Warmup)
+Chain 2: Iteration:  800 / 2000 [ 40%]  (Warmup)
+Chain 4: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+Chain 4: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+Chain 1: Iteration:  800 / 2000 [ 40%]  (Warmup)
+Chain 8: Iteration:  600 / 2000 [ 30%]  (Warmup)
+Chain 10: Iteration:  800 / 2000 [ 40%]  (Warmup)
+Chain 6: Iteration:  800 / 2000 [ 40%]  (Warmup)
+Chain 7: Iteration:  600 / 2000 [ 30%]  (Warmup)
+Chain 5: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+Chain 5: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+Chain 9: Iteration:  800 / 2000 [ 40%]  (Warmup)
+Chain 4: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+Chain 2: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+Chain 2: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+Chain 4: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+Chain 8: Iteration:  800 / 2000 [ 40%]  (Warmup)
+Chain 10: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+Chain 10: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+Chain 6: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+Chain 6: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+Chain 5: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+Chain 4: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+Chain 1: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+Chain 1: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+Chain 2: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+Chain 9: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+Chain 9: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+Chain 3: Iteration:  800 / 2000 [ 40%]  (Warmup)
+Chain 10: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+Chain 7: Iteration:  800 / 2000 [ 40%]  (Warmup)
+Chain 5: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
+Chain 4: 
+Chain 4:  Elapsed Time: 10243.7 seconds (Warm-up)
+Chain 4:                5326.63 seconds (Sampling)
+Chain 4:                15570.3 seconds (Total)
+Chain 4: 
+Chain 6: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+Chain 8: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+Chain 8: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+Chain 1: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+Chain 9: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+Chain 2: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+Chain 10: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+Chain 5: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+Chain 7: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+Chain 7: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+Chain 3: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+Chain 3: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+Chain 6: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+Chain 1: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+Chain 8: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+Chain 9: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+Chain 3: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+Chain 10: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+Chain 5: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+Chain 3: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+Chain 7: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+Chain 6: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+Chain 9: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+Chain 8: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+Chain 3: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+Chain 10: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+Chain 5: Iteration: 2000 / 2000 [100%]  (Sampling)
+Chain 5: 
+Chain 5:  Elapsed Time: 11118.4 seconds (Warm-up)
+Chain 5:                10478.4 seconds (Sampling)
+Chain 5:                21596.7 seconds (Total)
+Chain 5: 
+Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+Chain 7: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+Chain 9: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
+Chain 3: 
+Chain 3:  Elapsed Time: 17909 seconds (Warm-up)
+Chain 3:                5152.93 seconds (Sampling)
+Chain 3:                23062 seconds (Total)
+Chain 3: 
+Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+Chain 6: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+Chain 10: Iteration: 2000 / 2000 [100%]  (Sampling)
+Chain 10: 
+Chain 10:  Elapsed Time: 12681 seconds (Warm-up)
+Chain 10:                10512.7 seconds (Sampling)
+Chain 10:                23193.7 seconds (Total)
+Chain 10: 
+Chain 8: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
+Chain 2: 
+Chain 2:  Elapsed Time: 11965.5 seconds (Warm-up)
+Chain 2:                12041.6 seconds (Sampling)
+Chain 2:                24007.2 seconds (Total)
+Chain 2: 
+Chain 9: Iteration: 2000 / 2000 [100%]  (Sampling)
+Chain 9: 
+Chain 9:  Elapsed Time: 14478.7 seconds (Warm-up)
+Chain 9:                10321.9 seconds (Sampling)
+Chain 9:                24800.7 seconds (Total)
+Chain 9: 
+Chain 7: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
+Chain 1: 
+Chain 1:  Elapsed Time: 13915.4 seconds (Warm-up)
+Chain 1:                11410 seconds (Sampling)
+Chain 1:                25325.4 seconds (Total)
+Chain 1: 
+Chain 6: Iteration: 2000 / 2000 [100%]  (Sampling)
+Chain 6: 
+Chain 6:  Elapsed Time: 13146.2 seconds (Warm-up)
+Chain 6:                12652.7 seconds (Sampling)
+Chain 6:                25799 seconds (Total)
+Chain 6: 
+Chain 8: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+Chain 7: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+Chain 8: Iteration: 2000 / 2000 [100%]  (Sampling)
+Chain 8: 
+Chain 8:  Elapsed Time: 15959.9 seconds (Warm-up)
+Chain 8:                12591.7 seconds (Sampling)
+Chain 8:                28551.5 seconds (Total)
+Chain 8: 
+Chain 7: Iteration: 2000 / 2000 [100%]  (Sampling)
+Chain 7: 
+Chain 7:  Elapsed Time: 17776 seconds (Warm-up)
+Chain 7:                11756.9 seconds (Sampling)
+Chain 7:                29532.9 seconds (Total)
+Chain 7: 
+Saving the draws.
+      haven   lubridate     stringr     ggplot2         dlm        plyr 
+       TRUE        TRUE        TRUE        TRUE        TRUE        TRUE 
+      dplyr    magrittr       broom       tidyr     stringr    reshape2 
+       TRUE        TRUE        TRUE        TRUE        TRUE        TRUE 
+      readr       rvest   mcmcplots    parallel       rstan   shinystan 
+       TRUE        TRUE        TRUE        TRUE        TRUE        TRUE 
+  superdiag      xtable       knitr    openxlsx      plotly htmlwidgets 
+       TRUE        TRUE        TRUE        TRUE        TRUE        TRUE 
+Saving the draws for API.
+Saving the forecast for API.
+Creating ggplot.
+Creating plotly.
+Warning messages:
+1: In readLines(file, warn = TRUE) :
+  incomplete final line found on '/home/cerfort/prediction-2025/model_code/combined_model_simple.stan'
+2: There were 432 divergent transitions after warmup. See
+https://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup
+to find out why this is a problem and how to eliminate them. 
+3: There were 10 chains where the estimated Bayesian Fraction of Missing Information was low. See
+https://mc-stan.org/misc/warnings.html#bfmi-low 
+4: Examine the pairs() plot to diagnose sampling problems
+ 
+5: The largest R-hat is NA, indicating chains have not mixed.
+Running the chains for more iterations may help. See
+https://mc-stan.org/misc/warnings.html#r-hat 
+6: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.
+Running the chains for more iterations may help. See
+https://mc-stan.org/misc/warnings.html#bulk-ess 
+7: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.
+Running the chains for more iterations may help. See
+https://mc-stan.org/misc/warnings.html#tail-ess 
+8: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead. 
+9: 'layout' objects don't have these attributes: 'displayModeBar'
+Valid attributes include:
+'_deprecated', 'activeshape', 'annotations', 'autosize', 'autotypenumbers', 'calendar', 'clickmode', 'coloraxis', 'colorscale', 'colorway', 'computed', 'datarevision', 'dragmode', 'editrevision', 'editType', 'font', 'geo', 'grid', 'height', 'hidesources', 'hoverdistance', 'hoverlabel', 'hovermode', 'images', 'legend', 'mapbox', 'margin', 'meta', 'metasrc', 'modebar', 'newshape', 'paper_bgcolor', 'plot_bgcolor', 'polar', 'scene', 'selectdirection', 'selectionrevision', 'separators', 'shapes', 'showlegend', 'sliders', 'smith', 'spikedistance', 'template', 'ternary', 'title', 'transition', 'uirevision', 'uniformtext', 'updatemenus', 'width', 'xaxis', 'yaxis', 'barmode', 'bargap', 'mapType'
+ 
+10: 'bar' objects don't have these attributes: 'mode'
+Valid attributes include:
+'_deprecated', 'alignmentgroup', 'base', 'basesrc', 'cliponaxis', 'constraintext', 'customdata', 'customdatasrc', 'dx', 'dy', 'error_x', 'error_y', 'hoverinfo', 'hoverinfosrc', 'hoverlabel', 'hovertemplate', 'hovertemplatesrc', 'hovertext', 'hovertextsrc', 'ids', 'idssrc', 'insidetextanchor', 'insidetextfont', 'legendgroup', 'legendgrouptitle', 'legendrank', 'marker', 'meta', 'metasrc', 'name', 'offset', 'offsetgroup', 'offsetsrc', 'opacity', 'orientation', 'outsidetextfont', 'selected', 'selectedpoints', 'showlegend', 'stream', 'text', 'textangle', 'textfont', 'textposition', 'textpositionsrc', 'textsrc', 'texttemplate', 'texttemplatesrc', 'transforms', 'type', 'uid', 'uirevision', 'unselected', 'visible', 'width', 'widthsrc', 'x', 'x0', 'xaxis', 'xcalendar', 'xhoverformat', 'xperiod', 'xperiod0', 'xperiodalignment', 'xsrc', 'y', 'y0', 'yaxis', 'ycalendar', 'yhoverformat', 'yperiod', 'yperiod0', 'yperiodalignm [... truncated] 
+Total time needed in mins:
+500.76510177056
