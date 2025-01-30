@@ -1,0 +1,404 @@
+Loading required package: haven
+Loading required package: lubridate
+
+Attaching package: ‘lubridate’
+
+The following objects are masked from ‘package:base’:
+
+    date, intersect, setdiff, union
+
+Loading required package: stringr
+Loading required package: ggplot2
+Loading required package: dlm
+
+Attaching package: ‘dlm’
+
+The following object is masked from ‘package:ggplot2’:
+
+    %+%
+
+Loading required package: plyr
+Loading required package: dplyr
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:plyr’:
+
+    arrange, count, desc, failwith, id, mutate, rename, summarise,
+    summarize
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+Loading required package: magrittr
+Loading required package: broom
+Loading required package: tidyr
+
+Attaching package: ‘tidyr’
+
+The following object is masked from ‘package:magrittr’:
+
+    extract
+
+Loading required package: reshape2
+
+Attaching package: ‘reshape2’
+
+The following object is masked from ‘package:tidyr’:
+
+    smiths
+
+Loading required package: readr
+Loading required package: rvest
+
+Attaching package: ‘rvest’
+
+The following object is masked from ‘package:readr’:
+
+    guess_encoding
+
+Loading required package: mcmcplots
+Loading required package: coda
+Loading required package: parallel
+Loading required package: rstan
+Loading required package: StanHeaders
+
+rstan version 2.32.6 (Stan version 2.32.2)
+
+For execution on a local, multicore CPU with excess RAM we recommend calling
+options(mc.cores = parallel::detectCores()).
+To avoid recompilation of unchanged Stan programs, we recommend calling
+rstan_options(auto_write = TRUE)
+For within-chain threading using `reduce_sum()` or `map_rect()` Stan functions,
+change `threads_per_chain` option:
+rstan_options(threads_per_chain = 1)
+
+
+Attaching package: ‘rstan’
+
+The following object is masked from ‘package:coda’:
+
+    traceplot
+
+The following object is masked from ‘package:tidyr’:
+
+    extract
+
+The following object is masked from ‘package:magrittr’:
+
+    extract
+
+Loading required package: shinystan
+Loading required package: shiny
+
+This is shinystan version 2.6.0
+
+Loading required package: superdiag
+Loading required package: xtable
+Loading required package: knitr
+Loading required package: openxlsx
+Loading required package: plotly
+
+Attaching package: ‘plotly’
+
+The following objects are masked from ‘package:plyr’:
+
+    arrange, mutate, rename, summarise
+
+The following object is masked from ‘package:ggplot2’:
+
+    last_plot
+
+The following object is masked from ‘package:stats’:
+
+    filter
+
+The following object is masked from ‘package:graphics’:
+
+    layout
+
+Loading required package: htmlwidgets
+Loading required package: stringi
+Loading required package: keras
+Loading required package: tidyverse
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ forcats 1.0.0     ✔ tibble  3.2.1
+✔ purrr   1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dlm::%+%()              masks ggplot2::%+%()
+✖ plotly::arrange()       masks dplyr::arrange(), plyr::arrange()
+✖ purrr::compact()        masks plyr::compact()
+✖ dplyr::count()          masks plyr::count()
+✖ dplyr::desc()           masks plyr::desc()
+✖ rstan::extract()        masks tidyr::extract(), magrittr::extract()
+✖ dplyr::failwith()       masks plyr::failwith()
+✖ plotly::filter()        masks dplyr::filter(), stats::filter()
+✖ rvest::guess_encoding() masks readr::guess_encoding()
+✖ dplyr::id()             masks plyr::id()
+✖ dplyr::lag()            masks stats::lag()
+✖ plotly::mutate()        masks dplyr::mutate(), plyr::mutate()
+✖ plotly::rename()        masks dplyr::rename(), plyr::rename()
+✖ purrr::set_names()      masks magrittr::set_names()
+✖ plotly::summarise()     masks dplyr::summarise(), plyr::summarise()
+✖ dplyr::summarize()      masks plyr::summarize()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+Loading required package: MASS
+
+Attaching package: ‘MASS’
+
+The following object is masked from ‘package:plotly’:
+
+    select
+
+The following object is masked from ‘package:dplyr’:
+
+    select
+
+Loading required package: httr
+
+Attaching package: ‘httr’
+
+The following object is masked from ‘package:plotly’:
+
+    config
+
+Loading required package: future.apply
+Loading required package: future
+
+Attaching package: ‘future’
+
+The following object is masked from ‘package:keras’:
+
+    %<-%
+
+Loading required package: stargazer
+
+Please cite as: 
+
+ Hlavac, Marek (2022). stargazer: Well-Formatted Regression and Summary Statistics Tables.
+ R package version 5.2.3. https://CRAN.R-project.org/package=stargazer 
+
+       haven    lubridate      stringr      ggplot2          dlm         plyr 
+        TRUE         TRUE         TRUE         TRUE         TRUE         TRUE 
+       dplyr     magrittr        broom        tidyr      stringr     reshape2 
+        TRUE         TRUE         TRUE         TRUE         TRUE         TRUE 
+       readr        rvest    mcmcplots     parallel        rstan    shinystan 
+        TRUE         TRUE         TRUE         TRUE         TRUE         TRUE 
+   superdiag       xtable        knitr     openxlsx       plotly  htmlwidgets 
+        TRUE         TRUE         TRUE         TRUE         TRUE         TRUE 
+    parallel      stringi        keras    tidyverse         MASS         httr 
+        TRUE         TRUE         TRUE         TRUE         TRUE         TRUE 
+future.apply    stargazer 
+        TRUE         TRUE 
+Checking for new polls.
+Loading required package: xml2
+[1] "2025-01-30"
+There is a new poll. Running the model.
+Loading stan code.
+Loading structural inits.
+
+Estimating Model for Election 2025 with a cutoff of 2025-01-30 
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 3).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 4).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 5).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 6).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 7).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 8).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 9).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 10).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 11).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 12).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 13).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 14).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 15).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 16).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 17).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 18).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 20).
+
+SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 19).
+Chain 4: 
+Chain 4: Gradient evaluation took 0.007721 seconds
+Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 77.21 seconds.
+Chain 4: Adjust your expectations accordingly!
+Chain 4: 
+Chain 4: 
+Chain 13: 
+Chain Chain 1713: : 
+Gradient evaluation took 0.007426 seconds
+Chain 13Chain : 171000 transitions using 10 leapfrog steps per transition would take 74.26 seconds.: 
+Gradient evaluation took 0.007484 secondsChain 
+13Chain : 17Adjust your expectations accordingly!: 
+1000 transitions using 10 leapfrog steps per transition would take 74.84 seconds.Chain 
+13Chain : 17: 
+Adjust your expectations accordingly!Chain 
+13Chain : 17
+: 
+Chain 17: 
+Chain 8: 
+Chain 8: Gradient evaluation took 0.007243 seconds
+Chain 8: 1000 transitions using 10 leapfrog steps per transition would take 72.43 seconds.
+Chain 8: Adjust your expectations accordingly!
+Chain 8: 
+Chain 8: 
+Chain 16: 
+Chain 16: Gradient evaluation took 0.007178 seconds
+Chain 16: 1000 transitions using 10 leapfrog steps per transition would take 71.78 seconds.
+Chain 16: Adjust your expectations accordingly!
+Chain 16: 
+Chain 16: 
+Chain 14: 
+Chain 14: Gradient evaluation took 0.00737 seconds
+Chain 14: 1000 transitions using 10 leapfrog steps per transition would take 73.7 seconds.
+Chain 14: Adjust your expectations accordingly!
+Chain 14: 
+Chain 14: 
+Chain 11: 
+Chain 11: Gradient evaluation took 0.007069 seconds
+Chain 11: 1000 transitions using 10 leapfrog steps per transition would take 70.69 seconds.
+Chain 11: Adjust your expectations accordingly!
+Chain 11: 
+Chain 11: 
+Chain 4: Iteration:   1 / 1000 [  0%]  (Warmup)
+Chain 13: Iteration:   1 / 1000 [  0%]  (Warmup)
+Chain 17: Iteration:   1 / 1000 [  0%]  (Warmup)
+Chain 8: Iteration:   1 / 1000 [  0%]  (Warmup)
+Chain 2: 
+Chain 2: Gradient evaluation took 0.007475 seconds
+Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 74.75 seconds.
+Chain 2: Adjust your expectations accordingly!
+Chain 2: 
+Chain 2: 
+Chain 6: 
+Chain 6: Gradient evaluation took 0.007421 seconds
+Chain 6: 1000 transitions using 10 leapfrog steps per transition would take 74.21 seconds.
+Chain 6: Adjust your expectations accordingly!
+Chain 6: 
+Chain 6: 
+Chain 15: 
+Chain 15: Gradient evaluation took 0.006908 seconds
+Chain 15: 1000 transitions using 10 leapfrog steps per transition would take 69.08 seconds.
+Chain 15: Adjust your expectations accordingly!
+Chain 15: 
+Chain 15: 
+Chain 20: 
+Chain 20: Gradient evaluation took 0.005824 seconds
+Chain 20: 1000 transitions using 10 leapfrog steps per transition would take 58.24 seconds.
+Chain 20: Adjust your expectations accordingly!
+Chain 20: 
+Chain 20: 
+Chain 18: 
+Chain 18: Gradient evaluation took 0.006714 seconds
+Chain 18: 1000 transitions using 10 leapfrog steps per transition would take 67.14 seconds.
+Chain 18: Adjust your expectations accordingly!
+Chain 18: 
+Chain 18: 
+Chain 12: 
+Chain 12: Gradient evaluation took 0.005994 seconds
+Chain 12: 1000 transitions using 10 leapfrog steps per transition would take 59.94 seconds.
+Chain 12: Adjust your expectations accordingly!
+Chain 12: 
+Chain 12: 
+Chain 16: Iteration:   1 / 1000 [  0%]  (Warmup)
+Chain 19: 
+Chain 19: Gradient evaluation took 0.007642 seconds
+Chain 19: 1000 transitions using 10 leapfrog steps per transition would take 76.42 seconds.
+Chain 19: Adjust your expectations accordingly!
+Chain 19: 
+Chain 19: 
+Chain 14: Iteration:   1 / 1000 [  0%]  (Warmup)
+Chain 11: Iteration:   1 / 1000 [  0%]  (Warmup)
+Chain 5: 
+Chain 5: Gradient evaluation took 0.005977 seconds
+Chain 5: 1000 transitions using 10 leapfrog steps per transition would take 59.77 seconds.
+Chain 5: Adjust your expectations accordingly!
+Chain 5: 
+Chain 5: 
+Chain 3: 
+Chain 3: Gradient evaluation took 0.007441 seconds
+Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 74.41 seconds.
+Chain 3: Adjust your expectations accordingly!
+Chain 3: 
+Chain 3: 
+Chain 9: 
+Chain 9: Gradient evaluation took 0.005745 seconds
+Chain 9: 1000 transitions using 10 leapfrog steps per transition would take 57.45 seconds.
+Chain 9: Adjust your expectations accordingly!
+Chain 9: 
+Chain 9: 
+Chain 15: Iteration:   1 / 1000 [  0%]  (Warmup)
+Chain 2: Iteration:   1 / 1000 [  0%]  (Warmup)
+Chain 6: Iteration:   1 / 1000 [  0%]  (Warmup)
+Chain 12: Iteration:   1 / 1000 [  0%]  (Warmup)
+Chain 18: Iteration:   1 / 1000 [  0%]  (Warmup)
+Chain 20: Iteration:   1 / 1000 [  0%]  (Warmup)
+Chain 19: Iteration:   1 / 1000 [  0%]  (Warmup)
+Chain 1: 
+Chain 1: Gradient evaluation took 0.005493 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 54.93 seconds.
+Chain 1: Adjust your expectations accordingly!
+Chain 1: 
+Chain 1: 
+Chain 7: 
+Chain 7: Gradient evaluation took 0.005339 seconds
+Chain 7: 1000 transitions using 10 leapfrog steps per transition would take 53.39 seconds.
+Chain 7: Adjust your expectations accordingly!
+Chain 7: 
+Chain 7: 
+Chain 10: 
+Chain 10: Gradient evaluation took 0.005365 seconds
+Chain 10: 1000 transitions using 10 leapfrog steps per transition would take 53.65 seconds.
+Chain 10: Adjust your expectations accordingly!
+Chain 10: 
+Chain 10: 
+Chain 5: Iteration:   1 / 1000 [  0%]  (Warmup)
+Chain 3: Iteration:   1 / 1000 [  0%]  (Warmup)
+Chain 9: Iteration:   1 / 1000 [  0%]  (Warmup)
+Chain 1: Iteration:   1 / 1000 [  0%]  (Warmup)
+Chain Chain 710: : Iteration:   1 / 1000 [  0%]  (Warmup)Iteration:   1 / 1000 [  0%]  (Warmup)
+
+Chain 14: Iteration: 100 / 1000 [ 10%]  (Warmup)
+Chain 5: Iteration: 100 / 1000 [ 10%]  (Warmup)
+Chain 9: Iteration: 100 / 1000 [ 10%]  (Warmup)
+Chain 11: Iteration: 100 / 1000 [ 10%]  (Warmup)
+Chain 19: Iteration: 100 / 1000 [ 10%]  (Warmup)
+Chain 12: Iteration: 100 / 1000 [ 10%]  (Warmup)
+Chain 18: Iteration: 100 / 1000 [ 10%]  (Warmup)
+Chain 7: Iteration: 100 / 1000 [ 10%]  (Warmup)
+Chain 1: Iteration: 100 / 1000 [ 10%]  (Warmup)
+Chain 20: Iteration: 100 / 1000 [ 10%]  (Warmup)
+Chain 16: Iteration: 100 / 1000 [ 10%]  (Warmup)
+Chain 4: Iteration: 100 / 1000 [ 10%]  (Warmup)
+Chain 3: Iteration: 100 / 1000 [ 10%]  (Warmup)
+Chain 8: Iteration: 100 / 1000 [ 10%]  (Warmup)
+Chain 13: Iteration: 100 / 1000 [ 10%]  (Warmup)
+Chain 10: Iteration: 100 / 1000 [ 10%]  (Warmup)
+Chain 17: Iteration: 100 / 1000 [ 10%]  (Warmup)
+Chain 15: Iteration: 100 / 1000 [ 10%]  (Warmup)
+Chain 2: Iteration: 100 / 1000 [ 10%]  (Warmup)
