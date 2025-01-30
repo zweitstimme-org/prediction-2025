@@ -6,3 +6,4 @@ output/pred_abandoned.rds
 output/draws/
 output/zweitstimme_output*
 .DS_Store
+output/vacant_seats.rds

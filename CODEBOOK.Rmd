@@ -1,0 +1,117 @@
+---
+title: "Codebook"
+output: html_document
+date: "2025-01-30"
+---
+
+## Input Data Files:
+
+### btw_candidates_1983-2025.csv
+Historical candidate data from 1983-2025:
+- election: Election year
+- land: Federal state
+- wkr: Electoral district number
+- wkr_name: Electoral district name
+- partei: Party name
+- valid_E_l1: Valid votes in previous election (first vote)
+- valid_Z_l1: Valid votes in previous election (second vote)
+- res_l1_E: Vote share in previous election (first vote)
+- res_l1_Z: Vote share in previous election (second vote)
+- incumbent_party: Whether party won district in previous election (0/1)
+
+### wahlrecht_polls_{date}.RData
+Dataset with polling data:
+- date: Poll date
+- institute: Polling institute
+- sample_size: Sample size
+- cdu: CDU/CSU vote share
+- spd: SPD vote share
+- gru: Green party vote share
+- fdp: FDP vote share
+- lin: Left party vote share
+- afd: AfD vote share
+- bsw: BSW vote share
+- oth: Other parties vote share
+
+### pre_train_data_21.rds
+Dataset for structural model until 2021:
+- election: Election year
+- party: Party abbreviation
+- voteshare: Actual vote share
+- voteshare_l1: Previous election vote share
+- polls_200_230: Average poll share 200-230 days before election
+- chancellor_party: Whether party held chancellorship (0/1)
+
+
+### germany-federal-polls.csv
+Federal polling data:
+- electiondate: Election date
+- party: Party abbreviation
+- auftraggeber: Polling institute
+- date: Poll date
+- poll_share: Poll share
+- vote_share: Vote share
+- vote_share_l1: Previous election vote share
+- electiondate_l1: Previous election date
+- electiondate_lead1: Election date lead
+
+
+### germany-state-elections.csv
+State election results:
+- electiondate: Election date
+- land: Federal state
+- electiondate_l1: Previous election date
+- party: Party abbreviation
+- vote_share: Vote share
+- on_ballot: Whether party was on ballot (0/1)
+- vote_share_l1: Previous election vote share
+
+
+### germany-state-polls.csv
+
+State polling data:
+- date: Poll date
+- institute: Polling institute
+- land: Federal state
+- party: Party abbreviation
+- poll_share: Poll share
+
+## Output Data Files:
+
+### pre_train_data_25.rds
+Dataset for structural model until 2025:
+- election: Election year
+- party: Party abbreviation
+- voteshare: Actual vote share
+- voteshare_l1: Previous election vote share
+- polls_200_230: Average poll share 200-230 days before election
+- chancellor_party: Whether party held chancellorship (0/1)
+
+### forecast_draws_{date}.rds
+Matrix of simulated vote shares with:
+- Rows: Simulation iterations
+- Columns: Parties (cdu, spd, gru, fdp, afd, lin, bsw, oth)
+
+### prediction_data_districts.rds
+Dataset with district-level predictions:
+- wkr: Electoral district number
+- wkr_name: Electoral district name
+- land: Federal state
+- party: Party abbreviation
+- partei: Party name for plotting
+- winner: Predicted winner (0/1)
+- probability: Win probability
+- value: Predicted vote share
+- low: Lower confidence bound (83% credible interval)
+- high: Upper confidence bound (83% credible interval)
+- value_l1: Previous election vote share
+- incumbent_party: Whether party won district in previous election (0/1)
+- zs_valid_l1: Valid votes in previous election (second vote)
+- valid_l1: Valid votes in previous election (first vote)
+
+### pred_probabilities.rds
+Dataset with probabilities for various scenarios:
+- hurdle_{party}: Probability of party clearing 5% threshold
+- maj_{coalition}: Probability of coalition majority
+- prob_{party}_largest: Probability of party becoming largest
+- grundmandat_{party}: Probability of party winning 3+ direct mandates

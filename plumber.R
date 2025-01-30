@@ -185,7 +185,7 @@ function(res) {
 #* @serializer unboxedJSON
 #* @get /forecast_districts
 function(res) {
-  rds_path <- "/app/files/forecast_districts.rds"
+  rds_path <- "/app/files/prediction_data_districts.rds"
   
   # Check if the file exists
   if (!file.exists(rds_path)) {
@@ -234,7 +234,7 @@ function(res) {
 #* @serializer unboxedJSON
 #* @get /draws
 function(res) {
-  rds_path <- "/app/files/forecast_draws.rds"
+  rds_path <- "/app/files/forecast_party_vote_draws.rds"
   
   # Check if the file exists
   if (!file.exists(rds_path)) {

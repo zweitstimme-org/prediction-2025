@@ -18,10 +18,9 @@ set.seed(123)
 
 # Load shapefile
 # wahlkreise_sf <- st_read("data/btw25_geometrie_wahlkreise_shp/btw25_geometrie_wahlkreise_shp.shp")
+pred_vacant <- readRDS("api/pred_vacant.rds")
 
 gdf <- districts %>% filter(winner == 1)
-
-pred_vacant <- readRDS("api/pred_vacant.rds")
 
 gdf <- merge(gdf, pred_vacant %>% dplyr::select(-wkr_name), by = "wkr", all.x = TRUE) %>% 
   # NA abandon_p to 0
@@ -54,8 +53,6 @@ data <- rjson::fromJSON(paste(geojson_text, collapse = ""))
 data$features[[66]]
 
 data$features[[66]]$geometry$type
-
-
 
 
 for (k in 1:299) {
