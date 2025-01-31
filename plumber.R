@@ -373,3 +373,94 @@ function(req, res) {
   }
 }
 
+#* @get /map_zs_afd
+function(req, res) {
+  html_file_path <- "/app/files/map_zs_afd.html"
+  if (file.exists(html_file_path)) {
+    res$setHeader("Content-Type", "text/html")
+    res$body <- paste(readLines(html_file_path), collapse = "\n")
+    return(res)
+  } else {
+    res$status <- 404
+    return(list(message = "HTML file not found"))
+  }
+}
+
+
+#* @get /map_zs_cdu
+function(req, res) {
+  html_file_path <- "/app/files/map_zs_cdu.html"
+  if (file.exists(html_file_path)) {
+    res$setHeader("Content-Type", "text/html")
+    res$body <- paste(readLines(html_file_path), collapse = "\n")
+    return(res)
+  } else {
+    res$status <- 404
+    return(list(message = "HTML file not found"))
+  }
+}
+
+#* @get /map_zs_fdp
+function(req, res) {
+  html_file_path <- "/app/files/map_zs_fdp.html"
+  if (file.exists(html_file_path)) {
+    res$setHeader("Content-Type", "text/html")
+    res$body <- paste(readLines(html_file_path), collapse = "\n")
+    return(res)
+  } else {
+    res$status <- 404
+    return(list(message = "HTML file not found"))
+  }
+}
+
+#* @get /map_zs_gru
+function(req, res) {
+  html_file_path <- "/app/files/map_zs_gru.html"
+  if (file.exists(html_file_path)) {
+    res$setHeader("Content-Type", "text/html")
+    res$body <- paste(readLines(html_file_path), collapse = "\n")
+    return(res)
+  } else {
+    res$status <- 404
+    return(list(message = "HTML file not found"))
+  }
+}
+
+#* @get /map_zs_spd
+function(req, res) {
+  html_file_path <- "/app/files/map_zs_spd.html"
+  if (file.exists(html_file_path)) {
+    res$setHeader("Content-Type", "text/html")
+    res$body <- paste(readLines(html_file_path), collapse = "\n")
+    return(res)
+  } else {
+    res$status <- 404
+    return(list(message = "HTML file not found"))
+  }
+}
+
+#* @get /map_zs_lin
+function(req, res) {
+  html_file_path <- "/app/files/map_zs_lin.html"
+  if (file.exists(html_file_path)) {
+    res$setHeader("Content-Type", "text/html")
+    res$body <- paste(readLines(html_file_path), collapse = "\n")
+    return(res)
+  } else {
+    res$status <- 404
+    return(list(message = "HTML file not found"))
+  }
+}
+
+#* @get /map_zs_bsw
+function(req, res) {
+  html_file_path <- "/app/files/map_zs_bsw.html"
+  if (file.exists(html_file_path)) {
+    res$setHeader("Content-Type", "text/html")
+    res$body <- paste(readLines(html_file_path), collapse = "\n")
+    return(res)
+  } else {
+    res$status <- 404
+    return(list(message = "HTML file not found"))
+  }
+}
