@@ -110,14 +110,16 @@ colnames(rf_df) <- colnames(rf_test) <- standard_cols
 #     "resp_E", #  direct vote
 #     "ncand", # number of candidates 
 #     "propPlatz", # list spot divided by number state party list spots
-#     "resp_Z", # list vote
+#     "alsoList", # also on list
+#     "resp_Z", # list vote (from Zweitstimme Model)
 #     "res_l1_E", # lagged direct vote
 #     "formercand", # former candidate
 #     "east", # east germany
 #     "female", # female
 #     "incumbent", # incumbent
 #     "akad", # phd title
-#     "incumbent_in_wkr" # incumebent running in this district
+#     "incumbent_in_wkr", # incumebent running in this district
+#     "no_cand_l1" # no candidate in last election
 #   )
 
 ### 7. Generate Predictions --------------------------------
