@@ -301,6 +301,7 @@ for (j in 1:nsim) {
 ### 8. Save Results -------------------------------------
 
 saveRDS(vacant_seats, "output/vacant_seats.rds")
+# vacant_seats <- readRDS("output/vacant_seats.rds")
 
 pred_vacant <- vacant_seats %>%  filter(draw_winner) %>% group_by(land, wkr, wkr_name) %>% mutate(n = n()/max(iteration)) %>%
   summarise(abandon_p = mean(abandoned) %>% round(2)) %>% arrange(-abandon_p)
@@ -313,6 +314,7 @@ saveRDS(pred_vacant, "output/pred_vacant.rds")
 prediction_data_districts <- merge(prediction_data_districts, vacant_seats  %>% filter(abandoned) %>%  group_by(wkr, party) %>% mutate(n = n()/max(iteration)) %>%
                 summarise(abandon_p_party = mean(n) %>% round(2)),
               by = c("wkr", "party"), all.x = T) %>%
+  dplyr::mutate(abandon_p_party = round(abandon_p_party*100, 0)) %>% 
   dplyr::mutate(abandon_p_party = case_when(is.na(abandon_p_party) ~ 0,
                                             T ~ abandon_p_party))
 
@@ -327,9 +329,52 @@ plz <- plz %>% group_by(wkr) %>% summarise(plz = paste(plz, collapse = ", ")) %>
 # Merge by wkr
 prediction_data_districts <- merge(prediction_data_districts, plz, by = "wkr", all.x = T)
 
-prediction_data_districts$plz
+
+# Add candidate names
+# prediction_data_districts <- "output/prediction_data_districts.rds" %>% readRDS()
+
+btw25_bewerb_utf8 <- read_delim("/mnt/forecasts/prediction-2025/temp/btw25_bewerb_utf8.csv", 
+                                delim = ";", escape_double = FALSE, trim_ws = TRUE, 
+                                skip = 8)
+btw25_bewerb_utf8$GruppennameKurz %>% unique
+
+cand_names <- btw25_bewerb_utf8
+cand_names$Vornamen <- cand_names$Rufname
+
+# If Title is not NA add at beginning of Vornamen
+cand_names$Vornamen <- case_when(!is.na(cand_names$Titel) ~ str_c(cand_names$Titel, " ", cand_names$Vornamen),
+                                 T ~ cand_names$Vornamen)
+
+# If Namenszusatz is not NA add at beginning of Nachname
+cand_names$Nachname <- case_when(!is.na(cand_names$Namenszusatz) ~ str_c(cand_names$Namenszusatz, " ", cand_names$Nachname),
+                                 T ~ cand_names$Nachname)
+
+
+cand_names <- filter(cand_names, Gebietsart == "Wahlkreis") %>% 
+  dplyr::select(c(wkr = Gebietsnummer, GruppennameKurz, Nachname, Vornamen)) # VorpGewaehlt
+
+# Only keep SPD, CDU, CSU, GRÜNE, FDP, Die Linke, AfD, BSW
+cand_names <- cand_names %>% 
+  filter(GruppennameKurz %in% c("SPD", "CDU", "CSU", "GRÜNE", "GRÜNE/B 90", "FDP", "Die Linke", "AfD", "BSW"))
+
+# Add party var where SPD = spd, CSU = cdu, CDU = cdu .. 
+cand_names$party <- case_when(cand_names$GruppennameKurz == "SPD" ~ "spd",
+                              cand_names$GruppennameKurz == "CDU" ~ "cdu",
+                              cand_names$GruppennameKurz == "CSU" ~ "cdu",
+                              cand_names$GruppennameKurz == "GRÜNE" ~ "gru",
+                              cand_names$GruppennameKurz == "GRÜNE/B 90" ~ "gru",
+                              cand_names$GruppennameKurz == "FDP" ~ "fdp",
+                              cand_names$GruppennameKurz == "Die Linke" ~ "lin",
+                              cand_names$GruppennameKurz == "AfD" ~ "afd",
+                              cand_names$GruppennameKurz == "BSW" ~ "bsw")
+cand_names$party %>% table
+
+# Merge by wkr and party
+prediction_data_districts <- merge(prediction_data_districts, cand_names, by = c("wkr", "party"), all.x = T)
+
 
 # Save to API
 saveRDS(prediction_data_districts, file = "api/prediction_data_districts.rds")
-saveRDS(pred_vacant, "output/pred_vacant.rds")
+saveRDS(pred_vacant, "api/pred_vacant.rds")
+
 

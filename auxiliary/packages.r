@@ -1,14 +1,17 @@
 # List of required packages
 p_needed <- c(
+  
+  # Statistical modeling
+  "dlm", "MASS", "rstan", "shinystan", "mcmcplots", "superdiag",
+  
   # Data manipulation and import
-  "haven", "lubridate", "stringr", "tidyverse", "dplyr", "tidyr", "readr", "rio",
-  "plyr", "magrittr", "broom", "reshape2", "openxlsx",
+  "haven", "lubridate", "stringr", "tidyverse", "plyr", "tidyr", "readr", "rio",
+  "dplyr", "magrittr", "broom", "reshape2", "openxlsx",
   
   # Visualization
   "ggplot2", "plotly", "htmlwidgets", "patchwork",
   
-  # Statistical modeling
-  "dlm", "MASS", "rstan", "shinystan", "mcmcplots", "superdiag",
+
   
   # Web scraping and API
   "rvest", "httr", "jsonlite",

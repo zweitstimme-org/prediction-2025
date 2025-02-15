@@ -108,7 +108,7 @@ wahlrecht_xml_extract <- function(xml_url) {
            werte = as.numeric(werte)
     ) %>%
     filter(!(werte_id %in% c("son", "frw"))) %>% 
-    rename(institute = inst, date = dat, party = werte_id, value = werte, sample_size = bfrg) %>% 
+    dplyr::rename(institute = inst, date = dat, party = werte_id, value = werte, sample_size = bfrg) %>% 
     as.data.frame %>% 
     mutate(date = as.Date(date)) %>%
     pivot_wider(values_from = "value", names_from = "party") 

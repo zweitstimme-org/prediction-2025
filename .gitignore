@@ -7,3 +7,5 @@ output/draws/
 output/zweitstimme_output*
 .DS_Store
 output/vacant_seats.rds
+logs/*
+output/res*

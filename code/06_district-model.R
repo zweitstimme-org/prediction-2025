@@ -170,10 +170,16 @@ for (zsim in 1:nsim) {
 ### 9. Process Final Results -------------------------------
 
 # Calculate confidence intervals and means
-test$low <- round(apply(district_reg_predictions, 1, quantile, 0.17) * 100, 1)
-test$high <- round(apply(district_reg_predictions, 1, quantile, 0.83) * 100, 1)
+test$low <- round(apply(district_reg_predictions, 1, quantile, 0.025) * 100, 1)
+test$high <- round(apply(district_reg_predictions, 1, quantile, 0.975) * 100, 1)
 test$value <- round(rowMeans(district_reg_predictions) * 100, 1)
 test$zs_pred <- rowMeans(zs_pred)
+
+test %>% group_by(wkr) %>% 
+  # Summarise value
+  summarise(
+    value = sum(value),
+  ) 
 
 # Calculate winner probabilities
 test$winner <- FALSE
@@ -221,12 +227,23 @@ prediction_data_districts <- test %>%
          zs_value_l1 = res_l1_Z, incumbent_party, 
          zs_valid_l1 = valid_Z_l1, valid_l1 = valid_E_l1)
 
+prediction_data_districts$zs_value_l1 <- round(prediction_data_districts$zs_value_l1*100, 1)
+prediction_data_districts$value_l1 <- round(prediction_data_districts$value_l1*100, 1)
+
+
+# Add party vote var
+prediction_data_districts$zs_value <- round(rowMeans(zs_pred)*100, 1)
+
+# Add 83% confidence intervals as zs_low and zs_high
+prediction_data_districts$zs_low <- round(apply(zs_pred, 1, quantile, 1/12)*100, 1)
+prediction_data_districts$zs_high <- round(apply(zs_pred, 1, quantile, 11/12)*100, 1)
+
+# Save
 saveRDS(prediction_data_districts, "output/prediction_data_districts.rds")
 
 saveRDS(district_reg_predictions, "/mnt/forecasts/prediction-2025/temp/district_reg_predictions.rds")
 
-# Remove previous file name
-# file.remove("/mnt/forecasts/prediction-2025/temp/res_pred.RDS)
+
 
 
 

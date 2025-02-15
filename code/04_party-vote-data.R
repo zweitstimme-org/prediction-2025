@@ -14,6 +14,9 @@ latest_date <- max(ymd(str_extract(forecast_files, ".{10}(?=\\.rds)")))
 forecast_files <- forecast_files[ymd(str_extract(forecast_files, ".{10}(?=\\.rds)")) == latest_date]
 forecast <- readRDS(forecast_files)
 
+# Save draws to API
+saveRDS(forecast %>% as.data.frame, file = "api/forecast_party_vote_draws.rds")
+
 ### 2. Define Party Information ------------------------------
 
 # Order parties by size (based on median forecast)

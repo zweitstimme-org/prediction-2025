@@ -131,8 +131,11 @@ formatted_date <- paste0(format(as.POSIXlt(current_date), "%d"), ". ",
                          format(as.POSIXlt(current_date), "%Y"))
 
 
+forecast_party_vote$name <- as.character(forecast_party_vote$name)
 
-forecast_party_vote$name <- factor(forecast_party_vote$name, levels = forecast_party_vote$name)
+forecast_party_vote <- forecast_party_vote[order(-forecast_party_vote$value),]
+forecast_party_vote$name <- factor(forecast_party_vote$name, levels = forecast_party_vote$name[order(-forecast_party_vote$value)])
+forecast_party_vote$name
 
 
 plotly_plot <- plot_ly(
@@ -281,7 +284,7 @@ plotly_plot_mobile <- plot_ly(
     annotations = list(
       list(
         x = 0.02,
-        y = 10,
+        y = 7,
         xref = "paper",
         yref = "y",
         text = "5%-Hürde",

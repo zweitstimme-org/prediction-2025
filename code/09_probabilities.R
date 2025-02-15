@@ -14,7 +14,7 @@ district_reg_predictions <- readRDS("/mnt/forecasts/prediction-2025/temp/distric
 ### 2. Load Latest Forecast -------------------------------
 
 # Get most recent forecast file
-forecast_files <- list.files("output", full.names = TRUE) %>% 
+forecast_files <- list.files("/mnt/forecasts/prediction-2025/forecast", full.names = TRUE) %>% 
   str_subset("forecast_draws_")
 latest_date <- max(ymd(str_extract(forecast_files, ".{10}(?=\\.rds)")))
 forecast_files <- forecast_files[ymd(str_extract(forecast_files, ".{10}(?=\\.rds)")) == latest_date]
@@ -123,7 +123,7 @@ pred_probabilities <- data.frame(
 ### 8. Save Results ------------------------------------
 
 saveRDS(pred_probabilities, "output/pred_probabilities.rds")
-
+# pred_probabilities <- readRDS("output/pred_probabilities.rds")
 
 # Save to API
 saveRDS(pred_probabilities, "api/pred_probabilities.rds")

@@ -51,6 +51,9 @@ for (i in 1:length(forecast_files)) {
 }
 
 
+# Leave only last 3 months
+forecast_trend <- filter(forecast_trend, date >= max(forecast_trend$date) - months(3))
+
 
 # Do something like above, but as a line plot with x being date
 # ggplot(forecast_trend, aes(x = date, y = y, color = name, fill = name)) +
@@ -92,19 +95,16 @@ if (max(forecast_trend$date) != weekly_ticks[length(weekly_ticks)]) {
 weekly_tick_text <- format(weekly_ticks, "%d.%m.")
 
 
-# Plotly plot with weekly ticks
 plotly_plot <- plot_ly(
   forecast_trend,
   x = ~date,
   y = ~y,
   color = ~name,
-  fill = ~name,
   type = 'scatter',
   mode = 'lines',
   line = list(shape = "hv"),
-  fillcolor = ~color,
   colors = setNames(df_forecast$color, df_forecast$name),  # Ensure correct color mapping
-  showlegend = F,
+  showlegend = F,  # Enable legend
   hovertemplate = "%{y}%<extra></extra>"  # Display percentage value on hover
 ) %>% 
   layout(
@@ -116,47 +116,21 @@ plotly_plot <- plot_ly(
     ),
     yaxis = list(title = "%"),
     margin = list(l = 50, r = 50, b = 50, t = 50),
-    legend = list(orientation = "h", x = 0.5, y = -0.1)
+    legend = list(
+      orientation = "h",
+      x = 0.5,
+      # y = -1,
+      yanchor = "bottom",  # Anchor the legend from the top
+      xanchor = "center"
+      
+    )
   ) %>% 
-  plotly::config(displayModeBar = F)
-    # Disable the display bar
-
-
-# %>%  
-#   config(displayModeBar = F)
-
-# plotly_plot <- plot_ly(
-#   forecast_trend,
-#   x = ~date,
-#   y = ~y,
-#   type = 'scatter',
-#   mode = 'lines',
-#   line = list(shape = "hv"),
-#   color = ~name,  # Map only to 'name'
-#   colors = setNames(df_forecast$color, df_forecast$name),  # Map custom colors to names
-#   showlegend = TRUE,  # Enable legend
-#   hovertemplate = "%{y}%<extra></extra>"  # Display percentage value on hover
-# ) %>% 
-#   layout(
-#     xaxis = list(
-#       title = "",
-#       tickformat = "%d/%m",  # Day and month in "dd/mm" format
-#       tickvals = forecast_trend$date,  # Ensure tick values are set
-#       ticktext = format(forecast_trend$date, "%d.%m.")  # Format dates as day/month
-#     ),
-#     yaxis = list(title = "%"),
-#     margin = list(l = 50, r = 50, b = 50, t = 50),
-#     legend = list(
-#       orientation = "h",  # Horizontal orientation
-#       x = 0.5,            # Center the legend
-#       y = -0.3,           # Place it below the plot
-#       xanchor = "center", # Align the legend horizontally
-#       yanchor = "top"     # Align the legend vertically
-#     )
-#   ) %>% 
-#   plotly::config(displayModeBar = FALSE)  # Disable display mode bar
+  plotly::config(displayModeBar = FALSE)
 
 plotly_plot
+
+
+
 
 
 saveWidget(plotly_plot, "api/forecast_trend.html", selfcontained = TRUE, title = "Wahlprognose von zweitstimme.org") %>% 

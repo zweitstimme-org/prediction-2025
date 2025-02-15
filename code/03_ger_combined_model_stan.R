@@ -124,7 +124,7 @@ results <- stan(
 
 # Save results
 saveRDS(results, 
-        file = paste0("output/res_brw_", upcoming_election, "_", 
+        file = paste0("/mnt/forecasts/prediction-2025/forecast/res_brw_", upcoming_election, "_", 
                      as.Date(cutoff+1), ".rds"))
 
 ### 6. Process and Save Forecasts --------------------------
@@ -152,7 +152,7 @@ draws_forecast_levels[["polls"]] <- polls
 # Save forecast draws
 forecast <- draws_forecast_levels[["forecast"]]
 colnames(forecast) <- draws_forecast_levels[["party_names"]]
-saveRDS(forecast, str_c("output/forecast_draws_", as.Date(cutoff + 1), ".rds"))
+saveRDS(forecast, str_c("/mnt/forecasts/prediction-2025/forecast/forecast_draws_", as.Date(cutoff + 1), ".rds"))
 
 # Display results
 round(apply(forecast, 2, mean) * 100, 1)  # Mean forecast
