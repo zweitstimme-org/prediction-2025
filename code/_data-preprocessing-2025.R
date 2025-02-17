@@ -643,6 +643,7 @@ test <- test %>% filter(!is.na(ncand))
 
 
 
+write.csv(test[, names(test)[names(test) != "name"]], file = "data/btw_candidates_1983-2025_full.csv")
 
 write.csv(test, file = "/mnt/forecasts/prediction-2025/temp/btw_candidates_1983-2025_full.csv")
 
