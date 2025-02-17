@@ -8,7 +8,7 @@ message("Calculating vacant seats...")
 ### 1. Configuration and Data Loading ------------------------
 
 # Load required data
-btw_candidates_1983_2025 <- read.csv2("data/btw_candidates_1983-2025.csv", stringsAsFactors = FALSE)
+btw_candidates_1983_2025 <- read.csv("/mnt/forecasts/prediction-2025/temp/btw_candidates_1983-2025_new.csv", stringsAsFactors = FALSE)
 prediction_data_districts <- readRDS("output/prediction_data_districts.rds")
 district_reg_predictions <- readRDS("/mnt/forecasts/prediction-2025/temp/district_reg_predictions.rds")
 

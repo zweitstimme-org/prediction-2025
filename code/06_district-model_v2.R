@@ -23,7 +23,10 @@ colnames(forecast) <- c("CDU/CSU", "SPD", "LINKE", "GRUENE", "FDP", "AFD", "BSW"
 ### 2. Load and Process Candidate Data ----------------------
 
 # Load historical candidate data
-btw_candidates_1983_2025 <- read.csv("/mnt/forecasts/prediction-2025/temp/btw_candidates_1983-2025_new.csv", stringsAsFactors = FALSE)
+btw_candidates_1983_2025 <- read.csv("/mnt/forecasts/prediction-2025/temp/btw_candidates_1983-2025_full.csv", stringsAsFactors = FALSE)
+
+btw_candidates_1983_2025$party %>% unique
+
 
 # Process party names
 # btw_candidates_1983_2025$partei[btw_candidates_1983_2025$partei == "CSU"] <- "CDU/CSU"
@@ -39,28 +42,7 @@ rownames(btw_bund_res) <- c("2021", "2017", "2013")
 
 ### 3. Process Candidate Data for 2025 ----------------------
 
-# Add no_cand_l1 indicator
-btw_candidates_1983_2025$no_cand_l1 <- as.numeric(btw_candidates_1983_2025$res_l1_E == 0)
 
-# Process LINKE and BSW data for 2025
-linke_df <- btw_candidates_1983_2025 %>%
-  filter(election == 2025, partei == "LINKE") %>%
-  mutate(res_l1_Z = res_l1_Z/2)
-
-bsw_df <- btw_candidates_1983_2025 %>%
-  filter(election == 2025, partei == "LINKE") %>%
-  mutate(
-    partei = "BSW",
-    res_l1_E = 0,
-    res_l1_Z = res_l1_Z/2
-  )
-
-# Combine processed data
-btw_candidates_1983_2025 <- bind_rows(
-  filter(btw_candidates_1983_2025, !(partei == "LINKE" & election == 2025)),
-  linke_df,
-  bsw_df
-)
 
 ### 4. Prepare Training and Test Data -----------------------
 
