@@ -327,14 +327,14 @@ btw_candidates_1983_2025$no_cand_l1 <- as.numeric(btw_candidates_1983_2025$res_l
 # Process LINKE and BSW data for 2025
 linke_df <- btw_candidates_1983_2025 %>%
   filter(election == 2025, partei == "LINKE") %>%
-  dplyr::mutate(res_l1_Z = res_l1_Z/2)
+  dplyr::mutate(res_l1_Z = res_l1_Z)
 
 bsw_df <- btw_candidates_1983_2025 %>%
   filter(election == 2025, partei == "LINKE") %>%
   dplyr::mutate(
     partei = "BSW",
     res_l1_E = 0,
-    res_l1_Z = res_l1_Z/2
+    res_l1_Z = res_l1_Z
   )
 
 # Combine processed data
@@ -346,7 +346,7 @@ btw_candidates_1983_2025 <- bind_rows(
 
 
 # Load historical candidate data
-btw_candidates_1983_2025 <- read.csv2("/mnt/forecasts/prediction-2025/temp/btw_candidates_1983-2025.csv", stringsAsFactors = FALSE)
+# btw_candidates_1983_2025 <- read.csv2("/mnt/forecasts/prediction-2025/temp/btw_candidates_1983-2025.csv", stringsAsFactors = FALSE)
 
 # Process party names
 btw_candidates_1983_2025$partei[btw_candidates_1983_2025$partei == "CSU"] <- "CDU/CSU"

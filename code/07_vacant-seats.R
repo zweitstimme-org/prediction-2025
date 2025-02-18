@@ -8,7 +8,7 @@ message("Calculating vacant seats...")
 ### 1. Configuration and Data Loading ------------------------
 
 # Load required data
-btw_candidates_1983_2025 <- read.csv("/mnt/forecasts/prediction-2025/temp/btw_candidates_1983-2025_new.csv", stringsAsFactors = FALSE)
+btw_candidates_1983_2025 <- read.csv("/mnt/forecasts/prediction-2025/temp/btw_candidates_1983-2025_full.csv", stringsAsFactors = FALSE)
 prediction_data_districts <- readRDS("output/prediction_data_districts.rds")
 district_reg_predictions <- readRDS("/mnt/forecasts/prediction-2025/temp/district_reg_predictions.rds")
 
@@ -44,16 +44,22 @@ draws[, "cdu"] <- round(draws[, "cdu"] * cdu_factor, 4)
 
 ### 4. Process Vote Estimates -----------------------------
 
+
+
 # Get shares per party and state
 votes_est <- btw_candidates_1983_2025 %>% 
   filter(election %in% c(2021)) %>% 
   mutate(
     resp_Z = resp_Z %>% str_replace(",", ".") %>% as.numeric,
     party = substr(partei, 1, 3) %>% tolower(),
-    party = if_else(party == "and", "oth", party)
+    party = if_else(party == "and", "oth", party),
+    party = if_else(party == "cdu" & land == "BY", "csu", party),
   ) %>% 
   dplyr::select(land, wkr, party, valid_Z, resp_Z) %>% 
   filter(!is.na(valid_Z))
+
+# votes_est$party[votes_est$land == "BY" & votes_est$party == "cdu"] <- "csu"
+
 
 # Split Left party votes between Linke and BSW
 lin_est <- votes_est %>% 
@@ -74,8 +80,8 @@ votes_est <- bind_rows(
 # Past election results at federal level
 res_el <- c(
   cdu = 0.1890, spd = 0.2574, afd = 0.1034, 
-  fdp = 0.1146, lin = 0.0489/2, gru = 0.1475, 
-  csu = 0.0517, bsw = 0.0489/2, oth = 0.0875
+  fdp = 0.1146, lin = 0.0489, gru = 0.1475, 
+  csu = 0.0517, bsw = 0.0489, oth = 0.0875
 )
 
 # Reorder like draws
@@ -102,8 +108,6 @@ zs_pred <- t(apply(votes_est, 1, function(row) {
 }))
 
 ### 7. Process Vacant Seats ------------------------------
-
-vacant_seats <- data.frame()
 
 vacant_seats <- data.frame()
 

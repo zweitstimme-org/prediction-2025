@@ -25,15 +25,17 @@ colnames(forecast) <- c("CDU/CSU", "SPD", "LINKE", "GRUENE", "FDP", "AFD", "BSW"
 # Load historical candidate data
 btw_candidates_1983_2025 <- read.csv("/mnt/forecasts/prediction-2025/temp/btw_candidates_1983-2025_full.csv", stringsAsFactors = FALSE)
 
+btw_candidates_1983_2025$no_cand_l1 <- as.numeric(btw_candidates_1983_2025$res_l1_E == 0)
+
 btw_candidates_1983_2025$party %>% unique
 
-
+# btw_candidates_1983_2025 %>% filter(party == "bsw") %>% View
 # Process party names
 # btw_candidates_1983_2025$partei[btw_candidates_1983_2025$partei == "CSU"] <- "CDU/CSU"
 # btw_candidates_1983_2025$partei[btw_candidates_1983_2025$partei == "CDU"] <- "CDU/CSU"
 
 # Load historical election results
-res21 <- c(24.2, 25.7, 2.45, 14.7, 11.4, 10.4, 2.45, 8.7) / 100
+res21 <- c(24.2, 25.7, 2.45*2, 14.7, 11.4, 10.4, 2.45*2, 8.7) / 100
 res17 <- c(32.9, 20.5, 4.6, 8.9, 10.7, 12.6, 4.6, 5.9) / 100
 res13 <- c(41.5, 25.7, 4.3, 8.4, 4.8, 4.7, 4.3, 6.3) / 100
 btw_bund_res <- rbind(res21, res17, res13)
@@ -135,7 +137,6 @@ for (i in 1:nrow(test)) {
 res_list <- vector("list", length = nsim)
 district_reg_predictions <- matrix(0, nrow = nrow(test), ncol = nsim)
 
-
 # standard_cols <- c("ncand", "propPlatz", "alsoList", "resp_Z", "res_l1_E", "formercand", "east", "female", "incumbent", "akad", "incumbent_in_wkr", "no_cand_l1")
 
 # Generate predictions for each simulation
@@ -159,6 +160,12 @@ for (zsim in 1:nsim) {
   
   # Generate predictions
   test_x <- as.matrix(test_sim[, 2:ncol(test_sim)])
+  # show var classes of test_sim
+  # sapply(test_sim, class)
+  
+  # make all classes of test_x numeric
+  test_x <- apply(test_x, 2, as.numeric)
+  
   reg_test_mat <- cbind(1, test_x)
   reg_preds <- reg_test_mat %*% t(S) + 
     matrix(rnorm(nrow(reg_test_mat) * mu_nsim, 0, sd(residuals(reg))),
@@ -252,10 +259,21 @@ saveRDS(prediction_data_districts, "output/prediction_data_districts.rds")
 
 saveRDS(district_reg_predictions, "/mnt/forecasts/prediction-2025/temp/district_reg_predictions.rds")
 
-
-
-
-
-
-
+# prediction_data_districts_new <- prediction_data_districts
+# 
+# prediction_data_districts <- readRDS("output/prediction_data_districts.rds")
+# filter(prediction_data_districts, party %in% c("bsw", "lin"))$party %>% unique
+# filter(prediction_data_districts_new, party %in% c("lin"))$winner %>% table
+# data.frame(party = filter(prediction_data_districts, party %in% c("bsw", "lin"))$party, 
+#            old = filter(prediction_data_districts, party %in% c("bsw", "lin"))$value, 
+#            new = filter(prediction_data_districts_new, party %in% c("lin"))$value) %>% 
+#   ggplot() +
+#   geom_point(aes(x = old, y = new, color = party)) +
+#   # add diagonal
+#   geom_abline(intercept = 0, slope = 1, linetype = "dashed") +
+#   labs(title = "Comparison of Linke and BSW Predictions",
+#        x = "Old Predictions",
+#        y = "New Predictions") + 
+#   # make axis equal
+#   coord_fixed()
 
