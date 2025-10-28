@@ -1,0 +1,21 @@
+{
+  "name": ["Annina"],
+  "affiliation": ["witten"],
+  "parties": {
+    "cdu": [27.2],
+    "afd": [22.4],
+    "gru": [13.8],
+    "spd": [19.7],
+    "lin": [5.9],
+    "bsw": [3.9],
+    "oth": [2.8],
+    "fdp": [4.3]
+  },
+  "turnout": [80.6],
+  "firstProjection": {
+    "hours": [18],
+    "minutes": [17],
+    "seconds": [1]
+  },
+  "timestamp": ["2025-02-23T12:21:08.831Z"]
+}

@@ -1,0 +1,21 @@
+{
+  "name": ["Hannah"],
+  "affiliation": ["mannheim"],
+  "parties": {
+    "cdu": [28.4],
+    "afd": [21],
+    "gru": [12.5],
+    "spd": [16.5],
+    "lin": [8.4],
+    "bsw": [4.5],
+    "oth": [3.8],
+    "fdp": [4.9]
+  },
+  "turnout": [82.4],
+  "firstProjection": {
+    "hours": [18],
+    "minutes": [31],
+    "seconds": [55]
+  },
+  "timestamp": ["2025-02-23T15:00:30.536Z"]
+}

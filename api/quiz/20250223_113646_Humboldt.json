@@ -1,0 +1,21 @@
+{
+  "name": ["Humboldt"],
+  "affiliation": ["witten"],
+  "parties": {
+    "cdu": [32],
+    "afd": [22.7],
+    "gru": [13],
+    "spd": [14.5],
+    "lin": [7.4],
+    "bsw": [4.5],
+    "oth": [0.7],
+    "fdp": [5.2]
+  },
+  "turnout": [84.9],
+  "firstProjection": {
+    "hours": [18],
+    "minutes": [10],
+    "seconds": [0]
+  },
+  "timestamp": ["2025-02-23T11:36:45.870Z"]
+}

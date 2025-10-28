@@ -1,0 +1,21 @@
+{
+  "name": ["Lena"],
+  "affiliation": ["hertie"],
+  "parties": {
+    "cdu": [28],
+    "afd": [22],
+    "gru": [14],
+    "spd": [15],
+    "lin": [8],
+    "bsw": [3],
+    "oth": [5],
+    "fdp": [5]
+  },
+  "turnout": [77],
+  "firstProjection": {
+    "hours": [18],
+    "minutes": [30],
+    "seconds": [0]
+  },
+  "timestamp": ["2025-02-23T11:33:13.822Z"]
+}

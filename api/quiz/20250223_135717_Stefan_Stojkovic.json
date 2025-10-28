@@ -1,0 +1,21 @@
+{
+  "name": ["Stefan Stojkovic"],
+  "affiliation": ["witten"],
+  "parties": {
+    "cdu": [29],
+    "afd": [24],
+    "gru": [13],
+    "spd": [16],
+    "lin": [8],
+    "bsw": [5],
+    "oth": [1],
+    "fdp": [4]
+  },
+  "turnout": [71],
+  "firstProjection": {
+    "hours": [18],
+    "minutes": [5],
+    "seconds": [0]
+  },
+  "timestamp": ["2025-02-23T13:57:16.826Z"]
+}

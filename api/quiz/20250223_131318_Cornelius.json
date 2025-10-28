@@ -1,0 +1,21 @@
+{
+  "name": ["Cornelius"],
+  "affiliation": ["witten"],
+  "parties": {
+    "cdu": [27.5],
+    "afd": [23.5],
+    "gru": [15],
+    "spd": [13.5],
+    "lin": [9.5],
+    "bsw": [3.5],
+    "oth": [4.5],
+    "fdp": [3]
+  },
+  "turnout": [77.2],
+  "firstProjection": {
+    "hours": [18],
+    "minutes": [22],
+    "seconds": [12]
+  },
+  "timestamp": ["2025-02-23T13:13:18.330Z"]
+}

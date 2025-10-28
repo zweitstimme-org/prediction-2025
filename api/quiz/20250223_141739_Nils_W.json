@@ -1,0 +1,21 @@
+{
+  "name": ["Nils W"],
+  "affiliation": ["witten"],
+  "parties": {
+    "cdu": [30],
+    "afd": [25.3],
+    "gru": [11.5],
+    "spd": [14.5],
+    "lin": [3.3],
+    "bsw": [4.6],
+    "oth": [7.1],
+    "fdp": [3.7]
+  },
+  "turnout": [62.2],
+  "firstProjection": {
+    "hours": [18],
+    "minutes": [31],
+    "seconds": [1]
+  },
+  "timestamp": ["2025-02-23T14:17:38.528Z"]
+}

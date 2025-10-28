@@ -1,0 +1,21 @@
+{
+  "name": ["Leon"],
+  "affiliation": ["witten"],
+  "parties": {
+    "cdu": [29.5],
+    "afd": [23],
+    "gru": [13],
+    "spd": [14.5],
+    "lin": [8],
+    "bsw": [4.5],
+    "oth": [2.5],
+    "fdp": [5]
+  },
+  "turnout": [69.6],
+  "firstProjection": {
+    "hours": [18],
+    "minutes": [45],
+    "seconds": [0]
+  },
+  "timestamp": ["2025-02-23T11:40:28.782Z"]
+}

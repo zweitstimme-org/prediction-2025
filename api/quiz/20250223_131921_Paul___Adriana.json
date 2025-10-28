@@ -1,0 +1,21 @@
+{
+  "name": ["Paul & Adriana"],
+  "affiliation": ["hertie"],
+  "parties": {
+    "cdu": [31],
+    "afd": [20],
+    "gru": [14],
+    "spd": [16],
+    "lin": [8],
+    "bsw": [4],
+    "oth": [2.1],
+    "fdp": [4.9]
+  },
+  "turnout": [70],
+  "firstProjection": {
+    "hours": [20],
+    "minutes": [0],
+    "seconds": [0]
+  },
+  "timestamp": ["2025-02-23T13:19:20.843Z"]
+}

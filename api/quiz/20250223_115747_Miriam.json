@@ -1,0 +1,21 @@
+{
+  "name": ["Miriam"],
+  "affiliation": ["hertie"],
+  "parties": {
+    "cdu": [29.3],
+    "afd": [20.5],
+    "gru": [14.4],
+    "spd": [15.6],
+    "lin": [5.8],
+    "bsw": [4.6],
+    "oth": [5.5],
+    "fdp": [4.3]
+  },
+  "turnout": [78],
+  "firstProjection": {
+    "hours": [18],
+    "minutes": [45],
+    "seconds": [0]
+  },
+  "timestamp": ["2025-02-23T11:57:46.764Z"]
+}

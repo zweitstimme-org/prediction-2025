@@ -9,3 +9,6 @@ output/zweitstimme_output*
 output/vacant_seats.rds
 logs/*
 output/res*
+draws
+forecast
+temp

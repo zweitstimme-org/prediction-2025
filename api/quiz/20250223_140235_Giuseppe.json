@@ -1,0 +1,21 @@
+{
+  "name": ["Giuseppe"],
+  "affiliation": ["witten"],
+  "parties": {
+    "cdu": [28.9],
+    "afd": [22],
+    "gru": [13.5],
+    "spd": [14.9],
+    "lin": [8.6],
+    "bsw": [6.5],
+    "oth": [1.1],
+    "fdp": [4.5]
+  },
+  "turnout": [69],
+  "firstProjection": {
+    "hours": [19],
+    "minutes": [15],
+    "seconds": [0]
+  },
+  "timestamp": ["2025-02-23T14:02:34.541Z"]
+}

@@ -24,6 +24,11 @@ colnames(forecast) <- c("CDU/CSU", "SPD", "LINKE", "GRUENE", "FDP", "AFD", "BSW"
 
 # Load historical candidate data
 btw_candidates_1983_2025 <- read.csv("/mnt/forecasts/prediction-2025/temp/btw_candidates_1983-2025_full.csv", stringsAsFactors = FALSE)
+# filter(btw_candidates_1983_2025, !(has_candidate_2025 | is.na(has_candidate_2025))) %>% View
+btw_candidates_1983_2025 <- filter(btw_candidates_1983_2025, has_candidate_2025 | is.na(has_candidate_2025))
+nrow(btw_candidates_1983_2025)
+
+btw_candidates_1983_2025 %>% filter(election == 2025 & party == "bsw")
 
 btw_candidates_1983_2025$no_cand_l1 <- as.numeric(btw_candidates_1983_2025$res_l1_E == 0)
 
@@ -111,7 +116,8 @@ colnames(rf_df) <- colnames(rf_test) <- standard_cols
 # Calculate swings
 res_el <- btw_bund_res[paste0(election_l1),]
 sim.swing <- -sweep(-forecast, 2, -res_el)
-sim.prop.swing <- t(apply(sim.swing, 1, function(x) x / res_el))
+# sim.prop.swing_old <- t(apply(sim.swing, 1, function(x) x / res_el))
+sim.prop.swing <- t(sapply(1:nrow(forecast), function(draw)  (forecast[draw,] - res_el)/res_el))
 
 # Initialize prediction matrix
 zs_pred <- matrix(0, nrow = nrow(test), ncol = nrow(sim.swing))
@@ -194,8 +200,8 @@ for (zsim in 1:nsim) {
 # Calculate confidence intervals and means
 test$low <- round(apply(district_reg_predictions, 1, quantile, 0.025) * 100, 1)
 test$high <- round(apply(district_reg_predictions, 1, quantile, 0.975) * 100, 1)
-test$value <- round(rowMeans(district_reg_predictions) * 100, 1)
-test$zs_pred <- rowMeans(zs_pred)
+test$value <- round(rowMeans(district_reg_predictions)*100, 1) # round(apply(district_reg_predictions, 1, quantile, .5) * 100, 1) # round(rowMeans(district_reg_predictions) * 100, 1)
+# test$zs_pred <- rowMeans(zs_pred)
 
 # Calculate winner probabilities
 test$winner <- FALSE
@@ -246,13 +252,33 @@ prediction_data_districts <- test %>%
 prediction_data_districts$zs_value_l1 <- round(prediction_data_districts$zs_value_l1*100, 1)
 prediction_data_districts$value_l1 <- round(prediction_data_districts$value_l1*100, 1)
 
+# wkr_zs_l1 <- c()
+for (i in 1:299) {
+  
+  wkr_draws <- zs_pred[prediction_data_districts$wkr == i, ]
+  wkr_sum <- colSums(wkr_draws)
+  
+  # Divide each column of wkr_draw by the corresponding wkr_sum
+  zs_pred[prediction_data_districts$wkr == i, ] <- sweep(wkr_draws, 2, wkr_sum, "/")
+  
+  # wkr_zs_l1[i] <- prediction_data_districts[prediction_data_districts$wkr == i, "zs_value_l1"] %>% sum
+  
+}
+
+# prediction_data_districts[prediction_data_districts$wkr == i, "party"]
 
 # Add party vote var
-prediction_data_districts$zs_value <- round(rowMeans(zs_pred)*100, 1)
+prediction_data_districts$zs_value <- round(rowMeans(zs_pred)*100,1) # round(apply(zs_pred, 1, quantile, .5)*100, 1) # round(rowMeans(zs_pred)*100, 1)
 
 # Add 83% confidence intervals as zs_low and zs_high
 prediction_data_districts$zs_low <- round(apply(zs_pred, 1, quantile, 1/12)*100, 1)
 prediction_data_districts$zs_high <- round(apply(zs_pred, 1, quantile, 11/12)*100, 1)
+
+
+(prediction_data_districts %>% group_by(wkr) %>%
+  summarise(
+    zs_value = sum(zs_value)
+  ))$zs_value %>% mean
 
 # Save
 saveRDS(prediction_data_districts, "output/prediction_data_districts.rds")

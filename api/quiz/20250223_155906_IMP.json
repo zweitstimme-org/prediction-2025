@@ -1,0 +1,21 @@
+{
+  "name": ["IMP"],
+  "affiliation": ["witten"],
+  "parties": {
+    "cdu": [30],
+    "afd": [22],
+    "gru": [12],
+    "spd": [16],
+    "lin": [7],
+    "bsw": [3],
+    "oth": [6],
+    "fdp": [4]
+  },
+  "turnout": [79],
+  "firstProjection": {
+    "hours": [18],
+    "minutes": [15],
+    "seconds": [0]
+  },
+  "timestamp": ["2025-02-23T15:59:06.495Z"]
+}

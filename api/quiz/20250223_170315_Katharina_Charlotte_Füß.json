@@ -1,0 +1,21 @@
+{
+  "name": ["Katharina Charlotte Füß"],
+  "affiliation": ["mannheim"],
+  "parties": {
+    "cdu": [20],
+    "afd": [23],
+    "gru": [7],
+    "spd": [16],
+    "lin": [7],
+    "bsw": [5],
+    "oth": [18],
+    "fdp": [4]
+  },
+  "turnout": [72],
+  "firstProjection": {
+    "hours": [18],
+    "minutes": [15],
+    "seconds": [0]
+  },
+  "timestamp": ["2025-02-23T17:03:15.523Z"]
+}

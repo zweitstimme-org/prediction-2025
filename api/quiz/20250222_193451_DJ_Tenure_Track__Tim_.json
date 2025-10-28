@@ -1,0 +1,21 @@
+{
+  "name": ["DJ Tenure Track (Tim)"],
+  "affiliation": ["witten"],
+  "parties": {
+    "cdu": [28.9],
+    "afd": [19.2],
+    "gru": [15.4],
+    "spd": [15.7],
+    "lin": [8.2],
+    "bsw": [4.3],
+    "oth": [4.6],
+    "fdp": [3.7]
+  },
+  "turnout": [82.3],
+  "firstProjection": {
+    "hours": [18],
+    "minutes": [1],
+    "seconds": [24]
+  },
+  "timestamp": ["2025-02-22T19:34:50.231Z"]
+}

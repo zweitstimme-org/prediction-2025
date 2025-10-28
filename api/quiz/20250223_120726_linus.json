@@ -1,0 +1,21 @@
+{
+  "name": ["linus"],
+  "affiliation": ["hertie"],
+  "parties": {
+    "cdu": [29.2],
+    "afd": [22],
+    "gru": [13.5],
+    "spd": [15.8],
+    "lin": [6.3],
+    "bsw": [4.4],
+    "oth": [4],
+    "fdp": [4.8]
+  },
+  "turnout": [76],
+  "firstProjection": {
+    "hours": [18],
+    "minutes": [4],
+    "seconds": [12]
+  },
+  "timestamp": ["2025-02-23T12:07:26.448Z"]
+}

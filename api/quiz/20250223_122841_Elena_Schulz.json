@@ -1,0 +1,21 @@
+{
+  "name": ["Elena Schulz"],
+  "affiliation": ["hertie"],
+  "parties": {
+    "cdu": [31.1],
+    "afd": [21.3],
+    "gru": [14.6],
+    "spd": [15.7],
+    "lin": [6.3],
+    "bsw": [3.5],
+    "oth": [2.8],
+    "fdp": [4.7]
+  },
+  "turnout": [81],
+  "firstProjection": {
+    "hours": [18],
+    "minutes": [0],
+    "seconds": [30]
+  },
+  "timestamp": ["2025-02-23T12:28:40.692Z"]
+}

@@ -1,0 +1,21 @@
+{
+  "name": ["Fabian"],
+  "affiliation": ["mannheim"],
+  "parties": {
+    "cdu": [30.6],
+    "afd": [19.3],
+    "gru": [15.5],
+    "spd": [16.7],
+    "lin": [5.7],
+    "bsw": [3.8],
+    "oth": [3.8],
+    "fdp": [4.6]
+  },
+  "turnout": [78.4],
+  "firstProjection": {
+    "hours": [18],
+    "minutes": [46],
+    "seconds": [30]
+  },
+  "timestamp": ["2025-02-23T12:57:18.859Z"]
+}

@@ -1,0 +1,21 @@
+{
+  "name": ["Tarik"],
+  "affiliation": ["hertie"],
+  "parties": {
+    "cdu": [29.7],
+    "afd": [22.8],
+    "gru": [12.5],
+    "spd": [15.4],
+    "lin": [8.6],
+    "bsw": [4.3],
+    "oth": [3],
+    "fdp": [3.7]
+  },
+  "turnout": [78.3],
+  "firstProjection": {
+    "hours": [18],
+    "minutes": [11],
+    "seconds": [0]
+  },
+  "timestamp": ["2025-02-23T12:34:29.627Z"]
+}

@@ -1,0 +1,21 @@
+{
+  "name": ["Milan"],
+  "affiliation": ["witten"],
+  "parties": {
+    "cdu": [29.6],
+    "afd": [19.7],
+    "gru": [14.6],
+    "spd": [16.4],
+    "lin": [6.3],
+    "bsw": [4.2],
+    "oth": [4.3],
+    "fdp": [4.9]
+  },
+  "turnout": [74.8],
+  "firstProjection": {
+    "hours": [18],
+    "minutes": [0],
+    "seconds": [1]
+  },
+  "timestamp": ["2025-02-23T12:23:11.001Z"]
+}

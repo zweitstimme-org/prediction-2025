@@ -310,6 +310,9 @@ saveRDS(vacant_seats, "output/vacant_seats.rds")
 pred_vacant <- vacant_seats %>%  filter(draw_winner) %>% group_by(land, wkr, wkr_name) %>% mutate(n = n()/max(iteration)) %>%
   summarise(abandon_p = mean(abandoned) %>% round(2)) %>% arrange(-abandon_p)
 
+saveRDS(pred_vacant, "pred_vacant_2024-11-11.rds")
+
+
 saveRDS(pred_vacant, "output/pred_vacant.rds")
 
 ## Add to API

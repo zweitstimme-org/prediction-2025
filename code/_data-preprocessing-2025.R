@@ -312,7 +312,7 @@ btw_candidates_1983_2025 <- btw_candidates_1983_2025 %>% filter(!(partei == "CSU
 btw_candidates_1983_2025 %>% filter(incumbent_party == 1) %>% group_by(election) %>% summarise(valid_E_l1 = sum(valid_E_l1), valid_Z_l1 = sum(valid_Z_l1)) %>% ungroup() %>% arrange(election) # Correct
 
 
-btw_candidates_1983_2025 %>% filter(incumbent_party == 1 & election %in% c(2021, 2025)) %>% group_by(election, land) %>% summarise(valid_Z_l1 = sum(valid_Z_l1)) %>% ungroup() %>% arrange(election) %>% View
+# btw_candidates_1983_2025 %>% filter(incumbent_party == 1 & election %in% c(2021, 2025)) %>% group_by(election, land) %>% summarise(valid_Z_l1 = sum(valid_Z_l1)) %>% ungroup() %>% arrange(election) %>% View
 
 
 
@@ -363,6 +363,7 @@ btw_candidates_1983_2025$party <- case_when(
   TRUE ~ "oth"
 )
 btw_candidates_1983_2025$party %>% table
+
 
 
 # Load candidate data for 2021
@@ -585,9 +586,11 @@ kandidierende$alsoList[kandidierende$propPlatz == 0] <- 1
 kandidierende$party %>% unique
 btw_candidates_1983_2025$party %>% unique
 
+filter(btw_candidates_1983_2025, election == 2025 & party == "bsw") %>% nrow
+
 # Merge kandidierende to btw_candidunique()# Merge kandidierende to btw_candidates_1983_2025 by election wkr party, fill existing columns when NA
 test <- btw_candidates_1983_2025 %>% 
-  left_join(kandidierende, by = c("election", "wkr", "party")) %>% 
+  full_join(kandidierende, by = c("election", "wkr", "party")) %>% 
   dplyr::mutate(akad = ifelse(is.na(akad.x), akad.y, akad.x),
                 female = ifelse(is.na(female.x), female.y, female.x),
                 propPlatz = ifelse(is.na(propPlatz.x), propPlatz.y, propPlatz.x),
@@ -603,6 +606,8 @@ test <- btw_candidates_1983_2025 %>%
                 -name.x, -name.y,  # Dropping name.x, name.y
                 -east.x, -east.y)  # Dropping east.x, east.y
 
+
+filter(test, election == 2025 & party == "bsw") %>% nrow
 
 # When election is 2021 or 2025 and party is oth, set akad to 0 and direct_list_incumbent to FALSE
 test <- test %>% 
@@ -635,17 +640,35 @@ test$incumbent_in_wkr %>% table # 12 obs with two incumbets
 
 test$incumbent_in_wkr[test$incumbent_in_wkr == 2] <- 1
 
+# If election == 2025 and direct_list_incumbent is NA, then do the following: direkt_list_incumbent = FALSE, akad = 0, female = 0, propPlatz = 0, formercand = 0. For ncand and east take the unique value from other candidates in this wkr
+test$has_candidate_2025 <- !is.na(test$direct_list_incumbent)
+test$has_candidate_2025[test$election != 2025] <- NA
 
+table(test$direct_list_incumbent, useNA = "always")
+table(test$has_candidate_2025, useNA = "always")
 
+test <- test %>% 
+  group_by(wkr) %>%
+  mutate(direct_list_incumbent = ifelse(election == 2025 & is.na(direct_list_incumbent), FALSE, direct_list_incumbent),
+         akad = ifelse(election == 2025 & is.na(akad), 0, akad),
+         female = ifelse(election == 2025 & is.na(female), 0, female),
+         propPlatz = ifelse(election == 2025 & is.na(propPlatz), 0, propPlatz),
+         alsoList = ifelse(election == 2025 & is.na(alsoList), 1, alsoList),
+         formercand = ifelse(election == 2025 & is.na(formercand), 0, formercand),
+         ncand = ifelse(election == 2025 & is.na(ncand), unique(ncand[!is.na(ncand)]), ncand),
+         east = ifelse(election == 2025 & is.na(east), unique(east[!is.na(east)]), east)) %>%
+  ungroup()
+
+# test %>% filter(election == 2005) %>% View
+
+              
 
 # Drop if ncand is NA
 test <- test %>% filter(!is.na(ncand))
-
-
 
 write.csv(test[, names(test)[names(test) != "name"]], file = "data/btw_candidates_1983-2025_full.csv")
 
 write.csv(test, file = "/mnt/forecasts/prediction-2025/temp/btw_candidates_1983-2025_full.csv")
 
 
-
+filter(test, election == 2025 & party == "bsw") %>% nrow

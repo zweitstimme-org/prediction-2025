@@ -1,0 +1,21 @@
+{
+  "name": ["Antonia"],
+  "affiliation": ["witten"],
+  "parties": {
+    "cdu": [29],
+    "afd": [20.7],
+    "gru": [14.2],
+    "spd": [15.9],
+    "lin": [8.9],
+    "bsw": [4.8],
+    "oth": [2.1],
+    "fdp": [4.4]
+  },
+  "turnout": [79],
+  "firstProjection": {
+    "hours": [18],
+    "minutes": [15],
+    "seconds": [0]
+  },
+  "timestamp": ["2025-02-23T15:47:23.664Z"]
+}

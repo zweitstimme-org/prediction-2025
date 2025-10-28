@@ -1,0 +1,21 @@
+{
+  "name": ["Max"],
+  "affiliation": ["witten"],
+  "parties": {
+    "cdu": [32.7],
+    "afd": [19.8],
+    "gru": [13.4],
+    "spd": [16.6],
+    "lin": [6.2],
+    "bsw": [4.5],
+    "oth": [2],
+    "fdp": [4.8]
+  },
+  "turnout": [74.4],
+  "firstProjection": {
+    "hours": [18],
+    "minutes": [53],
+    "seconds": [0]
+  },
+  "timestamp": ["2025-02-23T12:46:07.700Z"]
+}

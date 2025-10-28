@@ -1,0 +1,21 @@
+{
+  "name": ["Francesco R."],
+  "affiliation": ["witten"],
+  "parties": {
+    "cdu": [29.2],
+    "afd": [21],
+    "gru": [14.2],
+    "spd": [15.8],
+    "lin": [8.5],
+    "bsw": [5.1],
+    "oth": [1.8],
+    "fdp": [4.4]
+  },
+  "turnout": [72.1],
+  "firstProjection": {
+    "hours": [18],
+    "minutes": [50],
+    "seconds": [0]
+  },
+  "timestamp": ["2025-02-23T11:25:29.559Z"]
+}

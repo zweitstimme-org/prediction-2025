@@ -1,9 +1,65 @@
-# plumber.R
+
+#* Enable CORS
 #* @filter cors
-cors <- function(res) {
-  res$setHeader("Access-Control-Allow-Origin", "*") # "https://zweitstimme.org")
+function(req, res) {
+  res$setHeader("Access-Control-Allow-Origin", "*")
+  res$setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
+  res$setHeader("Access-Control-Allow-Headers", "Content-Type")
+  
+  if (req$REQUEST_METHOD == "OPTIONS") {
+    res$status <- 200
+    return(list())
+  }
+  
   plumber::forward()
 }
+
+#* Save a quiz submission
+#* @post /quiz
+function(req) {
+  # Parse the JSON body
+  submission <- fromJSON(req$postBody)
+  
+  # Get current working directory for debugging
+  current_dir <- getwd()
+  print(paste("Current working directory:", current_dir))
+  
+  # Create a unique filename using timestamp and sanitized name
+  timestamp <- format(now(), "%Y%m%d_%H%M%S")
+  safe_name <- gsub("[^[:alnum:]]", "_", submission$name)
+  
+  # Use absolute path
+  quiz_dir <- "/app/files/quiz"
+  filename <- file.path(quiz_dir, paste0(timestamp, "_", safe_name, ".json"))
+  
+  print(paste("Attempting to write to:", filename))
+  
+  # Create quiz directory if it doesn't exist
+  if (!dir.exists(quiz_dir)) {
+    dir.create(quiz_dir, recursive = TRUE)
+    print(paste("Created directory:", quiz_dir))
+  }
+  
+  # Write the submission to a file
+  tryCatch({
+    write(toJSON(submission, pretty = TRUE), filename)
+    print(paste("Successfully wrote to:", filename))
+    list(
+      message = "Submission saved successfully",
+      status = 200,
+      path = filename  # Return the path for debugging
+    )
+  }, error = function(e) {
+    print(paste("Error writing file:", e$message))
+    list(
+      error = "Failed to save submission",
+      details = e$message,
+      path = filename,
+      status = 500
+    )
+  })
+}
+
 
 
 # Serve the last update timestamp
@@ -134,6 +190,36 @@ function(res) {
 
 
 
+# Serve district forecasts as JSON
+# Including 83% intervals
+#* @serializer unboxedJSON
+#* @get /forecast_districts_zeit
+function(res) {
+  rds_path <- "/app/files/prediction_data_districts_zeit.rds"
+  
+  # Check if the file exists
+  if (!file.exists(rds_path)) {
+    res$status <- 404
+    return(list(error = "File not found"))
+  }
+  
+  # Load the RDS file
+  forecast_data <- readRDS(rds_path)
+  
+  # Manually convert the data to JSON and specify UTF-8 encoding
+  json_data <- jsonlite::toJSON(forecast_data, pretty = TRUE, auto_unbox = TRUE, 
+                                encode = "UTF-8")
+  
+  # Set the content type and encoding
+  res$setHeader("Content-Type", "application/json; charset=utf-8")
+  
+  # Return JSON data directly
+  res$body <- json_data
+  
+  res
+}
+
+
 
 # Serve a PDF file
 #* @serializer contentType list(type="application/pdf")
@@ -158,54 +244,6 @@ function(res) {
 }
 
 
-
-# Serve the PNG file
-#* @serializer contentType list(type="image/png")
-#* @get /figure
-function(res) {
-  # Path to the PNG file
-  png_path <- "/app/files/figure_forecast.png"
-  
-  # Check if the file exists
-  if (!file.exists(png_path)) {
-    res$status <- 404
-    return(list(error = "File not found"))
-  }
-  
-  # Read the PNG file as raw binary content
-  png_content <- readBin(png_path, "raw", file.info(png_path)$size)
-  
-  # Set the content type as image/png
-  res$setHeader("Content-Type", "image/png")
-  
-  # Set the response body to the binary content
-  res$body <- png_content
-  res
-}
-
-# Serve the PNG file
-#* @serializer contentType list(type="image/png")
-#* @get /figure_districts
-function(res) {
-  # Path to the PNG file
-  png_path <- "/app/files/figure_forecast_districts.png"
-  
-  # Check if the file exists
-  if (!file.exists(png_path)) {
-    res$status <- 404
-    return(list(error = "File not found"))
-  }
-  
-  # Read the PNG file as raw binary content
-  png_content <- readBin(png_path, "raw", file.info(png_path)$size)
-  
-  # Set the content type as image/png
-  res$setHeader("Content-Type", "image/png")
-  
-  # Set the response body to the binary content
-  res$body <- png_content
-  res
-}
 
 
 
@@ -450,3 +488,55 @@ function(req, res) {
     return(list(message = "HTML file not found"))
   }
 }
+
+
+# This endpoint serves the HTML file directly
+#* @get /map_citizen_forecast_winner
+function(req, res) {
+  # Specify the path to your saved HTML file
+  html_file_path <- "/app/files/map_citizen_forecast_winner.html"
+  
+  # Check if the file exists
+  if (file.exists(html_file_path)) {
+    # Serve the HTML file
+    res$setHeader("Content-Type", "text/html")
+    res$body <- paste(readLines(html_file_path), collapse = "\n")  # Read HTML file and set body
+    return(res)
+  } else {
+    res$status <- 404
+    return(list(message = "HTML file not found"))
+  }
+}
+
+# Serve the PNG file
+#* @serializer contentType list(type="image/png")
+#* @get /figure_districts
+function(res) {
+  # Path to the PNG file
+  png_path <- "/app/files/figure_forecast_districts.png"
+  
+  # Check if the file exists
+  if (!file.exists(png_path)) {
+    res$status <- 404
+    return(list(error = "File not found"))
+  }
+  
+  # Read the PNG file as raw binary content
+  png_content <- readBin(png_path, "raw", file.info(png_path)$size)
+  
+  # Set the content type as image/png
+  res$setHeader("Content-Type", "image/png")
+  
+  # Set the response body to the binary content
+  res$body <- png_content
+  res
+}
+
+
+
+#* Save quiz results for open participants
+#* @post /quiz-open
+function(req, res) {
+  # Parse the JSON body
+  data <- req$body
+  

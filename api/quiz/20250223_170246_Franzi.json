@@ -1,0 +1,21 @@
+{
+  "name": ["Franzi"],
+  "affiliation": ["hertie"],
+  "parties": {
+    "cdu": [27],
+    "afd": [19],
+    "gru": [15],
+    "spd": [18],
+    "lin": [7],
+    "bsw": [4],
+    "oth": [6],
+    "fdp": [4]
+  },
+  "turnout": [68],
+  "firstProjection": {
+    "hours": [18],
+    "minutes": [3],
+    "seconds": [0]
+  },
+  "timestamp": ["2025-02-23T17:02:44.601Z"]
+}

@@ -26,5 +26,7 @@ COPY plumber.R /app/
 # Expose the port for the API
 EXPOSE 8073
 
+RUN R -e "install.packages(c('jsonlite', 'lubridate'), repos='https://cloud.r-project.org/')"
+
 # Start the Plumber API
-CMD ["R", "-e", "library(plumber); pr('/app/plumber.R') %>% pr_run(host = '0.0.0.0', port=8073)"]
+CMD ["R", "-e", "library(plumber); library(lubridate); library(jsonlite); pr('/app/plumber.R') %>% pr_run(host = '0.0.0.0', port=8073)"]

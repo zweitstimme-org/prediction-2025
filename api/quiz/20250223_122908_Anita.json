@@ -1,0 +1,21 @@
+{
+  "name": ["Anita"],
+  "affiliation": ["hertie"],
+  "parties": {
+    "cdu": [28.3],
+    "afd": [21],
+    "gru": [12.9],
+    "spd": [16.9],
+    "lin": [8.8],
+    "bsw": [4],
+    "oth": [4.1],
+    "fdp": [4]
+  },
+  "turnout": [77.2],
+  "firstProjection": {
+    "hours": [18],
+    "minutes": [10],
+    "seconds": [0]
+  },
+  "timestamp": ["2025-02-23T12:29:08.192Z"]
+}

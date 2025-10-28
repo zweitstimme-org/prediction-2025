@@ -1,0 +1,21 @@
+{
+  "name": ["Freddy"],
+  "affiliation": ["witten"],
+  "parties": {
+    "cdu": [28.4],
+    "afd": [19],
+    "gru": [13.8],
+    "spd": [15.6],
+    "lin": [8.7],
+    "bsw": [3.9],
+    "oth": [5.7],
+    "fdp": [4.9]
+  },
+  "turnout": [81.1],
+  "firstProjection": {
+    "hours": [18],
+    "minutes": [1],
+    "seconds": [45]
+  },
+  "timestamp": ["2025-02-22T23:24:29.272Z"]
+}

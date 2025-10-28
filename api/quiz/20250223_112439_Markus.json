@@ -1,0 +1,21 @@
+{
+  "name": ["Markus"],
+  "affiliation": ["witten"],
+  "parties": {
+    "cdu": [30.3],
+    "afd": [20.5],
+    "gru": [16.9],
+    "spd": [17.7],
+    "lin": [6.7],
+    "bsw": [2.8],
+    "oth": [0],
+    "fdp": [5.1]
+  },
+  "turnout": [78.2],
+  "firstProjection": {
+    "hours": [19],
+    "minutes": [11],
+    "seconds": [0]
+  },
+  "timestamp": ["2025-02-23T11:24:39.136Z"]
+}

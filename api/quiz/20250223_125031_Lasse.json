@@ -1,0 +1,21 @@
+{
+  "name": ["Lasse"],
+  "affiliation": ["witten"],
+  "parties": {
+    "cdu": [30.5],
+    "afd": [19.7],
+    "gru": [12.8],
+    "spd": [15.4],
+    "lin": [7.5],
+    "bsw": [4.4],
+    "oth": [5.5],
+    "fdp": [4.2]
+  },
+  "turnout": [77.2],
+  "firstProjection": {
+    "hours": [18],
+    "minutes": [1],
+    "seconds": [21]
+  },
+  "timestamp": ["2025-02-23T12:50:31.797Z"]
+}

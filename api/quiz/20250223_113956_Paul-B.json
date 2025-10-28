@@ -1,0 +1,21 @@
+{
+  "name": ["Paul B"],
+  "affiliation": ["mannheim"],
+  "parties": {
+    "cdu": [28.9],
+    "afd": [21],
+    "gru": [13.4],
+    "spd": [14.9],
+    "lin": [8.5],
+    "bsw": [3.2],
+    "oth": [5.2],
+    "fdp": [4.9]
+  },
+  "turnout": [71.5],
+  "firstProjection": {
+    "hours": [18],
+    "minutes": [36],
+    "seconds": [17]
+  },
+  "timestamp": ["2025-02-23T11:39:56.676Z"]
+}

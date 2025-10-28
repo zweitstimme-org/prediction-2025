@@ -1,0 +1,21 @@
+{
+  "name": ["Gleckert"],
+  "affiliation": ["hertie"],
+  "parties": {
+    "cdu": [29.9],
+    "afd": [19.4],
+    "gru": [13],
+    "spd": [15.6],
+    "lin": [6.6],
+    "bsw": [5.7],
+    "oth": [5.2],
+    "fdp": [4.6]
+  },
+  "turnout": [79.1],
+  "firstProjection": {
+    "hours": [18],
+    "minutes": [1],
+    "seconds": [0]
+  },
+  "timestamp": ["2025-02-23T12:45:31.082Z"]
+}

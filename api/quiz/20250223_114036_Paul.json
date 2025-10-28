@@ -1,0 +1,21 @@
+{
+  "name": ["Paul"],
+  "affiliation": ["hertie"],
+  "parties": {
+    "cdu": [28.3],
+    "afd": [19.9],
+    "gru": [12.9],
+    "spd": [18],
+    "lin": [8.8],
+    "bsw": [2.6],
+    "oth": [2.9],
+    "fdp": [6.6]
+  },
+  "turnout": [79.5],
+  "firstProjection": {
+    "hours": [18],
+    "minutes": [34],
+    "seconds": [23]
+  },
+  "timestamp": ["2025-02-23T11:40:36.337Z"]
+}

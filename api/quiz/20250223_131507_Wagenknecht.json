@@ -1,0 +1,21 @@
+{
+  "name": ["Wagenknecht"],
+  "affiliation": ["witten"],
+  "parties": {
+    "cdu": [31],
+    "afd": [24],
+    "gru": [13],
+    "spd": [16],
+    "lin": [7],
+    "bsw": [4.1],
+    "oth": [0],
+    "fdp": [4.9]
+  },
+  "turnout": [74],
+  "firstProjection": {
+    "hours": [18],
+    "minutes": [15],
+    "seconds": [0]
+  },
+  "timestamp": ["2025-02-23T13:15:07.694Z"]
+}

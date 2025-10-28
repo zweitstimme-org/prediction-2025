@@ -1,0 +1,21 @@
+{
+  "name": ["Christoph"],
+  "affiliation": ["witten"],
+  "parties": {
+    "cdu": [28.1],
+    "afd": [19.9],
+    "gru": [14.5],
+    "spd": [15.7],
+    "lin": [7.7],
+    "bsw": [4.5],
+    "oth": [5],
+    "fdp": [4.6]
+  },
+  "turnout": [77.6],
+  "firstProjection": {
+    "hours": [18],
+    "minutes": [5],
+    "seconds": [32]
+  },
+  "timestamp": ["2025-02-23T13:49:31.745Z"]
+}

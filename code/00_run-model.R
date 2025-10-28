@@ -53,6 +53,9 @@ save(wahlrecht_polls, file = str_c("output/polls/wahlrecht_polls_", Sys.Date(),"
 
 run_again <- T
 
+# Do not update after 21 Feb
+if(Sys.Date() > as.Date("2025-02-21")) run_again <- F
+
 if(run_again) {
   
   message("Running all code.")
@@ -68,6 +71,7 @@ if(run_again) {
   source("code/04_party-vote-data.R")
   source("code/05_party-vote-figures.R")
   source("code/06_district-model_v2.R")
+  source("code/06_district-model_zeit.R")
   source("code/07_vacant-seats.R")
   source("code/08_district-figures.R")
   source("code/09_probabilities.R")

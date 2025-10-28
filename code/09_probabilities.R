@@ -99,6 +99,9 @@ pred_probabilities <- data.frame(
   maj_cdu_csu_spd = mean((pred_probabilities$cdu + pred_probabilities$csu + pred_probabilities$spd) > 0.5),
   maj_cdu_csu_gru_spd = mean((pred_probabilities$cdu + pred_probabilities$csu + pred_probabilities$gru + pred_probabilities$spd) > 0.5),
   maj_cdu_csu_afd = mean((pred_probabilities$cdu + pred_probabilities$csu + pred_probabilities$afd) > 0.5),
+  maj_spd_gru_lin = mean((pred_probabilities$spd + pred_probabilities$gru + pred_probabilities$lin) > 0.5),
+  maj_cdu_csu_spd_fdp = mean((pred_probabilities$cdu + pred_probabilities$csu + pred_probabilities$spd + pred_probabilities$fdp) > 0.5),
+  maj_cdu_csu_spd_fdp_and_fdp_above5 = mean(((pred_probabilities$cdu + pred_probabilities$csu + pred_probabilities$spd + pred_probabilities$fdp) > 0.5) & pred_probabilities$fdp > 0),
   
   # Largest party probabilities
   prob_lin_largest = mean(pred_probabilities_merged$lin > apply(pred_probabilities_merged[, -which(names(pred_probabilities_merged) == "lin")], 1, max)),
@@ -117,8 +120,17 @@ pred_probabilities <- data.frame(
   grundmandat_cdu = sum(grundmandat_counter == "cdu")/nsim,
   grundmandat_csu = sum(grundmandat_counter == "csu")/nsim,
   grundmandat_gru = sum(grundmandat_counter == "gru")/nsim,
-  grundmandat_afd = sum(grundmandat_counter == "afd")/nsim
+  grundmandat_afd = sum(grundmandat_counter == "afd")/nsim,
+  
+  prob_afd_above25 = mean(pred_probabilities$afd > 0.25),
+  block_min_afd = mean(pred_probabilities$afd > 1/3),
+  
+  maj_cdu_csu_spd_fdp_if_fdp_above5 = mean((filter(pred_probabilities, fdp > 0)$cdu + filter(pred_probabilities, fdp > 0)$csu + filter(pred_probabilities, fdp > 0)$spd + filter(pred_probabilities, fdp > 0)$fdp) > 0.5),
+  maj_cdu_csu_spd_fdp_if_fdp_bsw_above5 = mean((filter(pred_probabilities, fdp > 0 & bsw > 0)$cdu + filter(pred_probabilities, fdp > 0 & bsw > 0)$csu + filter(pred_probabilities, fdp > 0 & bsw > 0)$spd + filter(pred_probabilities, fdp > 0 & bsw > 0)$fdp) > 0.5)
+  
 )
+
+
 
 ### 8. Save Results ------------------------------------
 
