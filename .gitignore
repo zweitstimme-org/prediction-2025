@@ -1,14 +1,21 @@
-.Rproj.user
-.Rhistory
-.RData
-.Ruserdata
 output/pred_abandoned.rds
 output/draws/
 output/zweitstimme_output*
-.DS_Store
 output/vacant_seats.rds
 logs/*
 output/res*
 draws
 forecast
 temp
+
+# System/personal junk
+.DS_Store
+._*
+.Rhistory
+.RHistory
+.Ruserdata
+.Rapp.history
+.Rproj.user/
+/.RData
+Rplots.pdf
+*.Rproj
