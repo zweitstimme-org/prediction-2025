@@ -76,9 +76,6 @@ write.csv(
   row.names = FALSE
 )
 
-# Keep plot output consistent: only show last 3 months
-forecast_trend <- filter(forecast_trend, date >= max(forecast_trend$date) - months(3))
-
 
 # Do something like above, but as a line plot with x being date
 # ggplot(forecast_trend, aes(x = date, y = y, color = name, fill = name)) +
