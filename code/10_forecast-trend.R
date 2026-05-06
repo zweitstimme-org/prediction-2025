@@ -2,7 +2,24 @@
 
 message("Zweitstimme trend.")
 
-(forecast_files <- list.files("/mnt/forecasts/prediction-2025/forecast", full.names = T) %>% str_subset("forecast_draws_"))
+suppressPackageStartupMessages({
+  library(magrittr)
+  library(dplyr)
+  library(stringr)
+  library(lubridate)
+  library(plotly)
+  library(htmlwidgets)
+})
+
+forecast_dir_candidates <- c(
+  "/mnt/forecasts/prediction-2025/forecast",
+  "/mnt/cerfort/forecasts/prediction-2025/forecast",
+  "forecast"
+)
+forecast_dir <- forecast_dir_candidates[dir.exists(forecast_dir_candidates)][1]
+if (is.na(forecast_dir)) stop("No forecast directory found.")
+
+(forecast_files <- list.files(forecast_dir, full.names = TRUE) %>% str_subset("forecast_draws_"))
 
 forecast_trend <- data.frame()
 
@@ -51,7 +68,15 @@ for (i in 1:length(forecast_files)) {
 }
 
 
-# Leave only last 3 months
+# Export full trend table (no filtering)
+# Matches the interval columns used elsewhere (value/low/high/low95/high95)
+write.csv(
+  forecast_trend,
+  file = "api/forecast_trend.csv",
+  row.names = FALSE
+)
+
+# Keep plot output consistent: only show last 3 months
 forecast_trend <- filter(forecast_trend, date >= max(forecast_trend$date) - months(3))
 
 
